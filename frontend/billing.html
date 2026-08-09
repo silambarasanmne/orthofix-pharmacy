@@ -163,16 +163,25 @@
               <table class="cart-table w-full border-collapse text-xs">
                 <thead>
                   <tr class="border-b border-slate-200 bg-slate-50/50">
-                    <th class="w-2/5 p-2 text-left text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Medicine Name & Details</th>
-                    <th class="w-[15%] p-2 text-right text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Price</th>
-                    <th class="w-[25%] p-2 text-center text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Qty (Input / Select)</th>
-                    <th class="w-[14%] p-2 text-right text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Total</th>
-                    <th class="w-[6%] p-2 text-center text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Action</th>
+                    <th class="w-2/5 p-2 text-left text-[11px] font-extrabold text-slate-600 uppercase tracking-wider">Medicine Name & Details</th>
+                    <th class="w-[15%] p-2 text-right text-[11px] font-extrabold text-slate-600 uppercase tracking-wider">Price</th>
+                    <th class="w-[25%] p-2 text-center text-[11px] font-extrabold text-slate-600 uppercase tracking-wider">Quantity (Input / Select)</th>
+                    <th class="w-[14%] p-2 text-right text-[11px] font-extrabold text-slate-600 uppercase tracking-wider">Total</th>
+                    <th class="w-[6%] p-2 text-center text-[11px] font-extrabold text-slate-600 uppercase tracking-wider">Action</th>
                   </tr>
                 </thead>
                 <tbody id="cart-table-body">
                   <!-- Dynamic Cart Rows Loaded via JS -->
                 </tbody>
+                <tfoot id="cart-table-foot" class="border-t border-slate-200 bg-slate-100/90 font-bold text-slate-800 text-[11px]">
+                  <tr>
+                    <td class="p-2 font-extrabold text-slate-700">Summary Footer</td>
+                    <td class="p-2 text-right text-slate-400">--</td>
+                    <td class="p-2 text-center text-slate-700 font-extrabold" id="foot-total-qty">0 Items</td>
+                    <td class="p-2 text-right text-sky-700 font-black text-sm" id="foot-total-amount">₹0.00</td>
+                    <td class="p-2 text-center"></td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
 
@@ -208,30 +217,12 @@
                 </div>
               </div>
 
-              <!-- Row 3: Payment Method & Complete Checkout Bar -->
-              <div class="cart-footer-row3 grid grid-cols-12 gap-2 items-center">
-                <div class="payment-method-selector col-span-5 grid grid-cols-3 gap-1">
-                  <button type="button" class="pay-btn selected p-1.5 border border-slate-200 rounded-lg bg-white text-xs font-bold text-slate-600 text-center hover:bg-slate-50 transition-colors" data-method="Cash">💵 Cash</button>
-                  <button type="button" class="pay-btn p-1.5 border border-slate-200 rounded-lg bg-white text-xs font-bold text-slate-600 text-center hover:bg-slate-50 transition-colors" data-method="UPI">📱 UPI</button>
-                  <button type="button" class="pay-btn p-1.5 border border-slate-200 rounded-lg bg-white text-xs font-bold text-slate-600 text-center hover:bg-slate-50 transition-colors" data-method="Card">💳 Card</button>
-                </div>
-
-                <!-- Complete Sale Action Button -->
-                <button class="btn-complete-sale col-span-7 w-full py-2.5 px-4 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white rounded-xl font-extrabold text-xs shadow-md shadow-sky-600/30 flex items-center justify-center gap-2 transition-all cursor-pointer" id="btn-complete-sale" disabled>
-                  <span>Complete Sale & Print Invoice</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+              <!-- Row 3: Single Submit Button -->
+              <div class="cart-footer-row3 pt-1">
+                <button class="btn-complete-sale w-full py-3 px-4 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white rounded-xl font-extrabold text-sm shadow-md shadow-sky-600/30 flex items-center justify-center gap-2 transition-all cursor-pointer" id="btn-complete-sale" disabled onclick="Billing.openSubmitPanel()">
+                  <i class="fa-solid fa-paper-plane text-base"></i>
+                  <span>Submit Bill</span>
                 </button>
-              </div>
-
-              <!-- Cash Received Row -->
-              <div class="cash-received-box bg-emerald-50/80 border border-emerald-200/80 px-3 py-1.5 rounded-xl flex items-center justify-between text-xs" id="cash-payment-box">
-                <div class="flex items-center gap-2">
-                  <label class="text-xs font-bold text-emerald-800">Received (₹):</label>
-                  <input type="number" id="amount-received" min="0" step="any" placeholder="0.00" class="w-20 p-1 border border-emerald-300 rounded-md text-xs font-bold text-right bg-white outline-none">
-                </div>
-                <div class="text-right">
-                  <span class="text-slate-500 font-medium">Change Owed:</span>
-                  <strong class="text-emerald-700 font-black text-sm" id="summary-change">₹0.00</strong>
-                </div>
               </div>
 
             </div>
@@ -240,6 +231,50 @@
 
         </div>
       </main>
+    </div>
+  </div>
+
+  <!-- SUBMIT BILL CONFIRMATION SUMMARY PANEL -->
+  <div class="modal-overlay fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-200" id="modal-submit-summary">
+    <div class="modal-box bg-white rounded-3xl shadow-2xl w-full max-w-md flex flex-col overflow-hidden">
+      <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+        <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-file-invoice text-sky-600"></i> Bill Summary & Confirm
+        </h3>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-700 text-lg p-1 rounded-lg" onclick="UI.closeModal('modal-submit-summary')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body p-6 space-y-4">
+        <div class="bg-sky-50/70 border border-sky-200/80 rounded-2xl p-4 space-y-3">
+          <div class="flex justify-between items-center border-b border-sky-200/60 pb-2">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Bill / Customer Name:</span>
+            <strong id="panel-bill-name" class="text-sm font-extrabold text-slate-900">-</strong>
+          </div>
+          <div class="flex justify-between items-center border-b border-sky-200/60 pb-2">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Bill Number:</span>
+            <span id="panel-bill-number" class="text-xs font-bold font-mono bg-white px-2.5 py-1 rounded-lg border border-sky-200 text-sky-700">INV-AUTO-GENERATED</span>
+          </div>
+          <div class="flex justify-between items-center border-b border-sky-200/60 pb-2">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Amount:</span>
+            <strong id="panel-total-amount" class="text-sm font-extrabold text-slate-800">₹0.00</strong>
+          </div>
+          <div class="flex justify-between items-center border-b border-sky-200/60 pb-2">
+            <span class="text-xs font-bold text-rose-500 uppercase tracking-wider">Discount:</span>
+            <strong id="panel-discount" class="text-sm font-extrabold text-rose-600">-₹0.00</strong>
+          </div>
+          <div class="flex justify-between items-center pt-1">
+            <span class="text-sm font-black text-slate-900 uppercase tracking-wider">Final Total:</span>
+            <strong id="panel-final-total" class="text-xl font-black text-sky-600">₹0.00</strong>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
+        <button type="button" class="btn btn-secondary px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors" onclick="UI.closeModal('modal-submit-summary')">Cancel</button>
+        <button type="button" class="btn btn-primary px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-xl font-extrabold text-xs shadow-md shadow-emerald-600/30 flex items-center gap-2 transition-all cursor-pointer" id="btn-confirm-save-bill" onclick="Billing.confirmAndSaveBill()">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Save & Complete Bill
+        </button>
+      </div>
     </div>
   </div>
 

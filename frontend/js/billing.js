@@ -371,8 +371,10 @@ const Billing = {
 
   calculateTotals() {
     let subtotal = 0;
+    let totalUnits = 0;
     this.cart.forEach(item => {
       subtotal += item.total_price;
+      totalUnits += item.quantity;
     });
 
     let discountAmt = 0;
@@ -387,40 +389,72 @@ const Billing = {
     }
 
     const grandTotal = Math.max(0, subtotal - discountAmt);
+    this.amountReceived = grandTotal;
 
     // Render summary UI
     const subtotalEl = document.getElementById('summary-subtotal');
     const discountEl = document.getElementById('summary-discount');
     const grandTotalEl = document.getElementById('summary-grand-total');
-    const changeEl = document.getElementById('summary-change');
     const completeBtn = document.getElementById('btn-complete-sale');
+    const footQtyEl = document.getElementById('foot-total-qty');
+    const footAmountEl = document.getElementById('foot-total-amount');
 
     if (subtotalEl) subtotalEl.textContent = UI.formatCurrency(subtotal);
     if (discountEl) discountEl.textContent = `-${UI.formatCurrency(discountAmt)}`;
     if (grandTotalEl) grandTotalEl.textContent = UI.formatCurrency(grandTotal);
+    if (footQtyEl) footQtyEl.textContent = `${totalUnits} Unit${totalUnits === 1 ? '' : 's'}`;
+    if (footAmountEl) footAmountEl.textContent = UI.formatCurrency(subtotal);
 
-    let changeAmt = 0;
-    if (this.paymentMethod === 'Cash') {
-      changeAmt = Math.max(0, this.amountReceived - grandTotal);
-    }
-    if (changeEl) changeEl.textContent = UI.formatCurrency(changeAmt);
-
-    // Disable complete sale button if cart is empty or cash received is insufficient
+    // Disable submit button if cart is empty
     if (completeBtn) {
-      const isCartEmpty = this.cart.length === 0;
-      const isCashInvalid = this.paymentMethod === 'Cash' && (this.amountReceived < grandTotal);
-      completeBtn.disabled = isCartEmpty || isCashInvalid;
+      completeBtn.disabled = this.cart.length === 0;
     }
   },
 
-  async completeSale() {
+  openSubmitPanel() {
     if (this.cart.length === 0) {
-      UI.showToast('Cannot complete sale: Current Bill is empty.', 'error');
+      UI.showToast('Cannot submit bill: Current Bill Cart is empty.', 'error');
       return;
     }
 
+    const customerName = document.getElementById('customer-name')?.value.trim() || 'Walk-in Customer';
+    let subtotal = 0;
+    this.cart.forEach(item => { subtotal += item.total_price; });
+
+    let discountAmt = 0;
+    if (this.discountType === 'percent') {
+      discountAmt = (subtotal * this.discountValue) / 100;
+    } else {
+      discountAmt = this.discountValue;
+    }
+    if (discountAmt > subtotal) discountAmt = subtotal;
+
+    const grandTotal = Math.max(0, subtotal - discountAmt);
+
+    const nameEl = document.getElementById('panel-bill-name');
+    const totalEl = document.getElementById('panel-total-amount');
+    const discEl = document.getElementById('panel-discount');
+    const finalEl = document.getElementById('panel-final-total');
+
+    if (nameEl) nameEl.textContent = customerName;
+    if (totalEl) totalEl.textContent = UI.formatCurrency(subtotal);
+    if (discEl) discEl.textContent = `-${UI.formatCurrency(discountAmt)}`;
+    if (finalEl) finalEl.textContent = UI.formatCurrency(grandTotal);
+
+    UI.openModal('modal-submit-summary');
+  },
+
+  async confirmAndSaveBill() {
+    if (this.cart.length === 0) return;
+
     const customerName = document.getElementById('customer-name')?.value || '';
     const customerPhone = document.getElementById('customer-phone')?.value || '';
+
+    let subtotal = 0;
+    this.cart.forEach(item => { subtotal += item.total_price; });
+    let discountAmt = (this.discountType === 'percent') ? (subtotal * this.discountValue) / 100 : this.discountValue;
+    if (discountAmt > subtotal) discountAmt = subtotal;
+    const grandTotal = Math.max(0, subtotal - discountAmt);
 
     const payload = {
       items: this.cart.map(item => ({
@@ -431,31 +465,33 @@ const Billing = {
       customer_phone: customerPhone,
       discount_type: this.discountType,
       discount_value: this.discountValue,
-      payment_method: this.paymentMethod,
-      amount_received: this.amountReceived
+      payment_method: 'Cash',
+      amount_received: grandTotal
     };
 
     try {
-      const btn = document.getElementById('btn-complete-sale');
+      const btn = document.getElementById('btn-confirm-save-bill');
       if (btn) btn.disabled = true;
 
       const res = await API.post('/billing/sale', payload);
       if (res.success) {
-        UI.showToast(`Sale Completed! Invoice ${res.invoice.invoice_number} generated.`, 'success');
+        UI.closeModal('modal-submit-summary');
+        UI.showToast(`✅ Bill INV-${res.invoice.invoice_number} saved successfully! Database updated.`, 'success');
         
-        // Show Invoice Modal
-        const modalContainer = document.getElementById('invoice-modal-content');
-        if (modalContainer) {
-          modalContainer.innerHTML = UI.renderInvoiceHtml(res.invoice);
-          UI.openModal('modal-invoice');
-        }
-
+        // Reset Cart & Return to Clean Billing Screen
         this.clearCart();
-        this.loadMedicines(); // Refresh stock in real time
+        this.loadMedicines(); // Refresh live database stock
+        
+        const searchInput = document.getElementById('search-medicine-input');
+        if (searchInput) {
+          searchInput.value = '';
+          searchInput.focus();
+        }
       }
     } catch (error) {
-      UI.showToast(error.message || 'Failed to complete sale.', 'error');
-      const btn = document.getElementById('btn-complete-sale');
+      UI.showToast(error.message || 'Failed to save bill.', 'error');
+    } finally {
+      const btn = document.getElementById('btn-confirm-save-bill');
       if (btn) btn.disabled = false;
     }
   }
