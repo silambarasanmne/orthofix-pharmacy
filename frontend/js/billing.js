@@ -105,10 +105,10 @@ const Billing = {
       btnClearCart.addEventListener('click', () => this.clearCart());
     }
 
-    // Complete Sale Button
+    // Single Submit Bill Button
     const btnCompleteSale = document.getElementById('btn-complete-sale');
     if (btnCompleteSale) {
-      btnCompleteSale.addEventListener('click', () => this.completeSale());
+      btnCompleteSale.addEventListener('click', () => this.openSubmitPanel());
     }
   },
 
@@ -411,8 +411,10 @@ const Billing = {
       completeBtn.disabled = !hasItems;
       if (hasItems) {
         completeBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+        completeBtn.removeAttribute('disabled');
       } else {
         completeBtn.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+        completeBtn.setAttribute('disabled', 'disabled');
       }
     }
   },
