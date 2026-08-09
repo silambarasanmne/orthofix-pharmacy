@@ -318,49 +318,49 @@ const Billing = {
       const highlightStyle = isHighlighted ? 'background-color: #e0f2fe; transition: background-color 1s ease;' : '';
 
       return `
-        <tr style="${highlightStyle}" id="cart-item-row-${item.medicine.id}">
-          <td style="padding: 0.55rem 0.35rem;">
-            <strong class="cart-item-name" style="font-size: 0.9rem; color: #0284c7; display: block;">
+        <tr style="${highlightStyle}" id="cart-item-row-${item.medicine.id}" class="hover:bg-slate-50/80 transition-colors">
+          <td class="p-2 align-middle">
+            <strong class="cart-item-name font-bold text-xs text-sky-700 block leading-tight">
               ${item.medicine.name}
             </strong>
-            <small style="color: #64748b; font-style: italic; display: block;">${item.medicine.generic_name}</small>
-            <div style="font-size: 0.72rem; color: #64748b; margin-top: 0.15rem; display: flex; gap: 0.5rem;">
-              <span>Batch: <strong>${item.medicine.batch_number}</strong></span>
-              <span>Stock: <strong style="color: #10b981;">${item.medicine.current_stock}</strong></span>
+            <small class="text-slate-500 italic text-[11px] block leading-tight">${item.medicine.generic_name}</small>
+            <div class="text-[10px] text-slate-500 mt-0.5 flex gap-2">
+              <span>Batch: <strong class="text-slate-700">${item.medicine.batch_number}</strong></span>
+              <span>Stock: <strong class="text-emerald-600">${item.medicine.current_stock}</strong></span>
             </div>
           </td>
 
-          <td style="text-align: right; font-weight: 700; color: #334155;">
+          <td class="p-2 text-right align-middle font-bold text-xs text-slate-800">
             ${UI.formatCurrency(item.unit_price)}
           </td>
 
           <!-- TEXT BOX + DROPDOWN SELECTION OPTION FOR NUMBER OF MEDICINES -->
-          <td style="text-align: center;">
-            <div style="display: flex; gap: 0.25rem; align-items: center; justify-content: center;">
+          <td class="p-2 text-center align-middle">
+            <div class="flex items-center justify-center gap-1">
               <input type="number" 
-                     class="qty-text-box" 
+                     class="qty-text-box w-11 p-1 border border-sky-500 rounded-md font-extrabold text-xs text-center outline-none bg-white focus:ring-2 focus:ring-sky-500/20" 
                      min="1" 
                      max="${item.medicine.current_stock}" 
                      value="${item.quantity}" 
                      onchange="Billing.setQuantity(${idx}, this.value)" 
-                     title="Type custom quantity"
-                     style="width: 48px; padding: 0.25rem 0.35rem; border: 1.5px solid #0284c7; border-radius: 6px; font-weight: 800; font-size: 0.85rem; text-align: center; outline: none; background: #ffffff;">
+                     title="Type custom quantity">
               
-              <select class="qty-select-dropdown" 
+              <select class="qty-select-dropdown p-1 border border-slate-300 rounded-md text-[11px] font-bold bg-slate-50 cursor-pointer text-slate-800 outline-none" 
                       onchange="Billing.setQuantity(${idx}, this.value)" 
-                      title="Select quantity from dropdown"
-                      style="padding: 0.25rem 0.2rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.75rem; font-weight: 700; background: #f8fafc; cursor: pointer; color: #0f172a;">
+                      title="Select quantity from dropdown">
                 ${this.generateQtySelectOptions(item.quantity, item.medicine.current_stock)}
               </select>
             </div>
           </td>
 
-          <td style="text-align: right; font-weight: 800; font-size: 0.95rem; color: #0f172a;">
+          <td class="p-2 text-right align-middle font-extrabold text-xs text-slate-900">
             ${UI.formatCurrency(item.total_price)}
           </td>
 
-          <td style="text-align: center;">
-            <button class="btn-remove-item" type="button" onclick="Billing.removeFromCart(${idx})" title="Remove ${item.medicine.name} from Bill" style="font-size: 1rem;">🗑️</button>
+          <td class="p-2 text-center align-middle">
+            <button class="btn-remove-item text-rose-500 hover:text-rose-700 p-1 hover:bg-rose-50 rounded transition-colors cursor-pointer" type="button" onclick="Billing.removeFromCart(${idx})" title="Remove ${item.medicine.name} from Bill">
+              <i class="fa-solid fa-trash-can text-sm"></i>
+            </button>
           </td>
         </tr>
       `;

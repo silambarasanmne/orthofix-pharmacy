@@ -118,19 +118,19 @@
       <main class="content-body flex-grow p-4 overflow-hidden">
         <div class="pos-grid grid grid-cols-1 lg:grid-cols-12 gap-4 h-full">
           
-          <!-- LEFT SIDE: MEDICINE SEARCH & SELECTION -->
-          <div class="pos-left lg:col-span-6 flex flex-col gap-3 h-full overflow-hidden">
-            <div class="search-card bg-white border border-slate-200/80 rounded-2xl p-3.5 shadow-sm flex items-center gap-3">
+          <!-- LEFT SIDE: MEDICINE SEARCH & SELECTION (5 COLS) -->
+          <div class="pos-left lg:col-span-5 flex flex-col gap-3 h-full overflow-hidden">
+            <div class="search-card bg-white border border-slate-200/80 rounded-2xl p-3 shadow-sm flex items-center gap-2">
               <div class="search-input-group flex-grow relative">
-                <span class="search-icon-inside absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
+                <span class="search-icon-inside absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
                   <i class="fa-solid fa-magnifying-glass"></i>
                 </span>
-                <input type="text" id="search-medicine-input" placeholder="Search medicine by Name, Generic name, Barcode, or Batch #..." autofocus class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:bg-white focus:border-sky-600 focus:ring-4 focus:ring-sky-600/10 outline-none transition-all">
+                <input type="text" id="search-medicine-input" placeholder="Search by Name, Generic, Batch #..." autofocus class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10 outline-none transition-all">
               </div>
-              <select id="filter-category" class="select-filter bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 outline-none cursor-pointer">
+              <select id="filter-category" class="select-filter bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-700 outline-none cursor-pointer">
                 <option value="All">All Categories</option>
               </select>
-              <select id="filter-status" class="select-filter bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 outline-none cursor-pointer">
+              <select id="filter-status" class="select-filter bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-700 outline-none cursor-pointer">
                 <option value="">All Stock</option>
                 <option value="in_stock" selected>In Stock Only</option>
                 <option value="low_stock">Low Stock</option>
@@ -140,14 +140,14 @@
             </div>
 
             <div class="medicine-results-container flex-grow overflow-y-auto pr-1">
-              <div class="medicine-grid grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3" id="medicine-grid">
+              <div class="medicine-grid grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="medicine-grid">
                 <!-- Dynamic Medicine Cards Loaded via JS -->
               </div>
             </div>
           </div>
 
-          <!-- RIGHT SIDE: CURRENT BILL CART PANEL -->
-          <div class="pos-right lg:col-span-6 bg-white border border-slate-200/80 rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
+          <!-- RIGHT SIDE: CURRENT BILL CART PANEL (7 COLS - SPACIOUS PARTITION) -->
+          <div class="pos-right lg:col-span-7 bg-white border border-slate-200/80 rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
             <div class="cart-header px-4 py-3 border-b border-slate-200/80 bg-slate-50/80 flex justify-between items-center flex-shrink-0">
               <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
                 <i class="fa-solid fa-cart-shopping text-sky-600"></i> Current Bill Cart
@@ -158,42 +158,42 @@
               </div>
             </div>
 
-            <!-- MEDICINE ITEMS TABLE AREA -->
+            <!-- MEDICINE ITEMS TABLE AREA WITH EXPLICIT COLUMN PARTITIONING -->
             <div class="cart-items-wrapper flex-grow overflow-y-auto p-2">
-              <table class="cart-table w-full border-collapse text-xs">
+              <table class="cart-table w-full border-collapse text-xs table-fixed">
                 <thead>
-                  <tr class="border-b border-slate-200 bg-slate-50/50">
-                    <th class="w-2/5 p-2 text-left text-[11px] font-extrabold text-slate-600 uppercase tracking-wider">Medicine Name & Details</th>
-                    <th class="w-[15%] p-2 text-right text-[11px] font-extrabold text-slate-600 uppercase tracking-wider">Price</th>
-                    <th class="w-[25%] p-2 text-center text-[11px] font-extrabold text-slate-600 uppercase tracking-wider">Quantity (Input / Select)</th>
-                    <th class="w-[14%] p-2 text-right text-[11px] font-extrabold text-slate-600 uppercase tracking-wider">Total</th>
-                    <th class="w-[6%] p-2 text-center text-[11px] font-extrabold text-slate-600 uppercase tracking-wider">Action</th>
+                  <tr class="border-b border-slate-200 bg-slate-100/70">
+                    <th class="w-[32%] p-2 text-left text-[11px] font-extrabold text-slate-700 uppercase tracking-wider">Medicine Name & Details</th>
+                    <th class="w-[15%] p-2 text-right text-[11px] font-extrabold text-slate-700 uppercase tracking-wider">Price</th>
+                    <th class="w-[28%] p-2 text-center text-[11px] font-extrabold text-slate-700 uppercase tracking-wider">Quantity (Input / Select)</th>
+                    <th class="w-[17%] p-2 text-right text-[11px] font-extrabold text-slate-700 uppercase tracking-wider">Total</th>
+                    <th class="w-[8%] p-2 text-center text-[11px] font-extrabold text-slate-700 uppercase tracking-wider">Action</th>
                   </tr>
                 </thead>
-                <tbody id="cart-table-body">
+                <tbody id="cart-table-body" class="divide-y divide-slate-100">
                   <!-- Dynamic Cart Rows Loaded via JS -->
                 </tbody>
-                <tfoot id="cart-table-foot" class="border-t border-slate-200 bg-slate-100/90 font-bold text-slate-800 text-[11px]">
+                <tfoot id="cart-table-foot" class="border-t-2 border-slate-200 bg-slate-100/90 font-bold text-slate-800 text-[11px]">
                   <tr>
-                    <td class="p-2 font-extrabold text-slate-700">Summary Footer</td>
-                    <td class="p-2 text-right text-slate-400">--</td>
-                    <td class="p-2 text-center text-slate-700 font-extrabold" id="foot-total-qty">0 Items</td>
-                    <td class="p-2 text-right text-sky-700 font-black text-sm" id="foot-total-amount">₹0.00</td>
-                    <td class="p-2 text-center"></td>
+                    <td class="p-2.5 font-extrabold text-slate-700">Summary Footer</td>
+                    <td class="p-2.5 text-right text-slate-400">--</td>
+                    <td class="p-2.5 text-center text-slate-800 font-extrabold" id="foot-total-qty">0 Items</td>
+                    <td class="p-2.5 text-right text-sky-700 font-black text-sm" id="foot-total-amount">₹0.00</td>
+                    <td class="p-2.5 text-center"></td>
                   </tr>
                 </tfoot>
               </table>
             </div>
 
-            <!-- ULTRA-COMPACT MICRO FOOTER PANEL -->
+            <!-- FOOTER PANEL WITH SPACIOUS INLINE ROW LAYOUTS -->
             <div class="cart-footer border-t border-slate-200 bg-white p-3.5 flex flex-col gap-2.5 flex-shrink-0">
               
-              <!-- Row 1: Compact Inline Customer Info & Discount Settings -->
-              <div class="cart-footer-row1 grid grid-cols-3 gap-2">
-                <input type="text" id="customer-name" placeholder="Customer Name (Optional)" class="p-2 border border-slate-200 rounded-lg text-xs font-semibold bg-slate-50 focus:bg-white focus:border-sky-600 outline-none">
-                <input type="tel" id="customer-phone" placeholder="Mobile Number (Optional)" class="p-2 border border-slate-200 rounded-lg text-xs font-semibold bg-slate-50 focus:bg-white focus:border-sky-600 outline-none">
-                <div class="flex items-center gap-1">
-                  <select id="discount-type" class="p-2 border border-slate-200 rounded-lg text-xs font-bold bg-slate-50 text-slate-700 outline-none">
+              <!-- Row 1: Inline Customer Info & Discount Settings -->
+              <div class="cart-footer-row1 grid grid-cols-12 gap-2">
+                <input type="text" id="customer-name" placeholder="Customer Name (Optional)" class="col-span-4 p-2 border border-slate-200 rounded-lg text-xs font-semibold bg-slate-50 focus:bg-white focus:border-sky-600 outline-none">
+                <input type="tel" id="customer-phone" placeholder="Mobile Number (Optional)" class="col-span-4 p-2 border border-slate-200 rounded-lg text-xs font-semibold bg-slate-50 focus:bg-white focus:border-sky-600 outline-none">
+                <div class="col-span-4 flex items-center gap-1">
+                  <select id="discount-type" class="p-2 border border-slate-200 rounded-lg text-xs font-bold bg-slate-50 text-slate-700 outline-none cursor-pointer">
                     <option value="fixed">Fixed (₹)</option>
                     <option value="percent">Percent (%)</option>
                   </select>
@@ -201,24 +201,24 @@
                 </div>
               </div>
 
-              <!-- Row 2: Compact Inline Subtotal, Discount & Grand Total Summary Bar -->
-              <div class="cart-footer-row2 flex justify-between items-center bg-slate-50 px-3 py-2 rounded-xl border border-slate-200/80 text-xs">
-                <div class="summary-pill flex items-center gap-1">
-                  <span class="text-slate-500 font-medium">Subtotal:</span>
-                  <strong id="summary-subtotal" class="text-slate-900 font-extrabold">₹0.00</strong>
-                </div>
-                <div class="summary-pill flex items-center gap-1 text-rose-600">
-                  <span>Discount:</span>
-                  <strong id="summary-discount" class="font-extrabold">-₹0.00</strong>
-                </div>
+              <!-- Row 2: Subtotal, Discount & Grand Total Summary Bar -->
+              <div class="cart-footer-row2 flex justify-between items-center bg-slate-100/90 px-4 py-2.5 rounded-xl border border-slate-200/80 text-xs">
                 <div class="summary-pill flex items-center gap-1.5">
-                  <span class="text-slate-700 font-bold">Grand Total:</span>
-                  <span class="grand-total-amount text-sky-600 font-black text-lg" id="summary-grand-total">₹0.00</span>
+                  <span class="text-slate-600 font-bold">Subtotal:</span>
+                  <strong id="summary-subtotal" class="text-slate-900 font-extrabold text-sm">₹0.00</strong>
+                </div>
+                <div class="summary-pill flex items-center gap-1.5 text-rose-600">
+                  <span class="font-bold">Discount:</span>
+                  <strong id="summary-discount" class="font-extrabold text-sm">-₹0.00</strong>
+                </div>
+                <div class="summary-pill flex items-center gap-2">
+                  <span class="text-slate-800 font-extrabold text-xs">Grand Total:</span>
+                  <span class="grand-total-amount text-sky-600 font-black text-xl" id="summary-grand-total">₹0.00</span>
                 </div>
               </div>
 
-              <!-- Row 3: Single Submit Button -->
-              <div class="cart-footer-row3 pt-1">
+              <!-- Row 3: Single Full-Width Submit Button -->
+              <div class="cart-footer-row3 pt-0.5">
                 <button class="btn-complete-sale w-full py-3 px-4 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white rounded-xl font-extrabold text-sm shadow-md shadow-sky-600/30 flex items-center justify-center gap-2 transition-all cursor-pointer" id="btn-complete-sale" disabled onclick="Billing.openSubmitPanel()">
                   <i class="fa-solid fa-paper-plane text-base"></i>
                   <span>Submit Bill</span>
