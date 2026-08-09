@@ -405,9 +405,15 @@ const Billing = {
     if (footQtyEl) footQtyEl.textContent = `${totalUnits} Unit${totalUnits === 1 ? '' : 's'}`;
     if (footAmountEl) footAmountEl.textContent = UI.formatCurrency(subtotal);
 
-    // Disable submit button if cart is empty
+    // Enable Submit button ONLY after tablet/medicine has been added to the cart
     if (completeBtn) {
-      completeBtn.disabled = this.cart.length === 0;
+      const hasItems = this.cart.length > 0;
+      completeBtn.disabled = !hasItems;
+      if (hasItems) {
+        completeBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+      } else {
+        completeBtn.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+      }
     }
   },
 
