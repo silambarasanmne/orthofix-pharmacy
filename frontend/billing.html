@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORTHOFIX SPECIALITY CLINIC — POS Billing</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <div id="app-container">
+    <!-- Sidebar Navigation with Hover Reveal & Collapse Toggle -->
+    <aside class="sidebar" id="main-sidebar">
+      <div class="sidebar-header">
+        <img src="/images/logo.png" alt="ORTHOFIX" class="brand-logo-img">
+        <div class="brand-info">
+          <h1>ORTHOFIX</h1>
+          <p>SPECIALITY CLINIC</p>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category">Main Menu</li>
+        <li>
+          <a href="/billing.html" class="nav-link active">
+            <span class="nav-icon">🧾</span> <span class="nav-text">Billing / POS</span>
+          </a>
+        </li>
+        <li>
+          <a href="/dashboard.html" class="nav-link">
+            <span class="nav-icon">📊</span> <span class="nav-text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/history.html" class="nav-link">
+            <span class="nav-icon">📜</span> <span class="nav-text">Billing History</span>
+          </a>
+        </li>
+
+        <li class="menu-category admin-only">Management</li>
+        <li class="admin-only">
+          <a href="/medicines.html" class="nav-link">
+            <span class="nav-icon">📦</span> <span class="nav-text">Medicine Inventory</span>
+          </a>
+        </li>
+        <li class="admin-only">
+          <a href="/reports.html" class="nav-link">
+            <span class="nav-icon">📈</span> <span class="nav-text">Sales Statements</span>
+          </a>
+        </li>
+        <li class="admin-only">
+          <a href="/users.html" class="nav-link">
+            <span class="nav-icon">👥</span> <span class="nav-text">Worker Management</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="avatar" id="user-avatar">U</div>
+          <div class="user-meta">
+            <h4 id="user-full-name">User Name</h4>
+            <span id="user-role-badge">Role</span>
+          </div>
+        </div>
+        <button class="btn-logout-icon" onclick="Auth.logout()" title="Logout">🚪</button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-title-wrapper">
+          <button class="btn-toggle-sidebar" title="Toggle Sidebar Pin / Hover Mode">☰</button>
+          <div class="header-title">
+            <h2>Retail Pharmacy POS Billing</h2>
+            <p>Search medicines, add items to current bill, set quantity via text box or selection dropdown, and checkout</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="session-chip">
+            <span>🟢 Active Session:</span>
+            <strong id="session-time">POS Ready</strong>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="Auth.logout()">Logout 🚪</button>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <div class="pos-grid">
+          
+          <!-- LEFT SIDE: MEDICINE SEARCH & SELECTION -->
+          <div class="pos-left">
+            <div class="search-card">
+              <div class="search-input-group">
+                <span class="search-icon-inside">🔍</span>
+                <input type="text" id="search-medicine-input" placeholder="Search medicine by Name, Generic name, Barcode, or Batch #..." autofocus>
+              </div>
+              <select id="filter-category" class="select-filter">
+                <option value="All">All Categories</option>
+              </select>
+              <select id="filter-status" class="select-filter">
+                <option value="">All Stock</option>
+                <option value="in_stock" selected>In Stock Only</option>
+                <option value="low_stock">Low Stock</option>
+                <option value="out_of_stock">Out of Stock</option>
+                <option value="expired">Expired</option>
+              </select>
+            </div>
+
+            <div class="medicine-results-container">
+              <div class="medicine-grid" id="medicine-grid">
+                <!-- Dynamic Medicine Cards Loaded via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT SIDE: CURRENT BILL CART PANEL WITH TEXT BOX & DROPDOWN QUANTITY SELECTOR -->
+          <div class="pos-right">
+            <div class="cart-header">
+              <h3>🧾 Current Bill Cart</h3>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="badge badge-instock" id="cart-count-badge">0 items</span>
+                <button class="btn btn-danger btn-sm" id="btn-clear-cart" title="Clear Cart">Clear</button>
+              </div>
+            </div>
+
+            <!-- MAXIMIZED MEDICINE ITEMS TABLE AREA (OCCUPIES 85%+ HEIGHT) -->
+            <div class="cart-items-wrapper">
+              <table class="cart-table">
+                <thead>
+                  <tr>
+                    <th style="width: 40%;">Medicine Name & Details</th>
+                    <th style="width: 15%; text-align: right;">Price</th>
+                    <th style="width: 25%; text-align: center;">Qty (Input / Select)</th>
+                    <th style="width: 14%; text-align: right;">Total</th>
+                    <th style="width: 6%; text-align: center;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="cart-table-body">
+                  <!-- Dynamic Cart Rows Loaded via JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- ULTRA-COMPACT MICRO FOOTER PANEL -->
+            <div class="cart-footer">
+              
+              <!-- Row 1: Compact Inline Customer Info & Discount Settings -->
+              <div class="cart-footer-row1">
+                <input type="text" id="customer-name" placeholder="Customer Name (Optional)">
+                <input type="tel" id="customer-phone" placeholder="Mobile Number (Optional)">
+                <div style="display: flex; align-items: center; gap: 0.25rem;">
+                  <select id="discount-type">
+                    <option value="fixed">Fixed (₹)</option>
+                    <option value="percent">Percent (%)</option>
+                  </select>
+                  <input type="number" id="discount-value" min="0" placeholder="Disc" step="any">
+                </div>
+              </div>
+
+              <!-- Row 2: Compact Inline Subtotal, Discount & Grand Total Summary Bar -->
+              <div class="cart-footer-row2">
+                <div class="summary-pill">
+                  <span>Subtotal:</span>
+                  <strong id="summary-subtotal" style="color: #0f172a;">₹0.00</strong>
+                </div>
+                <div class="summary-pill" style="color: #ef4444;">
+                  <span>Discount:</span>
+                  <strong id="summary-discount">-₹0.00</strong>
+                </div>
+                <div class="summary-pill" style="font-size: 0.9rem; font-weight: 800;">
+                  <span>Grand Total:</span>
+                  <span class="grand-total-amount" id="summary-grand-total" style="font-size: 1.1rem; color: #0284c7;">₹0.00</span>
+                </div>
+              </div>
+
+              <!-- Row 3: Slim Payment Method & Complete Checkout Bar -->
+              <div class="cart-footer-row3">
+                <div class="payment-method-selector">
+                  <button type="button" class="pay-btn selected" data-method="Cash">💵 Cash</button>
+                  <button type="button" class="pay-btn" data-method="UPI">📱 UPI</button>
+                  <button type="button" class="pay-btn" data-method="Card">💳 Card</button>
+                </div>
+
+                <!-- Complete Sale Action Button -->
+                <button class="btn-complete-sale" id="btn-complete-sale" disabled>
+                  <span>Complete Sale & Print Invoice</span> <span>➔</span>
+                </button>
+              </div>
+
+              <!-- Optional Cash Received Row (Slim) -->
+              <div class="cash-received-box" id="cash-payment-box" style="margin-top: 0.15rem;">
+                <div style="display: flex; align-items: center; gap: 0.35rem;">
+                  <label style="font-size: 0.72rem; font-weight: 700; color: #166534;">Received (₹):</label>
+                  <input type="number" id="amount-received" min="0" step="any" placeholder="0.00">
+                </div>
+                <div style="text-align: right; font-size: 0.75rem;">
+                  <span style="color: #64748b;">Change Owed:</span>
+                  <strong style="color: #10b981; font-weight: 800;" id="summary-change">₹0.00</strong>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- INVOICE PREVIEW MODAL -->
+  <div class="modal-overlay" id="modal-invoice">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3>🧾 Tax Invoice Receipt</h3>
+        <button class="btn-close-modal" onclick="UI.closeModal('modal-invoice')">✕</button>
+      </div>
+      <div class="modal-body" id="invoice-modal-content">
+        <!-- Rendered Printable Invoice HTML -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="UI.closeModal('modal-invoice')">Close</button>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Print Invoice</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/billing.js"></script>
+</body>
+</html>

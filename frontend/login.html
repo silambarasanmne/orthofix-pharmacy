@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORTHOFIX SPECIALITY CLINIC — Pharmacy POS Portal</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --login-font: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    
+    * {
+      font-family: var(--login-font);
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 15% 15%, #0f172a 0%, #1e293b 50%, #0284c7 160%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 1.5rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background glowing orbs */
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      pointer-events: none;
+      animation: floatOrb 12s ease-in-out infinite alternate;
+    }
+    .orb-1 {
+      width: 350px;
+      height: 350px;
+      background: #0284c7;
+      top: -50px;
+      left: -50px;
+    }
+    .orb-2 {
+      width: 400px;
+      height: 400px;
+      background: #0d9488;
+      bottom: -100px;
+      right: -100px;
+      animation-delay: -6s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 50px) scale(1.15); }
+    }
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 980px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2);
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      overflow: hidden;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Left Hero / Branding Panel */
+    .login-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 70%, #0369a1 100%);
+      color: #ffffff;
+      padding: 3.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-logo-img {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      object-fit: cover;
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.4);
+      background: #ffffff;
+      padding: 3px;
+    }
+
+    .brand-header h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .brand-header p {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-content h1 {
+      font-size: 1.95rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 0.85rem;
+      background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-content p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.86rem;
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+
+    .feature-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .hero-footer {
+      font-size: 0.78rem;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 1.25rem;
+    }
+
+    /* Right Login Form Panel */
+    .login-form-container {
+      padding: 3.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-header {
+      margin-bottom: 2rem;
+    }
+
+    .form-header h3 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .form-header p {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin-top: 0.25rem;
+    }
+
+    .input-field-group {
+      margin-bottom: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .input-field-group label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      color: #94a3b8;
+      font-size: 1rem;
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 2.75rem;
+      border-radius: 12px;
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: #0f172a;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .input-box input:focus {
+      border-color: #0284c7;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.12);
+    }
+
+    .input-box input:focus + .input-icon {
+      color: #0284c7;
+    }
+
+    .toggle-pwd-btn {
+      position: absolute;
+      right: 0.85rem;
+      background: none;
+      border: none;
+      color: #64748b;
+      font-size: 1.05rem;
+      cursor: pointer;
+      padding: 0.35rem;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .toggle-pwd-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 0.95rem;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(2, 132, 199, 0.45);
+      background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Responsive Adaptation for Mobile & Tablet */
+    @media (max-width: 900px) {
+      .login-wrapper {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+      }
+
+      .login-hero {
+        padding: 2.5rem 2rem;
+      }
+
+      .hero-content h1 {
+        font-size: 1.6rem;
+      }
+
+      .hero-content p, .feature-list {
+        display: none;
+      }
+
+      .login-form-container {
+        padding: 2.5rem 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glowing Background Orbs -->
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+
+  <!-- Login Card Container -->
+  <div class="login-wrapper">
+
+    <!-- Left Hero Section -->
+    <div class="login-hero">
+      <div class="hero-pattern"></div>
+      
+      <div class="brand-header">
+        <img src="/images/logo.png" alt="ORTHOFIX SPECIALITY CLINIC" class="brand-logo-img">
+        <div>
+          <h2>ORTHOFIX</h2>
+          <p>SPECIALITY CLINIC</p>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <h1>ORTHOFIX Speciality Pharmacy POS</h1>
+        <p>Ultra-fast point-of-sale billing, live stock validation, financial reporting, and inventory management for Orthofix Speciality Clinic.</p>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-check">✓</div>
+            <span>Lightning-Fast POS Medicine Search & Billing</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check">✓</div>
+            <span>Automated Stock Guard & Out-of-Stock Validation</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check">✓</div>
+            <span>Printable A4 & Thermal Tax Invoices</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check">✓</div>
+            <span>High-Speed Financial Statements & Analytics</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-footer">
+        <span>© 2026 ORTHOFIX SPECIALITY CLINIC</span>
+        <span>Version 3.0 Enterprise</span>
+      </div>
+    </div>
+
+    <!-- Right Login Form Section (No Admin/Manager Login Tabs) -->
+    <div class="login-form-container">
+      <div class="form-header">
+        <h3>Sign In to POS Portal</h3>
+        <p>Enter your username and password to authenticate</p>
+      </div>
+
+      <form id="login-form" onsubmit="handleLoginSubmit(event)">
+        <div class="input-field-group">
+          <label for="username">Username</label>
+          <div class="input-box">
+            <span class="input-icon">👤</span>
+            <input type="text" id="username" required placeholder="Enter username" autocomplete="username">
+          </div>
+        </div>
+
+        <div class="input-field-group">
+          <label for="password">Password</label>
+          <div class="input-box">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="password" required placeholder="Enter password" autocomplete="current-password">
+            <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility()" title="Show/Hide Password">👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span>Sign In to POS System</span>
+          <span>➔</span>
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    function togglePasswordVisibility() {
+      const pwdInput = document.getElementById('password');
+      if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+      } else {
+        pwdInput.type = 'password';
+      }
+    }
+
+    function handleLoginSubmit(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      Auth.login(username, password);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('reason') === 'inactivity') {
+        setTimeout(() => {
+          if (typeof UI !== 'undefined') {
+            UI.showToast('🔒 You were automatically logged out due to inactivity for security.', 'info');
+          }
+        }, 300);
+      }
+    });
+  </script>
+</body>
+</html>

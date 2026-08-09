@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MediCare Pharmacy — Redirecting...</title>
+  <script src="/js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = API.getToken();
+      const user = API.getUser();
+      if (token && user) {
+        if (user.role === 'Admin / Billing Manager') {
+          window.location.href = '/dashboard.html';
+        } else {
+          window.location.href = '/billing.html';
+        }
+      } else {
+        window.location.href = '/login.html';
+      }
+    });
+  </script>
+</head>
+<body>
+  <p style="font-family: sans-serif; text-align: center; margin-top: 3rem; color: #64748b;">
+    Redirecting to MediCare Pharmacy System...
+  </p>
+</body>
+</html>

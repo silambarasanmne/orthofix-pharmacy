@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  orthofix-app:
+    build: .
+    container_name: orthofix-pharmacy-app
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - JWT_SECRET=orthofix_secret_jwt_key_2026_super_secure
+    volumes:
+      - ./database:/app/database

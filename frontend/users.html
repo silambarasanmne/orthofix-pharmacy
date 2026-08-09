@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORTHOFIX SPECIALITY CLINIC — Worker Management</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <div id="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="main-sidebar">
+      <div class="sidebar-header">
+        <img src="/images/logo.png" alt="ORTHOFIX" class="brand-logo-img">
+        <div class="brand-info">
+          <h1>ORTHOFIX</h1>
+          <p>SPECIALITY CLINIC</p>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category">Main Menu</li>
+        <li>
+          <a href="/billing.html" class="nav-link">
+            <span class="nav-icon">🧾</span> <span class="nav-text">Billing / POS</span>
+          </a>
+        </li>
+        <li>
+          <a href="/dashboard.html" class="nav-link">
+            <span class="nav-icon">📊</span> <span class="nav-text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/history.html" class="nav-link">
+            <span class="nav-icon">📜</span> <span class="nav-text">Billing History</span>
+          </a>
+        </li>
+
+        <li class="menu-category admin-only">Management</li>
+        <li class="admin-only">
+          <a href="/medicines.html" class="nav-link">
+            <span class="nav-icon">📦</span> <span class="nav-text">Medicine Inventory</span>
+          </a>
+        </li>
+        <li class="admin-only">
+          <a href="/reports.html" class="nav-link">
+            <span class="nav-icon">📈</span> <span class="nav-text">Sales Statements</span>
+          </a>
+        </li>
+        <li class="admin-only">
+          <a href="/users.html" class="nav-link active">
+            <span class="nav-icon">👥</span> <span class="nav-text">Worker Management</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="avatar" id="user-avatar">U</div>
+          <div class="user-meta">
+            <h4 id="user-full-name">User Name</h4>
+            <span id="user-role-badge">Role</span>
+          </div>
+        </div>
+        <button class="btn-logout-icon" onclick="Auth.logout()" title="Logout">🚪</button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-title-wrapper">
+          <button class="btn-toggle-sidebar" title="Toggle Sidebar Pin / Hover Mode">☰</button>
+          <div class="header-title">
+            <h2>Worker & Billing Staff Management</h2>
+            <p>Create worker accounts, manage billing staff roles, toggle active status, and reset passwords</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" onclick="UserMgmt.openAddModal()">➕ Add Worker / User</button>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <div class="table-card">
+          <div class="table-header-bar">
+            <div class="table-header-title">
+              <h3>System Users Directory</h3>
+            </div>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>System Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body">
+              <!-- Loaded dynamically via Users.js -->
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT USER MODAL -->
+  <div class="modal-overlay" id="modal-user">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modal-user-title">➕ Add New Worker / User</h3>
+        <button class="btn-close-modal" onclick="UI.closeModal('modal-user')">✕</button>
+      </div>
+      <form id="form-user">
+        <div class="modal-body">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="user-username">Username *</label>
+            <input type="text" id="user-username" required placeholder="e.g. rahul_billing">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="user-fullname">Full Name *</label>
+            <input type="text" id="user-fullname" required placeholder="e.g. Rahul Sharma">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="user-email">Email Address</label>
+            <input type="email" id="user-email" placeholder="e.g. rahul@medicare.com">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="user-role">Role *</label>
+            <select id="user-role" class="select-filter" style="width: 100%;">
+              <option value="Billing Worker">Billing Worker</option>
+              <option value="Admin / Billing Manager">Admin / Billing Manager</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="user-password-group" style="margin-bottom: 1rem;">
+            <label for="user-password-input">Password *</label>
+            <input type="password" id="user-password-input" placeholder="Enter secure password">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="UI.closeModal('modal-user')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- RESET PASSWORD MODAL -->
+  <div class="modal-overlay" id="modal-reset-password">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>🔑 Reset User Password</h3>
+        <button class="btn-close-modal" onclick="UI.closeModal('modal-reset-password')">✕</button>
+      </div>
+      <form id="form-reset-password">
+        <div class="modal-body">
+          <p style="margin-bottom: 1rem; color: #64748b;">
+            Resetting password for: <strong id="reset-user-name" style="color: #0284c7;">-</strong>
+          </p>
+
+          <div class="form-group">
+            <label for="new-password-input">New Password *</label>
+            <input type="password" id="new-password-input" required placeholder="Enter new password">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="UI.closeModal('modal-reset-password')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/users.js"></script>
+</body>
+</html>

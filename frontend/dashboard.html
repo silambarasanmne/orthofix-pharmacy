@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORTHOFIX SPECIALITY CLINIC — Analytics Dashboard</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div id="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="main-sidebar">
+      <div class="sidebar-header">
+        <img src="/images/logo.png" alt="ORTHOFIX" class="brand-logo-img">
+        <div class="brand-info">
+          <h1>ORTHOFIX</h1>
+          <p>SPECIALITY CLINIC</p>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category">Main Menu</li>
+        <li>
+          <a href="/billing.html" class="nav-link">
+            <span class="nav-icon">🧾</span> <span class="nav-text">Billing / POS</span>
+          </a>
+        </li>
+        <li>
+          <a href="/dashboard.html" class="nav-link active">
+            <span class="nav-icon">📊</span> <span class="nav-text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/history.html" class="nav-link">
+            <span class="nav-icon">📜</span> <span class="nav-text">Billing History</span>
+          </a>
+        </li>
+
+        <li class="menu-category admin-only">Management</li>
+        <li class="admin-only">
+          <a href="/medicines.html" class="nav-link">
+            <span class="nav-icon">📦</span> <span class="nav-text">Medicine Inventory</span>
+          </a>
+        </li>
+        <li class="admin-only">
+          <a href="/reports.html" class="nav-link">
+            <span class="nav-icon">📈</span> <span class="nav-text">Sales Statements</span>
+          </a>
+        </li>
+        <li class="admin-only">
+          <a href="/users.html" class="nav-link">
+            <span class="nav-icon">👥</span> <span class="nav-text">Worker Management</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="avatar" id="user-avatar">U</div>
+          <div class="user-meta">
+            <h4 id="user-full-name">User Name</h4>
+            <span id="user-role-badge">Role</span>
+          </div>
+        </div>
+        <button class="btn-logout-icon" onclick="Auth.logout()" title="Logout">🚪</button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-title-wrapper">
+          <button class="btn-toggle-sidebar" title="Toggle Sidebar Pin / Hover Mode">☰</button>
+          <div class="header-title">
+            <h2>Pharmacy Analytics & Revenue Dashboard</h2>
+            <p>Real-time revenue monitoring, stock alerts, and sales performance</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <a href="/billing.html" class="btn btn-primary">➕ Quick New Bill</a>
+        </div>
+      </header>
+
+      <main class="content-body">
+        
+        <!-- REVENUE CARDS -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon icon-blue">💰</div>
+            <div class="stat-info">
+              <h3>Today's Revenue</h3>
+              <div class="stat-value" id="stat-today-revenue">₹0.00</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-teal">📅</div>
+            <div class="stat-info">
+              <h3>This Month's Revenue</h3>
+              <div class="stat-value" id="stat-month-revenue">₹0.00</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-green">🏆</div>
+            <div class="stat-info">
+              <h3>This Year's Revenue</h3>
+              <div class="stat-value" id="stat-year-revenue">₹0.00</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INVENTORY ALERTS CARDS -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon icon-blue">📦</div>
+            <div class="stat-info">
+              <h3>Total Medicines</h3>
+              <div class="stat-value" id="stat-total-medicines">0</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-amber">🟠</div>
+            <div class="stat-info">
+              <h3>Low Stock Alert</h3>
+              <div class="stat-value" id="stat-low-stock">0</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-red">🔴</div>
+            <div class="stat-info">
+              <h3>Out of Stock</h3>
+              <div class="stat-value" id="stat-out-stock">0</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-amber">⏳</div>
+            <div class="stat-info">
+              <h3>Expiring Soon (&lt;90 days)</h3>
+              <div class="stat-value" id="stat-expiring-soon">0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHARTS GRID (ADMIN ANALYTICS) -->
+        <div class="charts-grid admin-only">
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>📈 Daily Sales Trend (Past 7 Days)</h3>
+            </div>
+            <canvas id="chart-daily-sales" height="130"></canvas>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>💳 Payment Method Distribution</h3>
+            </div>
+            <canvas id="chart-payment-methods" height="130"></canvas>
+          </div>
+        </div>
+
+        <div class="charts-grid admin-only">
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>📊 Monthly Revenue Comparison</h3>
+            </div>
+            <canvas id="chart-monthly-sales" height="130"></canvas>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>⭐ Top 5 Selling Medicines</h3>
+            </div>
+            <canvas id="chart-top-selling" height="130"></canvas>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

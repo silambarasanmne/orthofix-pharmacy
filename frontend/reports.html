@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORTHOFIX SPECIALITY CLINIC — Financial Statements</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <div id="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="main-sidebar">
+      <div class="sidebar-header">
+        <img src="/images/logo.png" alt="ORTHOFIX" class="brand-logo-img">
+        <div class="brand-info">
+          <h1>ORTHOFIX</h1>
+          <p>SPECIALITY CLINIC</p>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category">Main Menu</li>
+        <li>
+          <a href="/billing.html" class="nav-link">
+            <span class="nav-icon">🧾</span> <span class="nav-text">Billing / POS</span>
+          </a>
+        </li>
+        <li>
+          <a href="/dashboard.html" class="nav-link">
+            <span class="nav-icon">📊</span> <span class="nav-text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/history.html" class="nav-link">
+            <span class="nav-icon">📜</span> <span class="nav-text">Billing History</span>
+          </a>
+        </li>
+
+        <li class="menu-category admin-only">Management</li>
+        <li class="admin-only">
+          <a href="/medicines.html" class="nav-link">
+            <span class="nav-icon">📦</span> <span class="nav-text">Medicine Inventory</span>
+          </a>
+        </li>
+        <li class="admin-only">
+          <a href="/reports.html" class="nav-link active">
+            <span class="nav-icon">📈</span> <span class="nav-text">Sales Statements</span>
+          </a>
+        </li>
+        <li class="admin-only">
+          <a href="/users.html" class="nav-link">
+            <span class="nav-icon">👥</span> <span class="nav-text">Worker Management</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="avatar" id="user-avatar">U</div>
+          <div class="user-meta">
+            <h4 id="user-full-name">User Name</h4>
+            <span id="user-role-badge">Role</span>
+          </div>
+        </div>
+        <button class="btn-logout-icon" onclick="Auth.logout()" title="Logout">🚪</button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-title-wrapper">
+          <button class="btn-toggle-sidebar" title="Toggle Sidebar Pin / Hover Mode">☰</button>
+          <div class="header-title">
+            <h2>Sales Reports & Financial Statements</h2>
+            <p>Date-wise detailed sales statements, monthly rollup statements, and Excel downloads</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary" onclick="Reports.exportSalesExcel()">📤 Export Sales to Excel</button>
+        </div>
+      </header>
+
+      <main class="content-body">
+        
+        <!-- SECTION 1: DATE-WISE SALES STATEMENT -->
+        <div class="table-card" style="margin-bottom: 2rem;">
+          <div class="table-header-bar">
+            <div class="table-header-title">
+              <h3>📅 Date-Wise Sales Statement</h3>
+            </div>
+            <div class="table-controls">
+              <label style="font-size: 0.8rem; font-weight: 600;">From:</label>
+              <input type="date" id="statement-from-date" class="select-filter">
+              <label style="font-size: 0.8rem; font-weight: 600;">To:</label>
+              <input type="date" id="statement-to-date" class="select-filter">
+              <button class="btn btn-primary btn-sm" onclick="Reports.loadDateWiseStatement()">Filter Statement</button>
+            </div>
+          </div>
+
+          <!-- SUMMARY METRICS BAR -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; padding: 1rem 1.25rem; background: #f8fafc; border-bottom: 1px solid var(--border-color);">
+            <div>
+              <span style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Total Bills</span>
+              <div style="font-size: 1.25rem; font-weight: 800;" id="stmt-total-bills">0</div>
+            </div>
+            <div>
+              <span style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Gross Sales</span>
+              <div style="font-size: 1.25rem; font-weight: 800;" id="stmt-gross-sales">₹0.00</div>
+            </div>
+            <div>
+              <span style="font-size: 0.75rem; color: #ef4444; font-weight: 700; text-transform: uppercase;">Total Discounts</span>
+              <div style="font-size: 1.25rem; font-weight: 800; color: #ef4444;" id="stmt-total-discounts">₹0.00</div>
+            </div>
+            <div>
+              <span style="font-size: 0.75rem; color: #10b981; font-weight: 700; text-transform: uppercase;">Net Revenue</span>
+              <div style="font-size: 1.25rem; font-weight: 800; color: #0284c7;" id="stmt-net-revenue">₹0.00</div>
+            </div>
+            <div>
+              <span style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Avg Bill Value</span>
+              <div style="font-size: 1.25rem; font-weight: 800;" id="stmt-avg-bill">₹0.00</div>
+            </div>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Bill Number</th>
+                <th>Date & Time</th>
+                <th>Customer</th>
+                <th>Subtotal</th>
+                <th>Discount</th>
+                <th>Final Amount</th>
+                <th>Payment</th>
+                <th>Billing Worker</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="date-wise-table-body">
+              <!-- Loaded dynamically via Reports.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SECTION 2: YEAR-WISE MONTHLY STATEMENT -->
+        <div class="table-card">
+          <div class="table-header-bar">
+            <div class="table-header-title">
+              <h3>🗓️ Year-Wise Sales Statement Summary</h3>
+            </div>
+            <div class="table-controls">
+              <label style="font-size: 0.8rem; font-weight: 600;">Select Year:</label>
+              <select id="statement-year" class="select-filter" onchange="Reports.loadYearlyStatement()">
+                <option value="2026" selected>2026</option>
+                <option value="2025">2025</option>
+              </select>
+            </div>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th style="text-align: center;">Total Bills</th>
+                <th style="text-align: right;">Gross Sales</th>
+                <th style="text-align: right;">Total Discounts</th>
+                <th style="text-align: right;">Net Revenue</th>
+              </tr>
+            </thead>
+            <tbody id="yearly-table-body">
+              <!-- Loaded dynamically via Reports.js -->
+            </tbody>
+            <tfoot id="yearly-table-foot">
+              <!-- Total summary row -->
+            </tfoot>
+          </table>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- INVOICE PREVIEW MODAL -->
+  <div class="modal-overlay" id="modal-invoice">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3>🧾 Tax Invoice Receipt</h3>
+        <button class="btn-close-modal" onclick="UI.closeModal('modal-invoice')">✕</button>
+      </div>
+      <div class="modal-body" id="invoice-modal-content">
+        <!-- Rendered Invoice HTML -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="UI.closeModal('modal-invoice')">Close</button>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Print Invoice</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/reports.js"></script>
+</body>
+</html>

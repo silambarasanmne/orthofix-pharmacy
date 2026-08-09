@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORTHOFIX SPECIALITY CLINIC — Medicine Inventory</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <div id="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="main-sidebar">
+      <div class="sidebar-header">
+        <img src="/images/logo.png" alt="ORTHOFIX" class="brand-logo-img">
+        <div class="brand-info">
+          <h1>ORTHOFIX</h1>
+          <p>SPECIALITY CLINIC</p>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category">Main Menu</li>
+        <li>
+          <a href="/billing.html" class="nav-link">
+            <span class="nav-icon">🧾</span> <span class="nav-text">Billing / POS</span>
+          </a>
+        </li>
+        <li>
+          <a href="/dashboard.html" class="nav-link">
+            <span class="nav-icon">📊</span> <span class="nav-text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/history.html" class="nav-link">
+            <span class="nav-icon">📜</span> <span class="nav-text">Billing History</span>
+          </a>
+        </li>
+
+        <li class="menu-category admin-only">Management</li>
+        <li class="admin-only">
+          <a href="/medicines.html" class="nav-link active">
+            <span class="nav-icon">📦</span> <span class="nav-text">Medicine Inventory</span>
+          </a>
+        </li>
+        <li class="admin-only">
+          <a href="/reports.html" class="nav-link">
+            <span class="nav-icon">📈</span> <span class="nav-text">Sales Statements</span>
+          </a>
+        </li>
+        <li class="admin-only">
+          <a href="/users.html" class="nav-link">
+            <span class="nav-icon">👥</span> <span class="nav-text">Worker Management</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="avatar" id="user-avatar">U</div>
+          <div class="user-meta">
+            <h4 id="user-full-name">User Name</h4>
+            <span id="user-role-badge">Role</span>
+          </div>
+        </div>
+        <button class="btn-logout-icon" onclick="Auth.logout()" title="Logout">🚪</button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-title-wrapper">
+          <button class="btn-toggle-sidebar" title="Toggle Sidebar Pin / Hover Mode">☰</button>
+          <div class="header-title">
+            <h2>Medicine & Inventory Management</h2>
+            <p>Manage medicine database, stock adjustments, batch info, and Excel import/export</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary" onclick="Medicines.openImportModal()">📥 Import Excel</button>
+          <button class="btn btn-primary" onclick="Medicines.openAddModal()">➕ Add Medicine</button>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <div class="table-card">
+          <div class="table-header-bar">
+            <div class="table-header-title">
+              <h3>Pharmacy Stock Register</h3>
+            </div>
+            <div class="table-controls">
+              <input type="text" id="med-search-input" class="select-filter" placeholder="Search medicine, generic, barcode..." style="width: 250px;">
+              <select id="med-filter-category" class="select-filter">
+                <option value="All">All Categories</option>
+              </select>
+              <select id="med-filter-status" class="select-filter">
+                <option value="">All Statuses</option>
+                <option value="in_stock">In Stock</option>
+                <option value="low_stock">Low Stock</option>
+                <option value="out_of_stock">Out of Stock</option>
+                <option value="expiring_30">Expiring in 30 Days</option>
+                <option value="expiring_90">Expiring in 90 Days</option>
+                <option value="expired">Expired</option>
+              </select>
+            </div>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Medicine Name & Generic</th>
+                <th>Category</th>
+                <th>Batch #</th>
+                <th>Expiry</th>
+                <th>Purchase Price</th>
+                <th>Selling Price</th>
+                <th>Current Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="medicines-table-body">
+              <!-- Loaded dynamically via Medicines.js -->
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT MEDICINE MODAL -->
+  <div class="modal-overlay" id="modal-medicine">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3 id="modal-med-title">➕ Add New Medicine</h3>
+        <button class="btn-close-modal" onclick="UI.closeModal('modal-medicine')">✕</button>
+      </div>
+      <form id="form-medicine">
+        <div class="modal-body">
+          <input type="hidden" id="med-id-hidden">
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="med-name">Medicine Name *</label>
+              <input type="text" id="med-name" required placeholder="e.g. Paracetamol 500mg">
+            </div>
+            <div class="form-group">
+              <label for="med-generic">Generic Name *</label>
+              <input type="text" id="med-generic" required placeholder="e.g. Acetaminophen">
+            </div>
+            <div class="form-group">
+              <label for="med-category">Category *</label>
+              <input type="text" id="med-category" required placeholder="e.g. Analgesics, Antibiotics">
+            </div>
+            <div class="form-group">
+              <label for="med-manufacturer">Manufacturer</label>
+              <input type="text" id="med-manufacturer" placeholder="e.g. Cipla Ltd">
+            </div>
+            <div class="form-group">
+              <label for="med-batch">Batch Number *</label>
+              <input type="text" id="med-batch" required placeholder="e.g. PCM2026A">
+            </div>
+            <div class="form-group">
+              <label for="med-expiry">Expiry Date (YYYY-MM-DD) *</label>
+              <input type="date" id="med-expiry" required>
+            </div>
+            <div class="form-group">
+              <label for="med-pprice">Purchase Price (₹) *</label>
+              <input type="number" id="med-pprice" min="0" step="any" required placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label for="med-sprice">Selling Price (₹) *</label>
+              <input type="number" id="med-sprice" min="0" step="any" required placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label for="med-stock">Current Stock *</label>
+              <input type="number" id="med-stock" min="0" required placeholder="0">
+            </div>
+            <div class="form-group">
+              <label for="med-minstock">Minimum Stock Alert Level *</label>
+              <input type="number" id="med-minstock" min="0" required placeholder="10">
+            </div>
+            <div class="form-group">
+              <label for="med-gst">GST Percentage (%)</label>
+              <input type="number" id="med-gst" min="0" step="any" value="12.0">
+            </div>
+            <div class="form-group">
+              <label for="med-barcode">Barcode / EAN (Optional)</label>
+              <input type="text" id="med-barcode" placeholder="e.g. 8901234567890">
+            </div>
+            <div class="form-group full-width">
+              <label for="med-desc">Description / Instructions</label>
+              <textarea id="med-desc" rows="2" placeholder="Usage details or notes..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="UI.closeModal('modal-medicine')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Medicine</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- STOCK ADJUSTMENT MODAL -->
+  <div class="modal-overlay" id="modal-stock">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>📦 Adjust Medicine Stock</h3>
+        <button class="btn-close-modal" onclick="UI.closeModal('modal-stock')">✕</button>
+      </div>
+      <form id="form-stock-adjust">
+        <div class="modal-body">
+          <input type="hidden" id="stock-med-id">
+          <div style="margin-bottom: 1rem; background: #f8fafc; padding: 0.85rem; border-radius: var(--radius-sm);">
+            <p>Medicine: <strong id="stock-med-name" style="color: #0284c7;">-</strong></p>
+            <p>Current Stock: <strong id="stock-med-current" style="font-size: 1.1rem;">0</strong></p>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="stock-change-qty">Stock Change Quantity (+ to Add, - to Reduce) *</label>
+            <input type="number" id="stock-change-qty" required placeholder="e.g. 50 or -10">
+          </div>
+
+          <div class="form-group">
+            <label for="stock-reason">Reason for Adjustment *</label>
+            <input type="text" id="stock-reason" required placeholder="e.g. Restock from supplier, Damaged stock removal">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="UI.closeModal('modal-stock')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Stock</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- EXCEL IMPORT MODAL -->
+  <div class="modal-overlay" id="modal-import-excel">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3>📥 Import Medicines from Excel (.xlsx)</h3>
+        <button class="btn-close-modal" onclick="UI.closeModal('modal-import-excel')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="background-color: #e0f2fe; padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h4 style="color: #0369a1; font-size: 0.95rem;">Step 1: Download Standard Template</h4>
+            <p style="font-size: 0.8rem; color: #0284c7;">Use our official formatted Excel template with pre-configured column headers.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="Medicines.downloadTemplate()">📄 Download Template</button>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label style="font-weight: 700;">Step 2: Select or Drag & Drop Excel File</label>
+          <input type="file" id="excel-file-input" accept=".xlsx, .xls" style="padding: 0.75rem; border: 2px dashed #0284c7; background: #f8fafc; border-radius: var(--radius-md); cursor: pointer;">
+        </div>
+
+        <!-- Import Preview Section -->
+        <div id="import-preview-section" style="display: none; margin-top: 1.5rem;">
+          <h4 style="font-weight: 700; margin-bottom: 0.75rem;">Step 3: Excel Row Validation Preview</h4>
+          
+          <div id="import-summary-counts" style="margin-bottom: 0.75rem;"></div>
+
+          <div style="max-height: 250px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
+            <table class="data-table" style="font-size: 0.8rem;">
+              <thead>
+                <tr>
+                  <th>Row</th>
+                  <th>Medicine</th>
+                  <th>Generic</th>
+                  <th>Category</th>
+                  <th>Batch</th>
+                  <th>Expiry</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="import-preview-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="UI.closeModal('modal-import-excel')">Cancel</button>
+        <button class="btn btn-success" id="btn-confirm-import" onclick="Medicines.confirmImport()" disabled>
+          ✅ Confirm & Import Valid Medicines
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/medicines.js"></script>
+</body>
+</html>
