@@ -116,21 +116,22 @@
       </header>
 
       <main class="content-body flex-grow p-4 overflow-hidden">
-        <div class="pos-grid grid grid-cols-1 lg:grid-cols-12 gap-4 h-full">
+        <!-- 2-SECTION SPLIT: LEFT SIDE (MEDICINE SEARCH) | RIGHT SIDE (CURRENT BILL CART) -->
+        <div class="pos-grid grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
           
-          <!-- LEFT SIDE: MEDICINE SEARCH & SELECTION (5 COLS) -->
-          <div class="pos-left lg:col-span-5 flex flex-col gap-3 h-full overflow-hidden">
+          <!-- SECTION 1 (LEFT): MEDICINE SEARCH & SELECTION -->
+          <div class="pos-left flex flex-col gap-3 h-full overflow-hidden">
             <div class="search-card bg-white border border-slate-200/80 rounded-2xl p-3 shadow-sm flex items-center gap-2">
               <div class="search-input-group flex-grow relative">
                 <span class="search-icon-inside absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
                   <i class="fa-solid fa-magnifying-glass"></i>
                 </span>
-                <input type="text" id="search-medicine-input" placeholder="Search by Name, Generic, Batch #..." autofocus class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10 outline-none transition-all">
+                <input type="text" id="search-medicine-input" placeholder="Search by Name, Generic, Batch #..." autofocus class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10 outline-none transition-all">
               </div>
-              <select id="filter-category" class="select-filter bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-700 outline-none cursor-pointer">
+              <select id="filter-category" class="select-filter bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-bold text-slate-700 outline-none cursor-pointer">
                 <option value="All">All Categories</option>
               </select>
-              <select id="filter-status" class="select-filter bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-700 outline-none cursor-pointer">
+              <select id="filter-status" class="select-filter bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-bold text-slate-700 outline-none cursor-pointer">
                 <option value="">All Stock</option>
                 <option value="in_stock" selected>In Stock Only</option>
                 <option value="low_stock">Low Stock</option>
@@ -146,8 +147,8 @@
             </div>
           </div>
 
-          <!-- RIGHT SIDE: CURRENT BILL CART PANEL (7 COLS - SPACIOUS PARTITION) -->
-          <div class="pos-right lg:col-span-7 bg-white border border-slate-200/80 rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
+          <!-- SECTION 2 (RIGHT): CURRENT BILL CART PANEL -->
+          <div class="pos-right bg-white border border-slate-200/80 rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
             <div class="cart-header px-4 py-3 border-b border-slate-200/80 bg-slate-50/80 flex justify-between items-center flex-shrink-0">
               <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
                 <i class="fa-solid fa-cart-shopping text-sky-600"></i> Current Bill Cart
