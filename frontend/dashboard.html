@@ -4,177 +4,228 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ORTHOFIX SPECIALITY CLINIC — Analytics Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              900: '#0c4a6e',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-  <div id="app-container">
+  <div id="app-container" class="flex w-screen h-screen overflow-hidden relative">
     <!-- Sidebar Navigation -->
-    <aside class="sidebar" id="main-sidebar">
-      <div class="sidebar-header">
-        <img src="/images/logo.png" alt="ORTHOFIX" class="brand-logo-img">
+    <aside class="sidebar bg-slate-900 text-slate-100 flex flex-col flex-shrink-0 z-50 transition-all duration-300 relative border-r border-slate-800" id="main-sidebar">
+      <div class="sidebar-header p-5 flex items-center gap-3 border-b border-slate-800/80 whitespace-nowrap">
+        <img src="/images/logo.png" alt="ORTHOFIX" class="w-10 h-10 rounded-xl object-cover shadow-md shadow-sky-500/30 bg-white p-1 flex-shrink-0">
         <div class="brand-info">
-          <h1>ORTHOFIX</h1>
-          <p>SPECIALITY CLINIC</p>
+          <h1 class="text-base font-extrabold tracking-tight text-white leading-tight">ORTHOFIX</h1>
+          <p class="text-xs font-semibold text-sky-400">SPECIALITY CLINIC</p>
         </div>
       </div>
 
-      <ul class="sidebar-menu">
-        <li class="menu-category">Main Menu</li>
+      <ul class="sidebar-menu list-none p-3 flex-grow flex flex-col gap-1 overflow-y-auto whitespace-nowrap">
+        <li class="menu-category text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2">Main Menu</li>
         <li>
-          <a href="/billing.html" class="nav-link">
-            <span class="nav-icon">🧾</span> <span class="nav-text">Billing / POS</span>
+          <a href="/billing.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-sky-400"><i class="fa-solid fa-receipt"></i></span> <span class="nav-text">Billing / POS</span>
           </a>
         </li>
         <li>
-          <a href="/dashboard.html" class="nav-link active">
-            <span class="nav-icon">📊</span> <span class="nav-text">Dashboard</span>
+          <a href="/dashboard.html" class="nav-link active flex items-center gap-3 px-3 py-2.5 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 transition-all">
+            <span class="nav-icon text-lg w-6 text-center"><i class="fa-solid fa-chart-line"></i></span> <span class="nav-text">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="/history.html" class="nav-link">
-            <span class="nav-icon">📜</span> <span class="nav-text">Billing History</span>
+          <a href="/history.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-teal-400"><i class="fa-solid fa-clock-rotate-left"></i></span> <span class="nav-text">Billing History</span>
           </a>
         </li>
 
-        <li class="menu-category admin-only">Management</li>
+        <li class="menu-category admin-only text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2 mt-2">Management</li>
         <li class="admin-only">
-          <a href="/medicines.html" class="nav-link">
-            <span class="nav-icon">📦</span> <span class="nav-text">Medicine Inventory</span>
+          <a href="/medicines.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-indigo-400"><i class="fa-solid fa-pills"></i></span> <span class="nav-text">Medicine Inventory</span>
           </a>
         </li>
         <li class="admin-only">
-          <a href="/reports.html" class="nav-link">
-            <span class="nav-icon">📈</span> <span class="nav-text">Sales Statements</span>
+          <a href="/reports.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-emerald-400"><i class="fa-solid fa-file-invoice-dollar"></i></span> <span class="nav-text">Sales Statements</span>
           </a>
         </li>
         <li class="admin-only">
-          <a href="/users.html" class="nav-link">
-            <span class="nav-icon">👥</span> <span class="nav-text">Worker Management</span>
+          <a href="/users.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-amber-400"><i class="fa-solid fa-users-gear"></i></span> <span class="nav-text">Worker Management</span>
           </a>
         </li>
       </ul>
 
-      <div class="sidebar-footer">
-        <div class="user-badge">
-          <div class="avatar" id="user-avatar">U</div>
+      <div class="sidebar-footer p-3.5 border-t border-slate-800/80 bg-slate-950/60 flex items-center justify-between whitespace-nowrap">
+        <div class="user-badge flex items-center gap-3">
+          <div class="avatar w-9 h-9 rounded-full bg-gradient-to-tr from-sky-500 to-sky-400 text-white font-extrabold text-xs flex items-center justify-center shadow-md shadow-sky-500/20 flex-shrink-0" id="user-avatar">U</div>
           <div class="user-meta">
-            <h4 id="user-full-name">User Name</h4>
-            <span id="user-role-badge">Role</span>
+            <h4 class="text-xs font-bold text-slate-100 leading-tight" id="user-full-name">User Name</h4>
+            <span class="text-[10px] font-semibold text-sky-400" id="user-role-badge">Role</span>
           </div>
         </div>
-        <button class="btn-logout-icon" onclick="Auth.logout()" title="Logout">🚪</button>
+        <button class="btn-logout-icon text-slate-400 hover:text-rose-400 hover:bg-rose-500/15 p-2 rounded-lg transition-colors cursor-pointer" onclick="Auth.logout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
       </div>
     </aside>
 
     <!-- Main Wrapper -->
-    <div class="main-wrapper">
-      <header class="top-header">
-        <div class="header-title-wrapper">
-          <button class="btn-toggle-sidebar" title="Toggle Sidebar Pin / Hover Mode">☰</button>
+    <div class="main-wrapper flex-grow flex flex-col h-screen overflow-hidden bg-slate-50">
+      <header class="top-header h-16 bg-white border-b border-slate-200/80 px-6 flex items-center justify-between flex-shrink-0 shadow-sm">
+        <div class="header-title-wrapper flex items-center gap-3">
+          <button class="btn-toggle-sidebar w-9 h-9 bg-slate-100 hover:bg-sky-50 text-slate-700 hover:text-sky-600 border border-slate-200 rounded-xl flex items-center justify-center cursor-pointer transition-colors" title="Toggle Sidebar Pin / Hover Mode">
+            <i class="fa-solid fa-bars text-sm"></i>
+          </button>
           <div class="header-title">
-            <h2>Pharmacy Analytics & Revenue Dashboard</h2>
-            <p>Real-time revenue monitoring, stock alerts, and sales performance</p>
+            <h2 class="text-base font-extrabold text-slate-900 tracking-tight">Pharmacy Analytics & Revenue Dashboard</h2>
+            <p class="text-xs text-slate-500 font-medium">Real-time revenue monitoring, stock alerts, and sales performance</p>
           </div>
         </div>
-        <div class="header-actions">
-          <a href="/billing.html" class="btn btn-primary">➕ Quick New Bill</a>
+        <div class="header-actions flex items-center gap-3">
+          <a href="/billing.html" class="btn btn-primary px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl text-xs font-bold shadow-md shadow-sky-600/25 flex items-center gap-2 transition-all">
+            <i class="fa-solid fa-plus"></i> Quick New Bill
+          </a>
         </div>
       </header>
 
-      <main class="content-body">
+      <main class="content-body flex-grow p-6 overflow-y-auto space-y-6">
         
         <!-- REVENUE CARDS -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon icon-blue">💰</div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="stat-card bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl flex-shrink-0 shadow-inner">
+              <i class="fa-solid fa-wallet"></i>
+            </div>
             <div class="stat-info">
-              <h3>Today's Revenue</h3>
-              <div class="stat-value" id="stat-today-revenue">₹0.00</div>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Today's Revenue</h3>
+              <div class="stat-value text-2xl font-extrabold text-slate-900 mt-0.5" id="stat-today-revenue">₹0.00</div>
             </div>
           </div>
 
-          <div class="stat-card">
-            <div class="stat-icon icon-teal">📅</div>
+          <div class="stat-card bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl flex-shrink-0 shadow-inner">
+              <i class="fa-solid fa-calendar-check"></i>
+            </div>
             <div class="stat-info">
-              <h3>This Month's Revenue</h3>
-              <div class="stat-value" id="stat-month-revenue">₹0.00</div>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">This Month's Revenue</h3>
+              <div class="stat-value text-2xl font-extrabold text-slate-900 mt-0.5" id="stat-month-revenue">₹0.00</div>
             </div>
           </div>
 
-          <div class="stat-card">
-            <div class="stat-icon icon-green">🏆</div>
+          <div class="stat-card bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl flex-shrink-0 shadow-inner">
+              <i class="fa-solid fa-trophy"></i>
+            </div>
             <div class="stat-info">
-              <h3>This Year's Revenue</h3>
-              <div class="stat-value" id="stat-year-revenue">₹0.00</div>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">This Year's Revenue</h3>
+              <div class="stat-value text-2xl font-extrabold text-slate-900 mt-0.5" id="stat-year-revenue">₹0.00</div>
             </div>
           </div>
         </div>
 
         <!-- INVENTORY ALERTS CARDS -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon icon-blue">📦</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="stat-card bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl flex-shrink-0">
+              <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
             <div class="stat-info">
-              <h3>Total Medicines</h3>
-              <div class="stat-value" id="stat-total-medicines">0</div>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Medicines</h3>
+              <div class="stat-value text-2xl font-extrabold text-slate-900 mt-0.5" id="stat-total-medicines">0</div>
             </div>
           </div>
 
-          <div class="stat-card">
-            <div class="stat-icon icon-amber">🟠</div>
+          <div class="stat-card bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl flex-shrink-0">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
             <div class="stat-info">
-              <h3>Low Stock Alert</h3>
-              <div class="stat-value" id="stat-low-stock">0</div>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Low Stock Alert</h3>
+              <div class="stat-value text-2xl font-extrabold text-slate-900 mt-0.5" id="stat-low-stock">0</div>
             </div>
           </div>
 
-          <div class="stat-card">
-            <div class="stat-icon icon-red">🔴</div>
+          <div class="stat-card bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl flex-shrink-0">
+              <i class="fa-solid fa-circle-xmark"></i>
+            </div>
             <div class="stat-info">
-              <h3>Out of Stock</h3>
-              <div class="stat-value" id="stat-out-stock">0</div>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Out of Stock</h3>
+              <div class="stat-value text-2xl font-extrabold text-slate-900 mt-0.5" id="stat-out-stock">0</div>
             </div>
           </div>
 
-          <div class="stat-card">
-            <div class="stat-icon icon-amber">⏳</div>
+          <div class="stat-card bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-xl flex-shrink-0">
+              <i class="fa-solid fa-hourglass-half"></i>
+            </div>
             <div class="stat-info">
-              <h3>Expiring Soon (&lt;90 days)</h3>
-              <div class="stat-value" id="stat-expiring-soon">0</div>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Expiring Soon (&lt;90 days)</h3>
+              <div class="stat-value text-2xl font-extrabold text-slate-900 mt-0.5" id="stat-expiring-soon">0</div>
             </div>
           </div>
         </div>
 
         <!-- CHARTS GRID (ADMIN ANALYTICS) -->
-        <div class="charts-grid admin-only">
-          <div class="chart-card">
-            <div class="chart-header">
-              <h3>📈 Daily Sales Trend (Past 7 Days)</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 admin-only">
+          <div class="lg:col-span-2 bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+            <div class="chart-header flex justify-between items-center mb-4">
+              <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-chart-area text-sky-600"></i> Daily Sales Trend (Past 7 Days)
+              </h3>
             </div>
             <canvas id="chart-daily-sales" height="130"></canvas>
           </div>
 
-          <div class="chart-card">
-            <div class="chart-header">
-              <h3>💳 Payment Method Distribution</h3>
+          <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+            <div class="chart-header flex justify-between items-center mb-4">
+              <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-pie-chart text-teal-600"></i> Payment Methods
+              </h3>
             </div>
             <canvas id="chart-payment-methods" height="130"></canvas>
           </div>
         </div>
 
-        <div class="charts-grid admin-only">
-          <div class="chart-card">
-            <div class="chart-header">
-              <h3>📊 Monthly Revenue Comparison</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 admin-only">
+          <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+            <div class="chart-header flex justify-between items-center mb-4">
+              <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-chart-column text-indigo-600"></i> Monthly Revenue Comparison
+              </h3>
             </div>
             <canvas id="chart-monthly-sales" height="130"></canvas>
           </div>
 
-          <div class="chart-card">
-            <div class="chart-header">
-              <h3>⭐ Top 5 Selling Medicines</h3>
+          <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+            <div class="chart-header flex justify-between items-center mb-4">
+              <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-award text-amber-500"></i> Top 5 Selling Medicines
+              </h3>
             </div>
             <canvas id="chart-top-selling" height="130"></canvas>
           </div>

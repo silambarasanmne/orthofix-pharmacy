@@ -4,102 +4,133 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ORTHOFIX SPECIALITY CLINIC — POS Billing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              900: '#0c4a6e',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-  <div id="app-container">
-    <!-- Sidebar Navigation with Hover Reveal & Collapse Toggle -->
-    <aside class="sidebar" id="main-sidebar">
-      <div class="sidebar-header">
-        <img src="/images/logo.png" alt="ORTHOFIX" class="brand-logo-img">
+  <div id="app-container" class="flex w-screen h-screen overflow-hidden relative">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar bg-slate-900 text-slate-100 flex flex-col flex-shrink-0 z-50 transition-all duration-300 relative border-r border-slate-800" id="main-sidebar">
+      <div class="sidebar-header p-5 flex items-center gap-3 border-b border-slate-800/80 whitespace-nowrap">
+        <img src="/images/logo.png" alt="ORTHOFIX" class="w-10 h-10 rounded-xl object-cover shadow-md shadow-sky-500/30 bg-white p-1 flex-shrink-0">
         <div class="brand-info">
-          <h1>ORTHOFIX</h1>
-          <p>SPECIALITY CLINIC</p>
+          <h1 class="text-base font-extrabold tracking-tight text-white leading-tight">ORTHOFIX</h1>
+          <p class="text-xs font-semibold text-sky-400">SPECIALITY CLINIC</p>
         </div>
       </div>
 
-      <ul class="sidebar-menu">
-        <li class="menu-category">Main Menu</li>
+      <ul class="sidebar-menu list-none p-3 flex-grow flex flex-col gap-1 overflow-y-auto whitespace-nowrap">
+        <li class="menu-category text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2">Main Menu</li>
         <li>
-          <a href="/billing.html" class="nav-link active">
-            <span class="nav-icon">🧾</span> <span class="nav-text">Billing / POS</span>
+          <a href="/billing.html" class="nav-link active flex items-center gap-3 px-3 py-2.5 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 transition-all">
+            <span class="nav-icon text-lg w-6 text-center"><i class="fa-solid fa-receipt"></i></span> <span class="nav-text">Billing / POS</span>
           </a>
         </li>
         <li>
-          <a href="/dashboard.html" class="nav-link">
-            <span class="nav-icon">📊</span> <span class="nav-text">Dashboard</span>
+          <a href="/dashboard.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-sky-400"><i class="fa-solid fa-chart-line"></i></span> <span class="nav-text">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="/history.html" class="nav-link">
-            <span class="nav-icon">📜</span> <span class="nav-text">Billing History</span>
+          <a href="/history.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-teal-400"><i class="fa-solid fa-clock-rotate-left"></i></span> <span class="nav-text">Billing History</span>
           </a>
         </li>
 
-        <li class="menu-category admin-only">Management</li>
+        <li class="menu-category admin-only text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2 mt-2">Management</li>
         <li class="admin-only">
-          <a href="/medicines.html" class="nav-link">
-            <span class="nav-icon">📦</span> <span class="nav-text">Medicine Inventory</span>
+          <a href="/medicines.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-indigo-400"><i class="fa-solid fa-pills"></i></span> <span class="nav-text">Medicine Inventory</span>
           </a>
         </li>
         <li class="admin-only">
-          <a href="/reports.html" class="nav-link">
-            <span class="nav-icon">📈</span> <span class="nav-text">Sales Statements</span>
+          <a href="/reports.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-emerald-400"><i class="fa-solid fa-file-invoice-dollar"></i></span> <span class="nav-text">Sales Statements</span>
           </a>
         </li>
         <li class="admin-only">
-          <a href="/users.html" class="nav-link">
-            <span class="nav-icon">👥</span> <span class="nav-text">Worker Management</span>
+          <a href="/users.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-amber-400"><i class="fa-solid fa-users-gear"></i></span> <span class="nav-text">Worker Management</span>
           </a>
         </li>
       </ul>
 
-      <div class="sidebar-footer">
-        <div class="user-badge">
-          <div class="avatar" id="user-avatar">U</div>
+      <div class="sidebar-footer p-3.5 border-t border-slate-800/80 bg-slate-950/60 flex items-center justify-between whitespace-nowrap">
+        <div class="user-badge flex items-center gap-3">
+          <div class="avatar w-9 h-9 rounded-full bg-gradient-to-tr from-sky-500 to-sky-400 text-white font-extrabold text-xs flex items-center justify-center shadow-md shadow-sky-500/20 flex-shrink-0" id="user-avatar">U</div>
           <div class="user-meta">
-            <h4 id="user-full-name">User Name</h4>
-            <span id="user-role-badge">Role</span>
+            <h4 class="text-xs font-bold text-slate-100 leading-tight" id="user-full-name">User Name</h4>
+            <span class="text-[10px] font-semibold text-sky-400" id="user-role-badge">Role</span>
           </div>
         </div>
-        <button class="btn-logout-icon" onclick="Auth.logout()" title="Logout">🚪</button>
+        <button class="btn-logout-icon text-slate-400 hover:text-rose-400 hover:bg-rose-500/15 p-2 rounded-lg transition-colors cursor-pointer" onclick="Auth.logout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
       </div>
     </aside>
 
     <!-- Main Wrapper -->
-    <div class="main-wrapper">
-      <header class="top-header">
-        <div class="header-title-wrapper">
-          <button class="btn-toggle-sidebar" title="Toggle Sidebar Pin / Hover Mode">☰</button>
+    <div class="main-wrapper flex-grow flex flex-col h-screen overflow-hidden bg-slate-50">
+      <header class="top-header h-16 bg-white border-b border-slate-200/80 px-6 flex items-center justify-between flex-shrink-0 shadow-sm">
+        <div class="header-title-wrapper flex items-center gap-3">
+          <button class="btn-toggle-sidebar w-9 h-9 bg-slate-100 hover:bg-sky-50 text-slate-700 hover:text-sky-600 border border-slate-200 rounded-xl flex items-center justify-center cursor-pointer transition-colors" title="Toggle Sidebar Pin / Hover Mode">
+            <i class="fa-solid fa-bars text-sm"></i>
+          </button>
           <div class="header-title">
-            <h2>Retail Pharmacy POS Billing</h2>
-            <p>Search medicines, add items to current bill, set quantity via text box or selection dropdown, and checkout</p>
+            <h2 class="text-base font-extrabold text-slate-900 tracking-tight">Retail Pharmacy POS Billing</h2>
+            <p class="text-xs text-slate-500 font-medium">Search medicines, add items to cart, adjust quantities, and print invoices</p>
           </div>
         </div>
-        <div class="header-actions">
-          <div class="session-chip">
-            <span>🟢 Active Session:</span>
+        <div class="header-actions flex items-center gap-3">
+          <div class="session-chip bg-emerald-50 border border-emerald-200/80 px-3 py-1.5 rounded-full text-xs text-emerald-700 font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <strong id="session-time">POS Ready</strong>
           </div>
-          <button class="btn btn-secondary btn-sm" onclick="Auth.logout()">Logout 🚪</button>
+          <button class="btn btn-secondary text-xs px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center gap-1.5 transition-colors" onclick="Auth.logout()">
+            <i class="fa-solid fa-right-from-bracket text-xs"></i> Logout
+          </button>
         </div>
       </header>
 
-      <main class="content-body">
-        <div class="pos-grid">
+      <main class="content-body flex-grow p-4 overflow-hidden">
+        <div class="pos-grid grid grid-cols-1 lg:grid-cols-12 gap-4 h-full">
           
           <!-- LEFT SIDE: MEDICINE SEARCH & SELECTION -->
-          <div class="pos-left">
-            <div class="search-card">
-              <div class="search-input-group">
-                <span class="search-icon-inside">🔍</span>
-                <input type="text" id="search-medicine-input" placeholder="Search medicine by Name, Generic name, Barcode, or Batch #..." autofocus>
+          <div class="pos-left lg:col-span-6 flex flex-col gap-3 h-full overflow-hidden">
+            <div class="search-card bg-white border border-slate-200/80 rounded-2xl p-3.5 shadow-sm flex items-center gap-3">
+              <div class="search-input-group flex-grow relative">
+                <span class="search-icon-inside absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input type="text" id="search-medicine-input" placeholder="Search medicine by Name, Generic name, Barcode, or Batch #..." autofocus class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:bg-white focus:border-sky-600 focus:ring-4 focus:ring-sky-600/10 outline-none transition-all">
               </div>
-              <select id="filter-category" class="select-filter">
+              <select id="filter-category" class="select-filter bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 outline-none cursor-pointer">
                 <option value="All">All Categories</option>
               </select>
-              <select id="filter-status" class="select-filter">
+              <select id="filter-status" class="select-filter bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 outline-none cursor-pointer">
                 <option value="">All Stock</option>
                 <option value="in_stock" selected>In Stock Only</option>
                 <option value="low_stock">Low Stock</option>
@@ -108,33 +139,35 @@
               </select>
             </div>
 
-            <div class="medicine-results-container">
-              <div class="medicine-grid" id="medicine-grid">
+            <div class="medicine-results-container flex-grow overflow-y-auto pr-1">
+              <div class="medicine-grid grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3" id="medicine-grid">
                 <!-- Dynamic Medicine Cards Loaded via JS -->
               </div>
             </div>
           </div>
 
-          <!-- RIGHT SIDE: CURRENT BILL CART PANEL WITH TEXT BOX & DROPDOWN QUANTITY SELECTOR -->
-          <div class="pos-right">
-            <div class="cart-header">
-              <h3>🧾 Current Bill Cart</h3>
-              <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span class="badge badge-instock" id="cart-count-badge">0 items</span>
-                <button class="btn btn-danger btn-sm" id="btn-clear-cart" title="Clear Cart">Clear</button>
+          <!-- RIGHT SIDE: CURRENT BILL CART PANEL -->
+          <div class="pos-right lg:col-span-6 bg-white border border-slate-200/80 rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
+            <div class="cart-header px-4 py-3 border-b border-slate-200/80 bg-slate-50/80 flex justify-between items-center flex-shrink-0">
+              <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-cart-shopping text-sky-600"></i> Current Bill Cart
+              </h3>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-instock px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold uppercase" id="cart-count-badge">0 items</span>
+                <button class="btn btn-danger text-xs px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-lg transition-colors border border-rose-200" id="btn-clear-cart" title="Clear Cart">Clear</button>
               </div>
             </div>
 
-            <!-- MAXIMIZED MEDICINE ITEMS TABLE AREA (OCCUPIES 85%+ HEIGHT) -->
-            <div class="cart-items-wrapper">
-              <table class="cart-table">
+            <!-- MEDICINE ITEMS TABLE AREA -->
+            <div class="cart-items-wrapper flex-grow overflow-y-auto p-2">
+              <table class="cart-table w-full border-collapse text-xs">
                 <thead>
-                  <tr>
-                    <th style="width: 40%;">Medicine Name & Details</th>
-                    <th style="width: 15%; text-align: right;">Price</th>
-                    <th style="width: 25%; text-align: center;">Qty (Input / Select)</th>
-                    <th style="width: 14%; text-align: right;">Total</th>
-                    <th style="width: 6%; text-align: center;">Action</th>
+                  <tr class="border-b border-slate-200 bg-slate-50/50">
+                    <th class="w-2/5 p-2 text-left text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Medicine Name & Details</th>
+                    <th class="w-[15%] p-2 text-right text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Price</th>
+                    <th class="w-[25%] p-2 text-center text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Qty (Input / Select)</th>
+                    <th class="w-[14%] p-2 text-right text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Total</th>
+                    <th class="w-[6%] p-2 text-center text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Action</th>
                   </tr>
                 </thead>
                 <tbody id="cart-table-body">
@@ -144,60 +177,60 @@
             </div>
 
             <!-- ULTRA-COMPACT MICRO FOOTER PANEL -->
-            <div class="cart-footer">
+            <div class="cart-footer border-t border-slate-200 bg-white p-3.5 flex flex-col gap-2.5 flex-shrink-0">
               
               <!-- Row 1: Compact Inline Customer Info & Discount Settings -->
-              <div class="cart-footer-row1">
-                <input type="text" id="customer-name" placeholder="Customer Name (Optional)">
-                <input type="tel" id="customer-phone" placeholder="Mobile Number (Optional)">
-                <div style="display: flex; align-items: center; gap: 0.25rem;">
-                  <select id="discount-type">
+              <div class="cart-footer-row1 grid grid-cols-3 gap-2">
+                <input type="text" id="customer-name" placeholder="Customer Name (Optional)" class="p-2 border border-slate-200 rounded-lg text-xs font-semibold bg-slate-50 focus:bg-white focus:border-sky-600 outline-none">
+                <input type="tel" id="customer-phone" placeholder="Mobile Number (Optional)" class="p-2 border border-slate-200 rounded-lg text-xs font-semibold bg-slate-50 focus:bg-white focus:border-sky-600 outline-none">
+                <div class="flex items-center gap-1">
+                  <select id="discount-type" class="p-2 border border-slate-200 rounded-lg text-xs font-bold bg-slate-50 text-slate-700 outline-none">
                     <option value="fixed">Fixed (₹)</option>
                     <option value="percent">Percent (%)</option>
                   </select>
-                  <input type="number" id="discount-value" min="0" placeholder="Disc" step="any">
+                  <input type="number" id="discount-value" min="0" placeholder="Disc" step="any" class="w-full p-2 border border-slate-200 rounded-lg text-xs font-semibold bg-slate-50 focus:bg-white focus:border-sky-600 outline-none">
                 </div>
               </div>
 
               <!-- Row 2: Compact Inline Subtotal, Discount & Grand Total Summary Bar -->
-              <div class="cart-footer-row2">
-                <div class="summary-pill">
-                  <span>Subtotal:</span>
-                  <strong id="summary-subtotal" style="color: #0f172a;">₹0.00</strong>
+              <div class="cart-footer-row2 flex justify-between items-center bg-slate-50 px-3 py-2 rounded-xl border border-slate-200/80 text-xs">
+                <div class="summary-pill flex items-center gap-1">
+                  <span class="text-slate-500 font-medium">Subtotal:</span>
+                  <strong id="summary-subtotal" class="text-slate-900 font-extrabold">₹0.00</strong>
                 </div>
-                <div class="summary-pill" style="color: #ef4444;">
+                <div class="summary-pill flex items-center gap-1 text-rose-600">
                   <span>Discount:</span>
-                  <strong id="summary-discount">-₹0.00</strong>
+                  <strong id="summary-discount" class="font-extrabold">-₹0.00</strong>
                 </div>
-                <div class="summary-pill" style="font-size: 0.9rem; font-weight: 800;">
-                  <span>Grand Total:</span>
-                  <span class="grand-total-amount" id="summary-grand-total" style="font-size: 1.1rem; color: #0284c7;">₹0.00</span>
+                <div class="summary-pill flex items-center gap-1.5">
+                  <span class="text-slate-700 font-bold">Grand Total:</span>
+                  <span class="grand-total-amount text-sky-600 font-black text-lg" id="summary-grand-total">₹0.00</span>
                 </div>
               </div>
 
-              <!-- Row 3: Slim Payment Method & Complete Checkout Bar -->
-              <div class="cart-footer-row3">
-                <div class="payment-method-selector">
-                  <button type="button" class="pay-btn selected" data-method="Cash">💵 Cash</button>
-                  <button type="button" class="pay-btn" data-method="UPI">📱 UPI</button>
-                  <button type="button" class="pay-btn" data-method="Card">💳 Card</button>
+              <!-- Row 3: Payment Method & Complete Checkout Bar -->
+              <div class="cart-footer-row3 grid grid-cols-12 gap-2 items-center">
+                <div class="payment-method-selector col-span-5 grid grid-cols-3 gap-1">
+                  <button type="button" class="pay-btn selected p-1.5 border border-slate-200 rounded-lg bg-white text-xs font-bold text-slate-600 text-center hover:bg-slate-50 transition-colors" data-method="Cash">💵 Cash</button>
+                  <button type="button" class="pay-btn p-1.5 border border-slate-200 rounded-lg bg-white text-xs font-bold text-slate-600 text-center hover:bg-slate-50 transition-colors" data-method="UPI">📱 UPI</button>
+                  <button type="button" class="pay-btn p-1.5 border border-slate-200 rounded-lg bg-white text-xs font-bold text-slate-600 text-center hover:bg-slate-50 transition-colors" data-method="Card">💳 Card</button>
                 </div>
 
                 <!-- Complete Sale Action Button -->
-                <button class="btn-complete-sale" id="btn-complete-sale" disabled>
-                  <span>Complete Sale & Print Invoice</span> <span>➔</span>
+                <button class="btn-complete-sale col-span-7 w-full py-2.5 px-4 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white rounded-xl font-extrabold text-xs shadow-md shadow-sky-600/30 flex items-center justify-center gap-2 transition-all cursor-pointer" id="btn-complete-sale" disabled>
+                  <span>Complete Sale & Print Invoice</span> <i class="fa-solid fa-arrow-right text-xs"></i>
                 </button>
               </div>
 
-              <!-- Optional Cash Received Row (Slim) -->
-              <div class="cash-received-box" id="cash-payment-box" style="margin-top: 0.15rem;">
-                <div style="display: flex; align-items: center; gap: 0.35rem;">
-                  <label style="font-size: 0.72rem; font-weight: 700; color: #166534;">Received (₹):</label>
-                  <input type="number" id="amount-received" min="0" step="any" placeholder="0.00">
+              <!-- Cash Received Row -->
+              <div class="cash-received-box bg-emerald-50/80 border border-emerald-200/80 px-3 py-1.5 rounded-xl flex items-center justify-between text-xs" id="cash-payment-box">
+                <div class="flex items-center gap-2">
+                  <label class="text-xs font-bold text-emerald-800">Received (₹):</label>
+                  <input type="number" id="amount-received" min="0" step="any" placeholder="0.00" class="w-20 p-1 border border-emerald-300 rounded-md text-xs font-bold text-right bg-white outline-none">
                 </div>
-                <div style="text-align: right; font-size: 0.75rem;">
-                  <span style="color: #64748b;">Change Owed:</span>
-                  <strong style="color: #10b981; font-weight: 800;" id="summary-change">₹0.00</strong>
+                <div class="text-right">
+                  <span class="text-slate-500 font-medium">Change Owed:</span>
+                  <strong class="text-emerald-700 font-black text-sm" id="summary-change">₹0.00</strong>
                 </div>
               </div>
 
@@ -211,18 +244,24 @@
   </div>
 
   <!-- INVOICE PREVIEW MODAL -->
-  <div class="modal-overlay" id="modal-invoice">
-    <div class="modal-box modal-lg">
-      <div class="modal-header">
-        <h3>🧾 Tax Invoice Receipt</h3>
-        <button class="btn-close-modal" onclick="UI.closeModal('modal-invoice')">✕</button>
+  <div class="modal-overlay fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-200" id="modal-invoice">
+    <div class="modal-box modal-lg bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden">
+      <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-receipt text-sky-600"></i> Tax Invoice Receipt
+        </h3>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-700 text-lg p-1 rounded-lg" onclick="UI.closeModal('modal-invoice')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-      <div class="modal-body" id="invoice-modal-content">
+      <div class="modal-body p-6 overflow-y-auto flex-grow" id="invoice-modal-content">
         <!-- Rendered Printable Invoice HTML -->
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="UI.closeModal('modal-invoice')">Close</button>
-        <button class="btn btn-primary" onclick="window.print()">🖨️ Print Invoice</button>
+      <div class="modal-footer p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
+        <button class="btn btn-secondary px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors" onclick="UI.closeModal('modal-invoice')">Close</button>
+        <button class="btn btn-primary px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl font-bold text-xs shadow-md shadow-sky-600/25 flex items-center gap-2 transition-all" onclick="window.print()">
+          <i class="fa-solid fa-print"></i> Print Invoice
+        </button>
       </div>
     </div>
   </div>

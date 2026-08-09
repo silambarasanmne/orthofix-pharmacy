@@ -4,179 +4,222 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ORTHOFIX SPECIALITY CLINIC — Worker Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              900: '#0c4a6e',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-  <div id="app-container">
+  <div id="app-container" class="flex w-screen h-screen overflow-hidden relative">
     <!-- Sidebar Navigation -->
-    <aside class="sidebar" id="main-sidebar">
-      <div class="sidebar-header">
-        <img src="/images/logo.png" alt="ORTHOFIX" class="brand-logo-img">
+    <aside class="sidebar bg-slate-900 text-slate-100 flex flex-col flex-shrink-0 z-50 transition-all duration-300 relative border-r border-slate-800" id="main-sidebar">
+      <div class="sidebar-header p-5 flex items-center gap-3 border-b border-slate-800/80 whitespace-nowrap">
+        <img src="/images/logo.png" alt="ORTHOFIX" class="w-10 h-10 rounded-xl object-cover shadow-md shadow-sky-500/30 bg-white p-1 flex-shrink-0">
         <div class="brand-info">
-          <h1>ORTHOFIX</h1>
-          <p>SPECIALITY CLINIC</p>
+          <h1 class="text-base font-extrabold tracking-tight text-white leading-tight">ORTHOFIX</h1>
+          <p class="text-xs font-semibold text-sky-400">SPECIALITY CLINIC</p>
         </div>
       </div>
 
-      <ul class="sidebar-menu">
-        <li class="menu-category">Main Menu</li>
+      <ul class="sidebar-menu list-none p-3 flex-grow flex flex-col gap-1 overflow-y-auto whitespace-nowrap">
+        <li class="menu-category text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2">Main Menu</li>
         <li>
-          <a href="/billing.html" class="nav-link">
-            <span class="nav-icon">🧾</span> <span class="nav-text">Billing / POS</span>
+          <a href="/billing.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-sky-400"><i class="fa-solid fa-receipt"></i></span> <span class="nav-text">Billing / POS</span>
           </a>
         </li>
         <li>
-          <a href="/dashboard.html" class="nav-link">
-            <span class="nav-icon">📊</span> <span class="nav-text">Dashboard</span>
+          <a href="/dashboard.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-sky-400"><i class="fa-solid fa-chart-line"></i></span> <span class="nav-text">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="/history.html" class="nav-link">
-            <span class="nav-icon">📜</span> <span class="nav-text">Billing History</span>
+          <a href="/history.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-teal-400"><i class="fa-solid fa-clock-rotate-left"></i></span> <span class="nav-text">Billing History</span>
           </a>
         </li>
 
-        <li class="menu-category admin-only">Management</li>
+        <li class="menu-category admin-only text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2 mt-2">Management</li>
         <li class="admin-only">
-          <a href="/medicines.html" class="nav-link">
-            <span class="nav-icon">📦</span> <span class="nav-text">Medicine Inventory</span>
+          <a href="/medicines.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-indigo-400"><i class="fa-solid fa-pills"></i></span> <span class="nav-text">Medicine Inventory</span>
           </a>
         </li>
         <li class="admin-only">
-          <a href="/reports.html" class="nav-link">
-            <span class="nav-icon">📈</span> <span class="nav-text">Sales Statements</span>
+          <a href="/reports.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-emerald-400"><i class="fa-solid fa-file-invoice-dollar"></i></span> <span class="nav-text">Sales Statements</span>
           </a>
         </li>
         <li class="admin-only">
-          <a href="/users.html" class="nav-link active">
-            <span class="nav-icon">👥</span> <span class="nav-text">Worker Management</span>
+          <a href="/users.html" class="nav-link active flex items-center gap-3 px-3 py-2.5 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 transition-all">
+            <span class="nav-icon text-lg w-6 text-center"><i class="fa-solid fa-users-gear"></i></span> <span class="nav-text">Worker Management</span>
           </a>
         </li>
       </ul>
 
-      <div class="sidebar-footer">
-        <div class="user-badge">
-          <div class="avatar" id="user-avatar">U</div>
+      <div class="sidebar-footer p-3.5 border-t border-slate-800/80 bg-slate-950/60 flex items-center justify-between whitespace-nowrap">
+        <div class="user-badge flex items-center gap-3">
+          <div class="avatar w-9 h-9 rounded-full bg-gradient-to-tr from-sky-500 to-sky-400 text-white font-extrabold text-xs flex items-center justify-center shadow-md shadow-sky-500/20 flex-shrink-0" id="user-avatar">U</div>
           <div class="user-meta">
-            <h4 id="user-full-name">User Name</h4>
-            <span id="user-role-badge">Role</span>
+            <h4 class="text-xs font-bold text-slate-100 leading-tight" id="user-full-name">User Name</h4>
+            <span class="text-[10px] font-semibold text-sky-400" id="user-role-badge">Role</span>
           </div>
         </div>
-        <button class="btn-logout-icon" onclick="Auth.logout()" title="Logout">🚪</button>
+        <button class="btn-logout-icon text-slate-400 hover:text-rose-400 hover:bg-rose-500/15 p-2 rounded-lg transition-colors cursor-pointer" onclick="Auth.logout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
       </div>
     </aside>
 
     <!-- Main Wrapper -->
-    <div class="main-wrapper">
-      <header class="top-header">
-        <div class="header-title-wrapper">
-          <button class="btn-toggle-sidebar" title="Toggle Sidebar Pin / Hover Mode">☰</button>
+    <div class="main-wrapper flex-grow flex flex-col h-screen overflow-hidden bg-slate-50">
+      <header class="top-header h-16 bg-white border-b border-slate-200/80 px-6 flex items-center justify-between flex-shrink-0 shadow-sm">
+        <div class="header-title-wrapper flex items-center gap-3">
+          <button class="btn-toggle-sidebar w-9 h-9 bg-slate-100 hover:bg-sky-50 text-slate-700 hover:text-sky-600 border border-slate-200 rounded-xl flex items-center justify-center cursor-pointer transition-colors" title="Toggle Sidebar Pin / Hover Mode">
+            <i class="fa-solid fa-bars text-sm"></i>
+          </button>
           <div class="header-title">
-            <h2>Worker & Billing Staff Management</h2>
-            <p>Create worker accounts, manage billing staff roles, toggle active status, and reset passwords</p>
+            <h2 class="text-base font-extrabold text-slate-900 tracking-tight">Worker & Billing Staff Management</h2>
+            <p class="text-xs text-slate-500 font-medium">Create worker accounts, manage billing staff roles, toggle active status, and reset passwords</p>
           </div>
         </div>
-        <div class="header-actions">
-          <button class="btn btn-primary" onclick="UserMgmt.openAddModal()">➕ Add Worker / User</button>
+        <div class="header-actions flex items-center gap-3">
+          <button class="btn btn-primary px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl text-xs font-bold shadow-md shadow-sky-600/25 flex items-center gap-2 transition-all cursor-pointer" onclick="UserMgmt.openAddModal()">
+            <i class="fa-solid fa-user-plus"></i> Add Worker / User
+          </button>
         </div>
       </header>
 
-      <main class="content-body">
-        <div class="table-card">
-          <div class="table-header-bar">
+      <main class="content-body flex-grow p-6 overflow-y-auto">
+        <div class="table-card bg-white border border-slate-200/80 rounded-2xl shadow-sm overflow-hidden">
+          <div class="table-header-bar p-5 border-b border-slate-200/80 flex flex-wrap justify-between items-center gap-4 bg-slate-50/50">
             <div class="table-header-title">
-              <h3>System Users Directory</h3>
+              <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-address-book text-sky-600"></i> System Users Directory
+              </h3>
             </div>
           </div>
 
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>User ID</th>
-                <th>Username</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>System Role</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="users-table-body">
-              <!-- Loaded dynamically via Users.js -->
-            </tbody>
-          </table>
+          <div class="overflow-x-auto">
+            <table class="data-table w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-100/70 border-b border-slate-200 text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">
+                  <th class="p-3.5">User ID</th>
+                  <th class="p-3.5">Username</th>
+                  <th class="p-3.5">Full Name</th>
+                  <th class="p-3.5">Email</th>
+                  <th class="p-3.5">System Role</th>
+                  <th class="p-3.5 text-center">Status</th>
+                  <th class="p-3.5 text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body" class="divide-y divide-slate-200 text-slate-700 font-medium">
+                <!-- Loaded dynamically via Users.js -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </main>
     </div>
   </div>
 
   <!-- ADD / EDIT USER MODAL -->
-  <div class="modal-overlay" id="modal-user">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 id="modal-user-title">➕ Add New Worker / User</h3>
-        <button class="btn-close-modal" onclick="UI.closeModal('modal-user')">✕</button>
+  <div class="modal-overlay fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-200" id="modal-user">
+    <div class="modal-box bg-white rounded-3xl shadow-2xl w-full max-w-lg flex flex-col overflow-hidden">
+      <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center">
+        <h3 id="modal-user-title" class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-user-plus text-sky-600"></i> Add New Worker / User
+        </h3>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-700 text-lg p-1 rounded-lg" onclick="UI.closeModal('modal-user')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-      <form id="form-user">
-        <div class="modal-body">
-          <div class="form-group" style="margin-bottom: 1rem;">
-            <label for="user-username">Username *</label>
-            <input type="text" id="user-username" required placeholder="e.g. rahul_billing">
+      <form id="form-user" class="flex flex-col flex-grow">
+        <div class="modal-body p-6 space-y-4">
+          <div class="form-group flex flex-col gap-1">
+            <label for="user-username" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Username *</label>
+            <input type="text" id="user-username" required placeholder="e.g. rahul_billing" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 outline-none focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10">
           </div>
 
-          <div class="form-group" style="margin-bottom: 1rem;">
-            <label for="user-fullname">Full Name *</label>
-            <input type="text" id="user-fullname" required placeholder="e.g. Rahul Sharma">
+          <div class="form-group flex flex-col gap-1">
+            <label for="user-fullname" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Full Name *</label>
+            <input type="text" id="user-fullname" required placeholder="e.g. Rahul Sharma" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 outline-none focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10">
           </div>
 
-          <div class="form-group" style="margin-bottom: 1rem;">
-            <label for="user-email">Email Address</label>
-            <input type="email" id="user-email" placeholder="e.g. rahul@medicare.com">
+          <div class="form-group flex flex-col gap-1">
+            <label for="user-email" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Email Address</label>
+            <input type="email" id="user-email" placeholder="e.g. rahul@medicare.com" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 outline-none focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10">
           </div>
 
-          <div class="form-group" style="margin-bottom: 1rem;">
-            <label for="user-role">Role *</label>
-            <select id="user-role" class="select-filter" style="width: 100%;">
+          <div class="form-group flex flex-col gap-1">
+            <label for="user-role" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Role *</label>
+            <select id="user-role" class="select-filter p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none cursor-pointer w-full">
               <option value="Billing Worker">Billing Worker</option>
               <option value="Admin / Billing Manager">Admin / Billing Manager</option>
             </select>
           </div>
 
-          <div class="form-group" id="user-password-group" style="margin-bottom: 1rem;">
-            <label for="user-password-input">Password *</label>
-            <input type="password" id="user-password-input" placeholder="Enter secure password">
+          <div class="form-group flex flex-col gap-1" id="user-password-group">
+            <label for="user-password-input" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Password *</label>
+            <input type="password" id="user-password-input" placeholder="Enter secure password" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 outline-none focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10">
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onclick="UI.closeModal('modal-user')">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save User</button>
+        <div class="modal-footer p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
+          <button type="button" class="btn btn-secondary px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors" onclick="UI.closeModal('modal-user')">Cancel</button>
+          <button type="submit" class="btn btn-primary px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl font-bold text-xs shadow-md shadow-sky-600/25 transition-all">Save User</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- RESET PASSWORD MODAL -->
-  <div class="modal-overlay" id="modal-reset-password">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3>🔑 Reset User Password</h3>
-        <button class="btn-close-modal" onclick="UI.closeModal('modal-reset-password')">✕</button>
+  <div class="modal-overlay fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-200" id="modal-reset-password">
+    <div class="modal-box bg-white rounded-3xl shadow-2xl w-full max-w-md flex flex-col overflow-hidden">
+      <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-key text-amber-500"></i> Reset User Password
+        </h3>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-700 text-lg p-1 rounded-lg" onclick="UI.closeModal('modal-reset-password')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-      <form id="form-reset-password">
-        <div class="modal-body">
-          <p style="margin-bottom: 1rem; color: #64748b;">
-            Resetting password for: <strong id="reset-user-name" style="color: #0284c7;">-</strong>
-          </p>
+      <form id="form-reset-password" class="flex flex-col flex-grow">
+        <div class="modal-body p-6 space-y-4">
+          <div class="bg-amber-50 border border-amber-200/80 p-3.5 rounded-xl">
+            <p class="text-xs text-slate-600 font-medium">
+              Resetting password for: <strong id="reset-user-name" class="text-sky-700 font-extrabold">-</strong>
+            </p>
+          </div>
 
-          <div class="form-group">
-            <label for="new-password-input">New Password *</label>
-            <input type="password" id="new-password-input" required placeholder="Enter new password">
+          <div class="form-group flex flex-col gap-1">
+            <label for="new-password-input" class="text-xs font-bold text-slate-700 uppercase tracking-wider">New Password *</label>
+            <input type="password" id="new-password-input" required placeholder="Enter new password" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 outline-none focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10">
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onclick="UI.closeModal('modal-reset-password')">Cancel</button>
-          <button type="submit" class="btn btn-primary">Update Password</button>
+        <div class="modal-footer p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
+          <button type="button" class="btn btn-secondary px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors" onclick="UI.closeModal('modal-reset-password')">Cancel</button>
+          <button type="submit" class="btn btn-primary px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl font-bold text-xs shadow-md shadow-sky-600/25 transition-all">Update Password</button>
         </div>
       </form>
     </div>

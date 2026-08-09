@@ -4,177 +4,214 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ORTHOFIX SPECIALITY CLINIC — Financial Statements</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              900: '#0c4a6e',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-  <div id="app-container">
+  <div id="app-container" class="flex w-screen h-screen overflow-hidden relative">
     <!-- Sidebar Navigation -->
-    <aside class="sidebar" id="main-sidebar">
-      <div class="sidebar-header">
-        <img src="/images/logo.png" alt="ORTHOFIX" class="brand-logo-img">
+    <aside class="sidebar bg-slate-900 text-slate-100 flex flex-col flex-shrink-0 z-50 transition-all duration-300 relative border-r border-slate-800" id="main-sidebar">
+      <div class="sidebar-header p-5 flex items-center gap-3 border-b border-slate-800/80 whitespace-nowrap">
+        <img src="/images/logo.png" alt="ORTHOFIX" class="w-10 h-10 rounded-xl object-cover shadow-md shadow-sky-500/30 bg-white p-1 flex-shrink-0">
         <div class="brand-info">
-          <h1>ORTHOFIX</h1>
-          <p>SPECIALITY CLINIC</p>
+          <h1 class="text-base font-extrabold tracking-tight text-white leading-tight">ORTHOFIX</h1>
+          <p class="text-xs font-semibold text-sky-400">SPECIALITY CLINIC</p>
         </div>
       </div>
 
-      <ul class="sidebar-menu">
-        <li class="menu-category">Main Menu</li>
+      <ul class="sidebar-menu list-none p-3 flex-grow flex flex-col gap-1 overflow-y-auto whitespace-nowrap">
+        <li class="menu-category text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2">Main Menu</li>
         <li>
-          <a href="/billing.html" class="nav-link">
-            <span class="nav-icon">🧾</span> <span class="nav-text">Billing / POS</span>
+          <a href="/billing.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-sky-400"><i class="fa-solid fa-receipt"></i></span> <span class="nav-text">Billing / POS</span>
           </a>
         </li>
         <li>
-          <a href="/dashboard.html" class="nav-link">
-            <span class="nav-icon">📊</span> <span class="nav-text">Dashboard</span>
+          <a href="/dashboard.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-sky-400"><i class="fa-solid fa-chart-line"></i></span> <span class="nav-text">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="/history.html" class="nav-link">
-            <span class="nav-icon">📜</span> <span class="nav-text">Billing History</span>
+          <a href="/history.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-teal-400"><i class="fa-solid fa-clock-rotate-left"></i></span> <span class="nav-text">Billing History</span>
           </a>
         </li>
 
-        <li class="menu-category admin-only">Management</li>
+        <li class="menu-category admin-only text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2 mt-2">Management</li>
         <li class="admin-only">
-          <a href="/medicines.html" class="nav-link">
-            <span class="nav-icon">📦</span> <span class="nav-text">Medicine Inventory</span>
+          <a href="/medicines.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-indigo-400"><i class="fa-solid fa-pills"></i></span> <span class="nav-text">Medicine Inventory</span>
           </a>
         </li>
         <li class="admin-only">
-          <a href="/reports.html" class="nav-link active">
-            <span class="nav-icon">📈</span> <span class="nav-text">Sales Statements</span>
+          <a href="/reports.html" class="nav-link active flex items-center gap-3 px-3 py-2.5 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 transition-all">
+            <span class="nav-icon text-lg w-6 text-center"><i class="fa-solid fa-file-invoice-dollar"></i></span> <span class="nav-text">Sales Statements</span>
           </a>
         </li>
         <li class="admin-only">
-          <a href="/users.html" class="nav-link">
-            <span class="nav-icon">👥</span> <span class="nav-text">Worker Management</span>
+          <a href="/users.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
+            <span class="nav-icon text-lg w-6 text-center text-amber-400"><i class="fa-solid fa-users-gear"></i></span> <span class="nav-text">Worker Management</span>
           </a>
         </li>
       </ul>
 
-      <div class="sidebar-footer">
-        <div class="user-badge">
-          <div class="avatar" id="user-avatar">U</div>
+      <div class="sidebar-footer p-3.5 border-t border-slate-800/80 bg-slate-950/60 flex items-center justify-between whitespace-nowrap">
+        <div class="user-badge flex items-center gap-3">
+          <div class="avatar w-9 h-9 rounded-full bg-gradient-to-tr from-sky-500 to-sky-400 text-white font-extrabold text-xs flex items-center justify-center shadow-md shadow-sky-500/20 flex-shrink-0" id="user-avatar">U</div>
           <div class="user-meta">
-            <h4 id="user-full-name">User Name</h4>
-            <span id="user-role-badge">Role</span>
+            <h4 class="text-xs font-bold text-slate-100 leading-tight" id="user-full-name">User Name</h4>
+            <span class="text-[10px] font-semibold text-sky-400" id="user-role-badge">Role</span>
           </div>
         </div>
-        <button class="btn-logout-icon" onclick="Auth.logout()" title="Logout">🚪</button>
+        <button class="btn-logout-icon text-slate-400 hover:text-rose-400 hover:bg-rose-500/15 p-2 rounded-lg transition-colors cursor-pointer" onclick="Auth.logout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
       </div>
     </aside>
 
     <!-- Main Wrapper -->
-    <div class="main-wrapper">
-      <header class="top-header">
-        <div class="header-title-wrapper">
-          <button class="btn-toggle-sidebar" title="Toggle Sidebar Pin / Hover Mode">☰</button>
+    <div class="main-wrapper flex-grow flex flex-col h-screen overflow-hidden bg-slate-50">
+      <header class="top-header h-16 bg-white border-b border-slate-200/80 px-6 flex items-center justify-between flex-shrink-0 shadow-sm">
+        <div class="header-title-wrapper flex items-center gap-3">
+          <button class="btn-toggle-sidebar w-9 h-9 bg-slate-100 hover:bg-sky-50 text-slate-700 hover:text-sky-600 border border-slate-200 rounded-xl flex items-center justify-center cursor-pointer transition-colors" title="Toggle Sidebar Pin / Hover Mode">
+            <i class="fa-solid fa-bars text-sm"></i>
+          </button>
           <div class="header-title">
-            <h2>Sales Reports & Financial Statements</h2>
-            <p>Date-wise detailed sales statements, monthly rollup statements, and Excel downloads</p>
+            <h2 class="text-base font-extrabold text-slate-900 tracking-tight">Sales Reports & Financial Statements</h2>
+            <p class="text-xs text-slate-500 font-medium">Date-wise detailed sales statements, monthly rollup statements, and Excel downloads</p>
           </div>
         </div>
-        <div class="header-actions">
-          <button class="btn btn-secondary" onclick="Reports.exportSalesExcel()">📤 Export Sales to Excel</button>
+        <div class="header-actions flex items-center gap-3">
+          <button class="btn btn-secondary px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold shadow-sm flex items-center gap-2 transition-colors cursor-pointer" onclick="Reports.exportSalesExcel()">
+            <i class="fa-solid fa-file-excel text-emerald-600"></i> Export Sales to Excel
+          </button>
         </div>
       </header>
 
-      <main class="content-body">
+      <main class="content-body flex-grow p-6 overflow-y-auto space-y-6">
         
         <!-- SECTION 1: DATE-WISE SALES STATEMENT -->
-        <div class="table-card" style="margin-bottom: 2rem;">
-          <div class="table-header-bar">
+        <div class="table-card bg-white border border-slate-200/80 rounded-2xl shadow-sm overflow-hidden">
+          <div class="table-header-bar p-5 border-b border-slate-200/80 flex flex-wrap justify-between items-center gap-4 bg-slate-50/50">
             <div class="table-header-title">
-              <h3>📅 Date-Wise Sales Statement</h3>
+              <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-calendar-day text-sky-600"></i> Date-Wise Sales Statement
+              </h3>
             </div>
-            <div class="table-controls">
-              <label style="font-size: 0.8rem; font-weight: 600;">From:</label>
-              <input type="date" id="statement-from-date" class="select-filter">
-              <label style="font-size: 0.8rem; font-weight: 600;">To:</label>
-              <input type="date" id="statement-to-date" class="select-filter">
-              <button class="btn btn-primary btn-sm" onclick="Reports.loadDateWiseStatement()">Filter Statement</button>
+            <div class="table-controls flex flex-wrap items-center gap-3">
+              <label class="text-xs font-bold text-slate-600">From:</label>
+              <input type="date" id="statement-from-date" class="select-filter px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-700 outline-none">
+              <label class="text-xs font-bold text-slate-600">To:</label>
+              <input type="date" id="statement-to-date" class="select-filter px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-700 outline-none">
+              <button class="btn btn-primary px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-xs shadow-sm flex items-center gap-2 transition-colors" onclick="Reports.loadDateWiseStatement()">Filter Statement</button>
             </div>
           </div>
 
           <!-- SUMMARY METRICS BAR -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; padding: 1rem 1.25rem; background: #f8fafc; border-bottom: 1px solid var(--border-color);">
-            <div>
-              <span style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Total Bills</span>
-              <div style="font-size: 1.25rem; font-weight: 800;" id="stmt-total-bills">0</div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 p-5 bg-slate-50/80 border-b border-slate-200/80">
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-2xs">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Bills</span>
+              <div class="text-xl font-extrabold text-slate-900 mt-1" id="stmt-total-bills">0</div>
             </div>
-            <div>
-              <span style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Gross Sales</span>
-              <div style="font-size: 1.25rem; font-weight: 800;" id="stmt-gross-sales">₹0.00</div>
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-2xs">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Gross Sales</span>
+              <div class="text-xl font-extrabold text-slate-900 mt-1" id="stmt-gross-sales">₹0.00</div>
             </div>
-            <div>
-              <span style="font-size: 0.75rem; color: #ef4444; font-weight: 700; text-transform: uppercase;">Total Discounts</span>
-              <div style="font-size: 1.25rem; font-weight: 800; color: #ef4444;" id="stmt-total-discounts">₹0.00</div>
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-2xs">
+              <span class="text-[11px] font-bold text-rose-500 uppercase tracking-wider">Total Discounts</span>
+              <div class="text-xl font-extrabold text-rose-600 mt-1" id="stmt-total-discounts">₹0.00</div>
             </div>
-            <div>
-              <span style="font-size: 0.75rem; color: #10b981; font-weight: 700; text-transform: uppercase;">Net Revenue</span>
-              <div style="font-size: 1.25rem; font-weight: 800; color: #0284c7;" id="stmt-net-revenue">₹0.00</div>
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-2xs">
+              <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider">Net Revenue</span>
+              <div class="text-xl font-extrabold text-sky-600 mt-1" id="stmt-net-revenue">₹0.00</div>
             </div>
-            <div>
-              <span style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Avg Bill Value</span>
-              <div style="font-size: 1.25rem; font-weight: 800;" id="stmt-avg-bill">₹0.00</div>
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-2xs">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Avg Bill Value</span>
+              <div class="text-xl font-extrabold text-slate-900 mt-1" id="stmt-avg-bill">₹0.00</div>
             </div>
           </div>
 
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Bill Number</th>
-                <th>Date & Time</th>
-                <th>Customer</th>
-                <th>Subtotal</th>
-                <th>Discount</th>
-                <th>Final Amount</th>
-                <th>Payment</th>
-                <th>Billing Worker</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="date-wise-table-body">
-              <!-- Loaded dynamically via Reports.js -->
-            </tbody>
-          </table>
+          <div class="overflow-x-auto">
+            <table class="data-table w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-100/70 border-b border-slate-200 text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">
+                  <th class="p-3.5">Bill Number</th>
+                  <th class="p-3.5">Date & Time</th>
+                  <th class="p-3.5">Customer</th>
+                  <th class="p-3.5 text-right">Subtotal</th>
+                  <th class="p-3.5 text-right">Discount</th>
+                  <th class="p-3.5 text-right">Final Amount</th>
+                  <th class="p-3.5 text-center">Payment</th>
+                  <th class="p-3.5 text-center">Billing Worker</th>
+                  <th class="p-3.5 text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody id="date-wise-table-body" class="divide-y divide-slate-200 text-slate-700 font-medium">
+                <!-- Loaded dynamically via Reports.js -->
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- SECTION 2: YEAR-WISE MONTHLY STATEMENT -->
-        <div class="table-card">
-          <div class="table-header-bar">
+        <div class="table-card bg-white border border-slate-200/80 rounded-2xl shadow-sm overflow-hidden">
+          <div class="table-header-bar p-5 border-b border-slate-200/80 flex flex-wrap justify-between items-center gap-4 bg-slate-50/50">
             <div class="table-header-title">
-              <h3>🗓️ Year-Wise Sales Statement Summary</h3>
+              <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-chart-column text-indigo-600"></i> Year-Wise Sales Statement Summary
+              </h3>
             </div>
-            <div class="table-controls">
-              <label style="font-size: 0.8rem; font-weight: 600;">Select Year:</label>
-              <select id="statement-year" class="select-filter" onchange="Reports.loadYearlyStatement()">
+            <div class="table-controls flex items-center gap-3">
+              <label class="text-xs font-bold text-slate-600">Select Year:</label>
+              <select id="statement-year" class="select-filter px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none cursor-pointer" onchange="Reports.loadYearlyStatement()">
                 <option value="2026" selected>2026</option>
                 <option value="2025">2025</option>
               </select>
             </div>
           </div>
 
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Month</th>
-                <th style="text-align: center;">Total Bills</th>
-                <th style="text-align: right;">Gross Sales</th>
-                <th style="text-align: right;">Total Discounts</th>
-                <th style="text-align: right;">Net Revenue</th>
-              </tr>
-            </thead>
-            <tbody id="yearly-table-body">
-              <!-- Loaded dynamically via Reports.js -->
-            </tbody>
-            <tfoot id="yearly-table-foot">
-              <!-- Total summary row -->
-            </tfoot>
-          </table>
+          <div class="overflow-x-auto">
+            <table class="data-table w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-100/70 border-b border-slate-200 text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">
+                  <th class="p-3.5">Month</th>
+                  <th class="p-3.5 text-center">Total Bills</th>
+                  <th class="p-3.5 text-right">Gross Sales</th>
+                  <th class="p-3.5 text-right">Total Discounts</th>
+                  <th class="p-3.5 text-right">Net Revenue</th>
+                </tr>
+              </thead>
+              <tbody id="yearly-table-body" class="divide-y divide-slate-200 text-slate-700 font-medium">
+                <!-- Loaded dynamically via Reports.js -->
+              </tbody>
+              <tfoot id="yearly-table-foot" class="bg-slate-100 font-extrabold text-slate-900">
+                <!-- Total summary row -->
+              </tfoot>
+            </table>
+          </div>
         </div>
 
       </main>
@@ -182,18 +219,24 @@
   </div>
 
   <!-- INVOICE PREVIEW MODAL -->
-  <div class="modal-overlay" id="modal-invoice">
-    <div class="modal-box modal-lg">
-      <div class="modal-header">
-        <h3>🧾 Tax Invoice Receipt</h3>
-        <button class="btn-close-modal" onclick="UI.closeModal('modal-invoice')">✕</button>
+  <div class="modal-overlay fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-200" id="modal-invoice">
+    <div class="modal-box modal-lg bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden">
+      <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center">
+        <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-receipt text-sky-600"></i> Tax Invoice Receipt
+        </h3>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-700 text-lg p-1 rounded-lg" onclick="UI.closeModal('modal-invoice')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-      <div class="modal-body" id="invoice-modal-content">
+      <div class="modal-body p-6 overflow-y-auto flex-grow" id="invoice-modal-content">
         <!-- Rendered Invoice HTML -->
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="UI.closeModal('modal-invoice')">Close</button>
-        <button class="btn btn-primary" onclick="window.print()">🖨️ Print Invoice</button>
+      <div class="modal-footer p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
+        <button class="btn btn-secondary px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors" onclick="UI.closeModal('modal-invoice')">Close</button>
+        <button class="btn btn-primary px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl font-bold text-xs shadow-md shadow-sky-600/25 flex items-center gap-2 transition-all" onclick="window.print()">
+          <i class="fa-solid fa-print"></i> Print Invoice
+        </button>
       </div>
     </div>
   </div>
