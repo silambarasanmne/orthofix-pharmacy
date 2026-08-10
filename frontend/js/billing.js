@@ -233,7 +233,6 @@ const Billing = {
       });
     }
 
-    UI.showToast(`Added "${med.name}" to current bill cart!`, 'success');
     this.renderCart(medicineId);
   },
 
