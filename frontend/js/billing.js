@@ -259,11 +259,7 @@ const Billing = {
   },
 
   removeFromCart(index) {
-    const removedItem = this.cart[index];
     this.cart.splice(index, 1);
-    if (removedItem) {
-      UI.showToast(`Removed "${removedItem.medicine.name}" from cart.`, 'info');
-    }
     this.renderCart();
   },
 
