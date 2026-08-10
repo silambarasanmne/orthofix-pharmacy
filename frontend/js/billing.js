@@ -377,30 +377,17 @@ const Billing = {
       totalUnits += item.quantity;
     });
 
-    let discountAmt = 0;
-    if (this.discountType === 'percent') {
-      discountAmt = (subtotal * this.discountValue) / 100;
-    } else {
-      discountAmt = this.discountValue;
-    }
-
-    if (discountAmt > subtotal) {
-      discountAmt = subtotal;
-    }
-
-    const grandTotal = Math.max(0, subtotal - discountAmt);
+    const grandTotal = Math.max(0, subtotal);
     this.amountReceived = grandTotal;
 
     // Render summary UI
     const subtotalEl = document.getElementById('summary-subtotal');
-    const discountEl = document.getElementById('summary-discount');
     const grandTotalEl = document.getElementById('summary-grand-total');
     const completeBtn = document.getElementById('btn-complete-sale');
     const footQtyEl = document.getElementById('foot-total-qty');
     const footAmountEl = document.getElementById('foot-total-amount');
 
     if (subtotalEl) subtotalEl.textContent = UI.formatCurrency(subtotal);
-    if (discountEl) discountEl.textContent = `-${UI.formatCurrency(discountAmt)}`;
     if (grandTotalEl) grandTotalEl.textContent = UI.formatCurrency(grandTotal);
     if (footQtyEl) footQtyEl.textContent = `${totalUnits} Unit${totalUnits === 1 ? '' : 's'}`;
     if (footAmountEl) footAmountEl.textContent = UI.formatCurrency(subtotal);
@@ -423,24 +410,14 @@ const Billing = {
     let subtotal = 0;
     this.cart.forEach(item => { subtotal += item.total_price; });
 
-    let discountAmt = 0;
-    if (this.discountType === 'percent') {
-      discountAmt = (subtotal * this.discountValue) / 100;
-    } else {
-      discountAmt = this.discountValue;
-    }
-    if (discountAmt > subtotal) discountAmt = subtotal;
-
-    const grandTotal = Math.max(0, subtotal - discountAmt);
+    const grandTotal = Math.max(0, subtotal);
 
     const nameEl = document.getElementById('panel-bill-name');
     const totalEl = document.getElementById('panel-total-amount');
-    const discEl = document.getElementById('panel-discount');
     const finalEl = document.getElementById('panel-final-total');
 
     if (nameEl) nameEl.textContent = customerName;
     if (totalEl) totalEl.textContent = UI.formatCurrency(subtotal);
-    if (discEl) discEl.textContent = `-${UI.formatCurrency(discountAmt)}`;
     if (finalEl) finalEl.textContent = UI.formatCurrency(grandTotal);
 
     UI.openModal('modal-submit-summary');
@@ -454,9 +431,7 @@ const Billing = {
 
     let subtotal = 0;
     this.cart.forEach(item => { subtotal += item.total_price; });
-    let discountAmt = (this.discountType === 'percent') ? (subtotal * this.discountValue) / 100 : this.discountValue;
-    if (discountAmt > subtotal) discountAmt = subtotal;
-    const grandTotal = Math.max(0, subtotal - discountAmt);
+    const grandTotal = Math.max(0, subtotal);
 
     const payload = {
       items: this.cart.map(item => ({
@@ -465,8 +440,8 @@ const Billing = {
       })),
       customer_name: customerName,
       customer_phone: customerPhone,
-      discount_type: this.discountType,
-      discount_value: this.discountValue,
+      discount_type: 'fixed',
+      discount_value: 0,
       payment_method: 'Cash',
       amount_received: grandTotal
     };
