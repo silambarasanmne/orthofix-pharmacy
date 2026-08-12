@@ -50,7 +50,7 @@
             <span class="nav-icon text-lg w-6 text-center text-sky-400"><i class="fa-solid fa-receipt"></i></span> <span class="nav-text">Billing / POS</span>
           </a>
         </li>
-        <li>
+        <li class="admin-only">
           <a href="/dashboard.html" class="nav-link active flex items-center gap-3 px-3 py-2.5 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 transition-all">
             <span class="nav-icon text-lg w-6 text-center"><i class="fa-solid fa-chart-line"></i></span> <span class="nav-text">Dashboard</span>
           </a>
@@ -118,10 +118,10 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div class="stat-card bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
             <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl flex-shrink-0 shadow-inner">
-              <i class="fa-solid fa-wallet"></i>
+              <i class="fa-solid fa-money-bill-wave"></i>
             </div>
             <div class="stat-info">
-              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Today's Revenue</h3>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Today's Cash Revenue</h3>
               <div class="stat-value text-2xl font-extrabold text-slate-900 mt-0.5" id="stat-today-revenue">₹0.00</div>
             </div>
           </div>
@@ -131,7 +131,7 @@
               <i class="fa-solid fa-calendar-check"></i>
             </div>
             <div class="stat-info">
-              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">This Month's Revenue</h3>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">This Month's Cash Revenue</h3>
               <div class="stat-value text-2xl font-extrabold text-slate-900 mt-0.5" id="stat-month-revenue">₹0.00</div>
             </div>
           </div>
@@ -141,7 +141,7 @@
               <i class="fa-solid fa-trophy"></i>
             </div>
             <div class="stat-info">
-              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">This Year's Revenue</h3>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">This Year's Cash Revenue</h3>
               <div class="stat-value text-2xl font-extrabold text-slate-900 mt-0.5" id="stat-year-revenue">₹0.00</div>
             </div>
           </div>
@@ -195,19 +195,60 @@
           <div class="lg:col-span-2 bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
             <div class="chart-header flex justify-between items-center mb-4">
               <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-chart-area text-sky-600"></i> Daily Sales Trend (Past 7 Days)
+                <i class="fa-solid fa-chart-area text-sky-600"></i> Daily Cash Sales Trend (Past 7 Days)
               </h3>
             </div>
             <canvas id="chart-daily-sales" height="130"></canvas>
           </div>
 
-          <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
-            <div class="chart-header flex justify-between items-center mb-4">
+          <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+            <div class="chart-header flex justify-between items-center mb-3">
               <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-pie-chart text-teal-600"></i> Payment Methods
+                <i class="fa-solid fa-money-bill-wave text-emerald-600"></i> Cash Transaction Summary
               </h3>
+              <span class="px-2.5 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-extrabold rounded-full uppercase">100% Cash</span>
             </div>
-            <canvas id="chart-payment-methods" height="130"></canvas>
+            
+            <div class="space-y-3 my-auto">
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                  </div>
+                  <div>
+                    <div class="text-[11px] font-bold text-slate-500">Total Cash Bills</div>
+                    <div class="text-xs font-semibold text-slate-400">All-time count</div>
+                  </div>
+                </div>
+                <div class="text-base font-extrabold text-slate-800" id="cash-stat-total-bills">0</div>
+              </div>
+
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-calculator"></i>
+                  </div>
+                  <div>
+                    <div class="text-[11px] font-bold text-slate-500">Average Cash Bill</div>
+                    <div class="text-xs font-semibold text-slate-400">Per customer</div>
+                  </div>
+                </div>
+                <div class="text-base font-extrabold text-slate-800" id="cash-stat-avg-bill">₹0.00</div>
+              </div>
+
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-tags"></i>
+                  </div>
+                  <div>
+                    <div class="text-[11px] font-bold text-slate-500">Total Cash Discounts</div>
+                    <div class="text-xs font-semibold text-slate-400">Offered on cash</div>
+                  </div>
+                </div>
+                <div class="text-base font-extrabold text-amber-600" id="cash-stat-discounts">₹0.00</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -215,7 +256,7 @@
           <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
             <div class="chart-header flex justify-between items-center mb-4">
               <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-chart-column text-indigo-600"></i> Monthly Revenue Comparison
+                <i class="fa-solid fa-chart-column text-indigo-600"></i> Monthly Cash Revenue Comparison
               </h3>
             </div>
             <canvas id="chart-monthly-sales" height="130"></canvas>
@@ -224,7 +265,7 @@
           <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
             <div class="chart-header flex justify-between items-center mb-4">
               <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-award text-amber-500"></i> Top 5 Selling Medicines
+                <i class="fa-solid fa-award text-amber-500"></i> Top 5 Selling Medicines (Cash Sales)
               </h3>
             </div>
             <canvas id="chart-top-selling" height="130"></canvas>

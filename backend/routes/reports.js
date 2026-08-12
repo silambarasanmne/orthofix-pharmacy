@@ -4,17 +4,28 @@ const XLSX = require('xlsx');
 const db = require('../database');
 const { authenticateToken, requireAdmin } = require('./auth');
 
-// GET /api/reports/dashboard - Revenue & Analytics overview
-router.get('/dashboard', authenticateToken, (req, res) => {
+// GET /api/reports/dashboard - Revenue & Analytics overview (Admin Only)
+router.get('/dashboard', authenticateToken, requireAdmin, (req, res) => {
   try {
     const todayStr = new Date().toISOString().split('T')[0];
     const monthStr = todayStr.substring(0, 7); // YYYY-MM
     const yearStr = todayStr.substring(0, 4);  // YYYY
 
-    // 1. Revenue Summaries
-    const todayRev = db.prepare("SELECT SUM(grand_total) as total, COUNT(*) as count FROM sales WHERE date(created_at) = date(?)").get(todayStr);
-    const monthRev = db.prepare("SELECT SUM(grand_total) as total, COUNT(*) as count FROM sales WHERE strftime('%Y-%m', created_at) = ?").get(monthStr);
-    const yearRev = db.prepare("SELECT SUM(grand_total) as total, COUNT(*) as count FROM sales WHERE strftime('%Y', created_at) = ?").get(yearStr);
+    // 1. Revenue Summaries (Cash Only)
+    const todayRev = db.prepare("SELECT SUM(grand_total) as total, COUNT(*) as count FROM sales WHERE date(created_at) = date(?) AND payment_method = 'Cash'").get(todayStr);
+    const monthRev = db.prepare("SELECT SUM(grand_total) as total, COUNT(*) as count FROM sales WHERE strftime('%Y-%m', created_at) = ? AND payment_method = 'Cash'").get(monthStr);
+    const yearRev = db.prepare("SELECT SUM(grand_total) as total, COUNT(*) as count FROM sales WHERE strftime('%Y', created_at) = ? AND payment_method = 'Cash'").get(yearStr);
+
+    // Cash Overview Metrics
+    const cashOverview = db.prepare(`
+      SELECT 
+        COUNT(*) as total_bills,
+        COALESCE(SUM(grand_total), 0) as total_revenue,
+        COALESCE(AVG(grand_total), 0) as avg_bill,
+        COALESCE(SUM(discount_amount), 0) as total_discounts
+      FROM sales
+      WHERE payment_method = 'Cash'
+    `).get();
 
     // 2. Inventory Cards
     const totalMeds = db.prepare("SELECT COUNT(*) as count FROM medicines").get().count;
@@ -24,14 +35,14 @@ router.get('/dashboard', authenticateToken, (req, res) => {
     const in90Days = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
     const expiringSoon = db.prepare("SELECT COUNT(*) as count FROM medicines WHERE expiry_date >= ? AND expiry_date <= ?").get(todayStr, in90Days).count;
 
-    // 3. Chart Datasets
+    // 3. Chart Datasets (Cash Only)
     // Daily sales past 7 days
     const dailySalesData = [];
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
       d.setDate(d.getDate() - i);
       const dStr = d.toISOString().split('T')[0];
-      const sum = db.prepare("SELECT SUM(grand_total) as total FROM sales WHERE date(created_at) = date(?)").get(dStr).total || 0;
+      const sum = db.prepare("SELECT SUM(grand_total) as total FROM sales WHERE date(created_at) = date(?) AND payment_method = 'Cash'").get(dStr).total || 0;
       dailySalesData.push({
         date: dStr,
         label: d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }),
@@ -39,33 +50,28 @@ router.get('/dashboard', authenticateToken, (req, res) => {
       });
     }
 
-    // Monthly sales for current year
+    // Monthly sales for current year (Cash Only)
     const monthlySalesData = [];
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     for (let m = 1; m <= 12; m++) {
       const mPad = String(m).padStart(2, '0');
       const key = `${yearStr}-${mPad}`;
-      const sum = db.prepare("SELECT SUM(grand_total) as total FROM sales WHERE strftime('%Y-%m', created_at) = ?").get(key).total || 0;
+      const sum = db.prepare("SELECT SUM(grand_total) as total FROM sales WHERE strftime('%Y-%m', created_at) = ? AND payment_method = 'Cash'").get(key).total || 0;
       monthlySalesData.push({
         month: monthNames[m - 1],
         sales: sum
       });
     }
 
-    // Top Selling Medicines
+    // Top Selling Medicines (Cash Only)
     const topSelling = db.prepare(`
-      SELECT medicine_name, SUM(quantity) as total_qty, SUM(total_price) as total_revenue
-      FROM sale_items
-      GROUP BY medicine_name
+      SELECT si.medicine_name, SUM(si.quantity) as total_qty, SUM(si.total_price) as total_revenue
+      FROM sale_items si
+      JOIN sales s ON si.sale_id = s.id
+      WHERE s.payment_method = 'Cash'
+      GROUP BY si.medicine_name
       ORDER BY total_qty DESC
       LIMIT 5
-    `).all();
-
-    // Payment Methods breakdown
-    const paymentMethods = db.prepare(`
-      SELECT payment_method, COUNT(*) as count, SUM(grand_total) as amount
-      FROM sales
-      GROUP BY payment_method
     `).all();
 
     return res.json({
@@ -78,6 +84,12 @@ router.get('/dashboard', authenticateToken, (req, res) => {
         year: yearRev.total || 0,
         year_count: yearRev.count || 0
       },
+      cash_summary: {
+        total_bills: cashOverview.total_bills || 0,
+        total_revenue: cashOverview.total_revenue || 0,
+        avg_bill: cashOverview.avg_bill || 0,
+        total_discounts: cashOverview.total_discounts || 0
+      },
       inventory: {
         total_medicines: totalMeds,
         low_stock: lowStock,
@@ -87,8 +99,7 @@ router.get('/dashboard', authenticateToken, (req, res) => {
       charts: {
         daily_sales: dailySalesData,
         monthly_sales: monthlySalesData,
-        top_selling: topSelling,
-        payment_methods: paymentMethods
+        top_selling: topSelling
       }
     });
   } catch (error) {
