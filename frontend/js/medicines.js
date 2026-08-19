@@ -135,9 +135,9 @@ const Medicines = {
           <td><span class="badge ${badgeClass}">${m.stock_status}</span></td>
           <td>
             <div style="display: flex; gap: 0.35rem;">
-              <button class="btn btn-secondary btn-sm" onclick="Medicines.openStockModal(${m.id})" title="Adjust Stock">📦 Stock</button>
-              <button class="btn btn-primary btn-sm" onclick="Medicines.openEditModal(${m.id})" title="Edit Medicine">✏️ Edit</button>
-              <button class="btn btn-danger btn-sm" onclick="Medicines.deleteMedicine(${m.id})" title="Delete Medicine">🗑️</button>
+              <button class="btn btn-secondary btn-sm flex items-center gap-1" onclick="Medicines.openStockModal(${m.id})" title="Adjust Stock"><i class="fa-solid fa-boxes-stacked"></i> Stock</button>
+              <button class="btn btn-primary btn-sm flex items-center gap-1" onclick="Medicines.openEditModal(${m.id})" title="Edit Medicine"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+              <button class="btn btn-danger btn-sm flex items-center justify-center" onclick="Medicines.deleteMedicine(${m.id})" title="Delete Medicine"><i class="fa-solid fa-trash-can"></i></button>
             </div>
           </td>
         </tr>
@@ -147,7 +147,7 @@ const Medicines = {
 
   openAddModal() {
     this.editingId = null;
-    document.getElementById('modal-med-title').textContent = '➕ Add New Medicine';
+    document.getElementById('modal-med-title').innerHTML = '<i class="fa-solid fa-plus text-sky-600 mr-2"></i>Add New Medicine';
     document.getElementById('form-medicine').reset();
     document.getElementById('med-id-hidden').value = '';
     UI.openModal('modal-medicine');
@@ -158,7 +158,7 @@ const Medicines = {
     if (!med) return;
 
     this.editingId = id;
-    document.getElementById('modal-med-title').textContent = '✏️ Edit Medicine';
+    document.getElementById('modal-med-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-sky-600 mr-2"></i>Edit Medicine';
     document.getElementById('med-id-hidden').value = med.id;
     document.getElementById('med-name').value = med.name;
     document.getElementById('med-generic').value = med.generic_name;

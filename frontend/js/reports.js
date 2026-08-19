@@ -72,20 +72,35 @@ const Reports = {
         <td>${UI.formatDateTime(s.created_at)}</td>
         <td>
           <strong>${s.customer_name || 'Walk-in Customer'}</strong>
-          ${s.customer_phone ? `<br><small style="color: #64748b;">📱 ${s.customer_phone}</small>` : ''}
+          ${s.customer_phone ? `<br><small style="color: #64748b;"><i class="fa-solid fa-phone text-xs mr-1 text-slate-400"></i>${s.customer_phone}</small>` : ''}
         </td>
         <td>${UI.formatCurrency(s.subtotal)}</td>
         <td style="color: #ef4444;">-${UI.formatCurrency(s.discount_amount)}</td>
         <td style="font-weight: 800; color: #0f172a;">${UI.formatCurrency(s.grand_total)}</td>
         <td><span class="badge badge-instock">${s.payment_method}</span></td>
         <td><small style="color: #64748b;">${s.worker_name}</small></td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="Reports.viewInvoice('${s.invoice_number}')">
-            👁️ Invoice
+        <td style="text-align: center;">
+          <button class="btn btn-primary btn-sm px-3 py-1.5 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl text-xs font-bold shadow-sm flex items-center justify-center gap-1.5 transition-all mx-auto" onclick="Reports.downloadInvoicePDF('${s.invoice_number}')">
+            <i class="fa-solid fa-file-pdf text-red-300"></i> Download PDF
           </button>
         </td>
       </tr>
     `).join('');
+  },
+
+  async downloadInvoicePDF(invoiceNumber) {
+    try {
+      UI.showToast('Preparing PDF download...', 'info');
+      const res = await API.get(`/billing/invoice/${invoiceNumber}`);
+      if (res.success && res.invoice) {
+        await UI.downloadInvoiceAsPDF(res.invoice);
+      } else {
+        UI.showToast('Failed to fetch invoice details.', 'error');
+      }
+    } catch (error) {
+      console.error('Failed to download invoice PDF:', error);
+      UI.showToast('Failed to download invoice PDF.', 'error');
+    }
   },
 
   async viewInvoice(invoiceNumber) {
@@ -158,8 +173,10 @@ const Reports = {
         <td style="font-weight:800; color:#0284c7;">${UI.formatCurrency(s.grand_total)}</td>
         <td><span class="badge badge-instock">${s.payment_method}</span></td>
         <td>${s.worker_name}</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="Reports.viewInvoice('${s.invoice_number}')">View</button>
+        <td style="text-align: center;">
+          <button class="btn btn-primary btn-sm px-3 py-1.5 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl text-xs font-bold shadow-sm flex items-center justify-center gap-1.5 transition-all mx-auto" onclick="Reports.downloadInvoicePDF('${s.invoice_number}')">
+            <i class="fa-solid fa-file-pdf text-red-300"></i> Download PDF
+          </button>
         </td>
       </tr>
     `).join('');

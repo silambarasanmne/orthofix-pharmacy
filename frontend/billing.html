@@ -46,7 +46,7 @@
         <li class="menu-category text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2">Main Menu</li>
         <li>
           <a href="/billing.html" class="nav-link active flex items-center gap-3 px-3 py-2.5 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 transition-all">
-            <span class="nav-icon text-lg w-6 text-center"><i class="fa-solid fa-receipt"></i></span> <span class="nav-text">Billing / POS</span>
+            <span class="nav-icon text-lg w-6 text-center text-white"><i class="fa-solid fa-receipt"></i></span> <span class="nav-text">Billing / POS</span>
           </a>
         </li>
         <li class="admin-only">
@@ -80,10 +80,10 @@
 
       <div class="sidebar-footer p-3.5 border-t border-slate-800/80 bg-slate-950/60 flex items-center justify-between whitespace-nowrap">
         <div class="user-badge flex items-center gap-3">
-          <div class="avatar w-9 h-9 rounded-full bg-gradient-to-tr from-sky-500 to-sky-400 text-white font-extrabold text-xs flex items-center justify-center shadow-md shadow-sky-500/20 flex-shrink-0" id="user-avatar">U</div>
-          <div class="user-meta">
-            <h4 class="text-xs font-bold text-slate-100 leading-tight" id="user-full-name">User Name</h4>
-            <span class="text-[10px] font-semibold text-sky-400" id="user-role-badge">Role</span>
+          <div class="user-avatar w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center text-xs border border-sky-500/30" id="user-avatar-initials">AD</div>
+          <div class="user-info">
+            <div class="user-name text-xs font-bold text-slate-200 leading-none" id="sidebar-user-name">Administrator</div>
+            <div class="user-role text-[10px] text-sky-400 font-semibold" id="sidebar-user-role">Manager</div>
           </div>
         </div>
         <button class="btn-logout-icon text-slate-400 hover:text-rose-400 hover:bg-rose-500/15 p-2 rounded-lg transition-colors cursor-pointer" onclick="Auth.logout()" title="Logout">
@@ -100,7 +100,7 @@
             <i class="fa-solid fa-bars text-sm"></i>
           </button>
           <div class="header-title">
-            <h2 class="text-base font-extrabold text-slate-900 tracking-tight">Retail Pharmacy POS Billing</h2>
+            <h2 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center"><i class="fa-solid fa-receipt text-sky-600 mr-2"></i>Retail Pharmacy POS Billing</h2>
             <p class="text-xs text-slate-500 font-medium">Search medicines, add items to cart, adjust quantities, and print invoices</p>
           </div>
         </div>

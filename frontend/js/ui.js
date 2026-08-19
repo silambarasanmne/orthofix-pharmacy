@@ -205,6 +205,43 @@ const UI = {
         </div>
       </div>
     `;
+  },
+  async downloadInvoiceAsPDF(invoice) {
+    if (!invoice) return;
+    const container = document.createElement('div');
+    container.style.position = 'fixed';
+    container.style.left = '-9999px';
+    container.style.top = '0';
+    container.style.width = '790px';
+    container.style.backgroundColor = '#ffffff';
+    container.style.padding = '24px';
+    container.style.boxSizing = 'border-box';
+    container.style.zIndex = '-9999';
+    container.innerHTML = UI.renderInvoiceHtml(invoice);
+    document.body.appendChild(container);
+
+    try {
+      if (typeof html2pdf !== 'undefined') {
+        const opt = {
+          margin: [0.3, 0.4, 0.3, 0.4],
+          filename: `${invoice.invoice_number || 'Invoice'}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+        await html2pdf().set(opt).from(container).save();
+        UI.showToast(`Invoice ${invoice.invoice_number} downloaded as PDF`, 'success');
+      } else {
+        UI.showToast('PDF library loading...', 'warning');
+      }
+    } catch (err) {
+      console.error('PDF Generation Error:', err);
+      UI.showToast('Failed to generate PDF document.', 'error');
+    } finally {
+      if (container.parentNode) {
+        container.parentNode.removeChild(container);
+      }
+    }
   }
 };
 
@@ -213,3 +250,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.UI = UI;
+

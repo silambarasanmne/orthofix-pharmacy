@@ -69,11 +69,11 @@ const UserMgmt = {
           <td>${statusBadge}</td>
           <td>
             <div style="display: flex; gap: 0.35rem;">
-              <button class="btn btn-secondary btn-sm" onclick="UserMgmt.openEditModal(${u.id})">✏️ Edit</button>
-              <button class="btn btn-secondary btn-sm" onclick="UserMgmt.openResetPasswordModal(${u.id})">🔑 Password</button>
+              <button class="btn btn-secondary btn-sm flex items-center gap-1" onclick="UserMgmt.openEditModal(${u.id})"><i class="fa-solid fa-user-pen"></i> Edit</button>
+              <button class="btn btn-secondary btn-sm flex items-center gap-1" onclick="UserMgmt.openResetPasswordModal(${u.id})"><i class="fa-solid fa-key"></i> Password</button>
               ${!isSelf ? `
-                <button class="btn ${u.is_active ? 'btn-danger' : 'btn-success'} btn-sm" onclick="UserMgmt.toggleStatus(${u.id}, ${u.is_active})">
-                  ${u.is_active ? 'Deactivate' : 'Activate'}
+                <button class="btn ${u.is_active ? 'btn-danger' : 'btn-success'} btn-sm flex items-center gap-1" onclick="UserMgmt.toggleStatus(${u.id}, ${u.is_active})">
+                  <i class="fa-solid ${u.is_active ? 'fa-user-xmark' : 'fa-user-check'}"></i> ${u.is_active ? 'Deactivate' : 'Activate'}
                 </button>
               ` : ''}
             </div>
@@ -85,7 +85,7 @@ const UserMgmt = {
 
   openAddModal() {
     this.editingId = null;
-    document.getElementById('modal-user-title').textContent = '➕ Add New Worker / User';
+    document.getElementById('modal-user-title').innerHTML = '<i class="fa-solid fa-user-plus text-sky-600 mr-2"></i>Add New Worker / User';
     document.getElementById('form-user').reset();
     document.getElementById('user-password-group').style.display = 'flex';
     document.getElementById('user-password-input').required = true;
@@ -97,7 +97,7 @@ const UserMgmt = {
     if (!user) return;
 
     this.editingId = id;
-    document.getElementById('modal-user-title').textContent = '✏️ Edit User Details';
+    document.getElementById('modal-user-title').innerHTML = '<i class="fa-solid fa-user-pen text-sky-600 mr-2"></i>Edit User Details';
     document.getElementById('user-username').value = user.username;
     document.getElementById('user-username').disabled = true; // Cannot edit username
     document.getElementById('user-fullname').value = user.full_name;
