@@ -372,18 +372,29 @@ const Billing = {
       totalUnits += item.quantity;
     });
 
-    const grandTotal = Math.max(0, subtotal);
+    let discountAmt = 0;
+    if (this.discountType === 'percent') {
+      discountAmt = (subtotal * (this.discountValue || 0)) / 100;
+    } else {
+      discountAmt = this.discountValue || 0;
+    }
+
+    const grandTotal = Math.max(0, subtotal - discountAmt);
     this.amountReceived = grandTotal;
 
     // Render summary UI
     const subtotalEl = document.getElementById('summary-subtotal');
     const grandTotalEl = document.getElementById('summary-grand-total');
+    const panelTotalEl = document.getElementById('panel-total-amount');
+    const panelFinalEl = document.getElementById('panel-final-total');
     const completeBtn = document.getElementById('btn-complete-sale');
     const footQtyEl = document.getElementById('foot-total-qty');
     const footAmountEl = document.getElementById('foot-total-amount');
 
     if (subtotalEl) subtotalEl.textContent = UI.formatCurrency(subtotal);
     if (grandTotalEl) grandTotalEl.textContent = UI.formatCurrency(grandTotal);
+    if (panelTotalEl) panelTotalEl.textContent = UI.formatCurrency(subtotal);
+    if (panelFinalEl) panelFinalEl.textContent = UI.formatCurrency(grandTotal);
     if (footQtyEl) footQtyEl.textContent = `${totalUnits} Unit${totalUnits === 1 ? '' : 's'}`;
     if (footAmountEl) footAmountEl.textContent = UI.formatCurrency(subtotal);
 
@@ -405,7 +416,14 @@ const Billing = {
     let subtotal = 0;
     this.cart.forEach(item => { subtotal += item.total_price; });
 
-    const grandTotal = Math.max(0, subtotal);
+    let discountAmt = 0;
+    if (this.discountType === 'percent') {
+      discountAmt = (subtotal * (this.discountValue || 0)) / 100;
+    } else {
+      discountAmt = this.discountValue || 0;
+    }
+
+    const grandTotal = Math.max(0, subtotal - discountAmt);
 
     const nameEl = document.getElementById('panel-bill-name');
     const totalEl = document.getElementById('panel-total-amount');
@@ -418,6 +436,8 @@ const Billing = {
     UI.openModal('modal-submit-summary');
   },
 
+  lastSavedInvoice: null,
+
   async confirmAndSaveBill() {
     if (this.cart.length === 0) return;
 
@@ -426,7 +446,15 @@ const Billing = {
 
     let subtotal = 0;
     this.cart.forEach(item => { subtotal += item.total_price; });
-    const grandTotal = Math.max(0, subtotal);
+
+    let discountAmt = 0;
+    if (this.discountType === 'percent') {
+      discountAmt = (subtotal * (this.discountValue || 0)) / 100;
+    } else {
+      discountAmt = this.discountValue || 0;
+    }
+
+    const grandTotal = Math.max(0, subtotal - discountAmt);
 
     const payload = {
       items: this.cart.map(item => ({
@@ -435,10 +463,10 @@ const Billing = {
       })),
       customer_name: customerName,
       customer_phone: customerPhone,
-      discount_type: 'fixed',
-      discount_value: 0,
-      payment_method: 'Cash',
-      amount_received: grandTotal
+      discount_type: this.discountType || 'fixed',
+      discount_value: this.discountValue || 0,
+      payment_method: this.paymentMethod || 'Cash',
+      amount_received: this.amountReceived || grandTotal
     };
 
     try {
@@ -446,9 +474,22 @@ const Billing = {
       if (btn) btn.disabled = true;
 
       const res = await API.post('/billing/sale', payload);
-      if (res.success) {
+      if (res.success && res.invoice) {
+        this.lastSavedInvoice = res.invoice;
+
         UI.closeModal('modal-submit-summary');
-        UI.showToast(`✅ Bill INV-${res.invoice.invoice_number} saved successfully! Database updated.`, 'success');
+
+        // Populate Success & Print Modal
+        const invNumEl = document.getElementById('success-inv-number');
+        const custNameEl = document.getElementById('success-customer-name');
+        const grandTotalEl = document.getElementById('success-total-amount');
+
+        if (invNumEl) invNumEl.textContent = res.invoice.invoice_number;
+        if (custNameEl) custNameEl.textContent = res.invoice.customer_name || 'Walk-in Customer';
+        if (grandTotalEl) grandTotalEl.textContent = UI.formatCurrency(res.invoice.grand_total);
+
+        UI.openModal('modal-bill-success');
+        UI.showToast(`✅ Bill ${res.invoice.invoice_number} submitted successfully!`, 'success');
         
         // Reset Cart & Return to Clean Billing Screen
         this.clearCart();
@@ -466,6 +507,27 @@ const Billing = {
       const btn = document.getElementById('btn-confirm-save-bill');
       if (btn) btn.disabled = false;
     }
+  },
+
+  printSavedInvoice() {
+    if (!this.lastSavedInvoice) {
+      UI.showToast('No recent invoice found to print.', 'warning');
+      return;
+    }
+    UI.closeModal('modal-bill-success');
+    UI.printInvoice(this.lastSavedInvoice);
+  },
+
+  async downloadSavedInvoicePDF() {
+    if (!this.lastSavedInvoice) {
+      UI.showToast('No recent invoice found.', 'warning');
+      return;
+    }
+    await UI.downloadInvoiceAsPDF(this.lastSavedInvoice);
+  },
+
+  closeSuccessModal() {
+    UI.closeModal('modal-bill-success');
   }
 };
 

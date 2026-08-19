@@ -6,7 +6,10 @@ const { authenticateToken } = require('./auth');
 // Helper to generate unique sequential Invoice Number: INV-YYYYMMDD-XXXX
 function generateInvoiceNumber() {
   const now = new Date();
-  const dateStr = now.toISOString().split('T')[0].replace(/-/g, ''); // YYYYMMDD
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const dateStr = `${year}${month}${day}`;
   const prefix = `INV-${dateStr}-`;
 
   const stmt = db.prepare("SELECT invoice_number FROM sales WHERE invoice_number LIKE ? ORDER BY id DESC LIMIT 1");
@@ -135,63 +138,74 @@ router.post('/sale', authenticateToken, (req, res) => {
 
     const invoiceNumber = generateInvoiceNumber();
 
-    // 4. Perform Transactional Save
-    const insertSale = db.prepare(`
-      INSERT INTO sales 
-      (invoice_number, customer_name, customer_phone, customer_address, subtotal, discount_type, discount_value, discount_amount, grand_total, payment_method, amount_received, change_amount, worker_id, worker_name)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `);
+    // 4. Perform Atomic Transactional Save
+    db.exec('BEGIN TRANSACTION;');
+    let saleId = null;
 
-    const saleResult = insertSale.run(
-      invoiceNumber,
-      customer_name ? customer_name.trim() : 'Walk-in Customer',
-      customer_phone ? customer_phone.trim() : '',
-      customer_address ? customer_address.trim() : '',
-      calculatedSubtotal,
-      discount_type || 'fixed',
-      discVal,
-      discountAmt,
-      grandTotal,
-      payment_method,
-      amtReceived,
-      changeAmt,
-      req.user.id,
-      req.user.full_name
-    );
+    try {
+      const insertSale = db.prepare(`
+        INSERT INTO sales 
+        (invoice_number, customer_name, customer_phone, customer_address, subtotal, discount_type, discount_value, discount_amount, grand_total, payment_method, amount_received, change_amount, worker_id, worker_name)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `);
 
-    const saleId = saleResult.lastInsertRowid;
-
-    const insertSaleItem = db.prepare(`
-      INSERT INTO sale_items (sale_id, medicine_id, medicine_name, generic_name, batch_number, unit_price, quantity, total_price)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `);
-
-    const updateStock = db.prepare(`
-      UPDATE medicines SET current_stock = current_stock - ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?
-    `);
-
-    const insertStockMovement = db.prepare(`
-      INSERT INTO stock_movements (medicine_id, medicine_name, previous_quantity, change_quantity, new_quantity, reason, user_name)
-      VALUES (?, ?, ?, ?, ?, 'Customer Sale', ?)
-    `);
-
-    for (const vi of validatedItems) {
-      insertSaleItem.run(
-        saleId,
-        vi.medicine.id,
-        vi.medicine.name,
-        vi.medicine.generic_name,
-        vi.medicine.batch_number,
-        vi.unit_price,
-        vi.quantity,
-        vi.item_total
+      const saleResult = insertSale.run(
+        invoiceNumber,
+        customer_name ? customer_name.trim() : 'Walk-in Customer',
+        customer_phone ? customer_phone.trim() : '',
+        customer_address ? customer_address.trim() : '',
+        calculatedSubtotal,
+        discount_type || 'fixed',
+        discVal,
+        discountAmt,
+        grandTotal,
+        payment_method,
+        amtReceived,
+        changeAmt,
+        req.user.id,
+        req.user.full_name
       );
 
-      const prevStock = vi.medicine.current_stock;
-      const newStock = prevStock - vi.quantity;
+      saleId = saleResult.lastInsertRowid;
 
-      updateStock.run(vi.quantity, vi.medicine.id);
-      insertStockMovement.run(vi.medicine.id, vi.medicine.name, prevStock, -vi.quantity, newStock, req.user.full_name);
+      const insertSaleItem = db.prepare(`
+        INSERT INTO sale_items (sale_id, medicine_id, medicine_name, generic_name, batch_number, unit_price, quantity, total_price)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+
+      const updateStock = db.prepare(`
+        UPDATE medicines SET current_stock = current_stock - ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?
+      `);
+
+      const insertStockMovement = db.prepare(`
+        INSERT INTO stock_movements (medicine_id, medicine_name, previous_quantity, change_quantity, new_quantity, reason, user_name)
+        VALUES (?, ?, ?, ?, ?, 'Customer Sale', ?)
+      `);
+
+      for (const vi of validatedItems) {
+        insertSaleItem.run(
+          saleId,
+          vi.medicine.id,
+          vi.medicine.name,
+          vi.medicine.generic_name,
+          vi.medicine.batch_number,
+          vi.unit_price,
+          vi.quantity,
+          vi.item_total
+        );
+
+        const prevStock = vi.medicine.current_stock;
+        const newStock = prevStock - vi.quantity;
+
+        updateStock.run(vi.quantity, vi.medicine.id);
+        insertStockMovement.run(vi.medicine.id, vi.medicine.name, prevStock, -vi.quantity, newStock, req.user.full_name);
+      }
+
+      db.exec('COMMIT;');
+    } catch (txError) {
+      db.exec('ROLLBACK;');
+      console.error('Transaction Failed. Rolled back sale creation:', txError);
+      return res.status(500).json({ success: false, message: 'Failed to record sale transaction in database.' });
     }
 
     // Fetch saved complete sale detail

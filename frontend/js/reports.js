@@ -80,9 +80,14 @@ const Reports = {
         <td><span class="badge badge-instock">${s.payment_method}</span></td>
         <td><small style="color: #64748b;">${s.worker_name}</small></td>
         <td style="text-align: center;">
-          <button class="btn btn-primary btn-sm px-3 py-1.5 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl text-xs font-bold shadow-sm flex items-center justify-center gap-1.5 transition-all mx-auto" onclick="Reports.downloadInvoicePDF('${s.invoice_number}')">
-            <svg class="w-4 h-4 text-red-300 mr-1 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg> Download PDF
-          </button>
+          <div class="flex items-center justify-center gap-1.5">
+            <button type="button" class="btn btn-secondary btn-sm px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all" onclick="Reports.viewInvoice('${s.invoice_number}')" title="View & Print Invoice">
+              <svg class="w-4 h-4 text-sky-600 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+            <button type="button" class="btn btn-primary btn-sm px-3 py-1.5 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl text-xs font-bold shadow-sm flex items-center justify-center gap-1.5 transition-all" onclick="Reports.downloadInvoicePDF('${s.invoice_number}')" title="Download PDF">
+              <svg class="w-4 h-4 text-red-300 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg> Download PDF
+            </button>
+          </div>
         </td>
       </tr>
     `).join('');
@@ -115,6 +120,19 @@ const Reports = {
       }
     } catch (error) {
       UI.showToast('Failed to load invoice details.', 'error');
+    }
+  },
+
+  async printInvoiceDirect(invoiceNumber) {
+    try {
+      const res = await API.get(`/billing/invoice/${invoiceNumber}`);
+      if (res.success && res.invoice) {
+        UI.printInvoice(res.invoice);
+      } else {
+        UI.showToast('Failed to fetch invoice details.', 'error');
+      }
+    } catch (error) {
+      UI.showToast('Failed to print invoice.', 'error');
     }
   },
 

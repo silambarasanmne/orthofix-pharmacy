@@ -1147,6 +1147,104 @@ body {
   to { transform: translateX(0); opacity: 1; }
 }
 
+/* Invoice Receipt Layout & Styling for PDF & Print */
+.invoice-preview-container {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  padding: 1.5rem !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.invoice-header {
+  text-align: center;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.invoice-header p {
+  margin: 0.15rem 0;
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.invoice-meta-grid {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+}
+
+.invoice-meta-grid p {
+  margin: 0.2rem 0;
+  color: #334155;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+}
+
+.invoice-table th {
+  background-color: #f1f5f9;
+  color: #1e293b;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+.invoice-table td {
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.invoice-totals {
+  margin-left: auto;
+  width: 260px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  margin-bottom: 1rem;
+}
+
+.invoice-totals div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.3rem;
+}
+
+.invoice-totals .grand-row {
+  border-top: 1.5px solid #cbd5e1;
+  padding-top: 0.4rem;
+  margin-top: 0.4rem;
+  font-weight: 900;
+  font-size: 0.95rem;
+  color: #0284c7;
+}
+
+.invoice-footer {
+  text-align: center;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 0.75rem;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
 /* Print Media Optimizations */
 @media print {
   body * {

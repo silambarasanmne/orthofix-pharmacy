@@ -251,7 +251,7 @@
     <div class="modal-box bg-white rounded-3xl shadow-2xl w-full max-w-md flex flex-col overflow-hidden">
       <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
         <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-          <svg class="w-5 h-5 text-sky-600 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h6M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg> Bill Summary & Confirm
+          <svg class="w-5 h-5 text-sky-600 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h6M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg> Bill Summary & Payment
         </h3>
         <button class="btn-close-modal text-slate-400 hover:text-slate-700 text-lg p-1 rounded-lg" onclick="UI.closeModal('modal-submit-summary')">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -260,18 +260,37 @@
       <div class="modal-body p-6 space-y-4">
         <div class="bg-sky-50/70 border border-sky-200/80 rounded-2xl p-4 space-y-3">
           <div class="flex justify-between items-center border-b border-sky-200/60 pb-2">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Bill / Customer Name:</span>
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Customer Name:</span>
             <strong id="panel-bill-name" class="text-sm font-extrabold text-slate-900">-</strong>
           </div>
           <div class="flex justify-between items-center border-b border-sky-200/60 pb-2">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Bill Number:</span>
-            <span id="panel-bill-number" class="text-xs font-bold font-mono bg-white px-2.5 py-1 rounded-lg border border-sky-200 text-sky-700">INV-AUTO-GENERATED</span>
-          </div>
-          <div class="flex justify-between items-center border-b border-sky-200/60 pb-2">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Amount:</span>
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Subtotal:</span>
             <strong id="panel-total-amount" class="text-sm font-extrabold text-slate-800">₹0.00</strong>
           </div>
-          <div class="flex justify-between items-center pt-1">
+
+          <!-- Discount Selector Block -->
+          <div class="space-y-1.5 pt-1">
+            <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wider block">Discount (Optional):</label>
+            <div class="flex gap-2">
+              <select id="discount-type" class="p-2 border border-slate-200 rounded-xl text-xs font-bold bg-white text-slate-800 outline-none">
+                <option value="fixed">Fixed (₹)</option>
+                <option value="percent">Percent (%)</option>
+              </select>
+              <input type="number" id="discount-value" min="0" placeholder="0" class="flex-grow p-2 border border-slate-200 rounded-xl text-xs font-bold bg-white outline-none">
+            </div>
+          </div>
+
+          <!-- Payment Method Selector Block -->
+          <div class="space-y-1.5 pt-1">
+            <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wider block">Payment Mode:</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" class="pay-btn selected p-2 rounded-xl border border-sky-600 bg-sky-50 text-sky-700 font-extrabold text-xs cursor-pointer transition-all" data-method="Cash">Cash</button>
+              <button type="button" class="pay-btn p-2 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-xs cursor-pointer transition-all" data-method="UPI">UPI</button>
+              <button type="button" class="pay-btn p-2 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-xs cursor-pointer transition-all" data-method="Card">Card</button>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center pt-2 border-t border-sky-200/80">
             <span class="text-sm font-black text-slate-900 uppercase tracking-wider">Final Total:</span>
             <strong id="panel-final-total" class="text-xl font-black text-sky-600">₹0.00</strong>
           </div>
@@ -281,6 +300,46 @@
         <button type="button" class="btn btn-secondary px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors" onclick="UI.closeModal('modal-submit-summary')">Cancel</button>
         <button type="button" class="btn btn-primary px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-xl font-extrabold text-xs shadow-md shadow-emerald-600/30 flex items-center gap-2 transition-all cursor-pointer" id="btn-confirm-save-bill" onclick="Billing.confirmAndSaveBill()">
           <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg> Save & Complete Bill
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BILL SUBMITTED SUCCESS & PRINT POPUP MODAL -->
+  <div class="modal-overlay fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-200" id="modal-bill-success">
+    <div class="modal-box bg-white rounded-3xl shadow-2xl w-full max-w-md flex flex-col overflow-hidden text-center relative">
+      <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1.5 rounded-xl hover:bg-slate-100 transition-all cursor-pointer" onclick="Billing.closeSuccessModal()" title="Close Popup">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="p-6 pt-8 space-y-4">
+        <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <div>
+          <h3 class="text-lg font-extrabold text-slate-900">Bill Created Successfully!</h3>
+          <p class="text-xs text-slate-500 font-medium mt-1">Transaction recorded in system database</p>
+        </div>
+        <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 text-left space-y-2">
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-slate-500 font-bold">Invoice #:</span>
+            <strong id="success-inv-number" class="text-sky-700 font-mono font-bold">-</strong>
+          </div>
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-slate-500 font-bold">Customer:</span>
+            <span id="success-customer-name" class="text-slate-800 font-extrabold">-</span>
+          </div>
+          <div class="flex justify-between items-center text-xs pt-1 border-t border-slate-200/60">
+            <span class="text-slate-700 font-extrabold uppercase">Total Paid:</span>
+            <strong id="success-total-amount" class="text-emerald-600 font-black text-base">₹0.00</strong>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex flex-wrap justify-center gap-2.5">
+        <button type="button" class="btn px-4 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-xs shadow-md shadow-sky-600/30 flex items-center gap-2 transition-all cursor-pointer" onclick="Billing.printSavedInvoice()">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 00-2-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg> Print Invoice
+        </button>
+        <button type="button" class="btn px-4 py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-bold text-xs transition-colors cursor-pointer" onclick="Billing.closeSuccessModal()">
+          New Sale
         </button>
       </div>
     </div>
@@ -303,13 +362,14 @@
       <div class="modal-footer p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
         <button class="btn btn-secondary px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors" onclick="UI.closeModal('modal-invoice')">Close</button>
         <button class="btn btn-primary px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl font-bold text-xs shadow-md shadow-sky-600/25 flex items-center gap-2 transition-all" onclick="window.print()">
-          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg> Print Invoice
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 00-2-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg> Print Invoice
         </button>
       </div>
     </div>
   </div>
 
   <script src="/js/api.js?v=4.0"></script>
+  <script src="/js/html2pdf.bundle.min.js"></script>
   <script src="/js/ui.js?v=4.0"></script>
   <script src="/js/auth.js?v=4.0"></script>
   <script src="/js/billing.js?v=4.0"></script>

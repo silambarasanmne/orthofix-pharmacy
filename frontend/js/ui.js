@@ -244,31 +244,58 @@ const UI = {
       </div>
     `;
   },
+
+  async waitForImages(container) {
+    if (!container) return;
+    const images = Array.from(container.querySelectorAll('img'));
+    const promises = images.map(img => {
+      if (img.complete) return Promise.resolve();
+      return new Promise(resolve => {
+        img.onload = resolve;
+        img.onerror = resolve;
+      });
+    });
+    await Promise.all(promises);
+  },
+
+  getInvoiceFileName(invoice) {
+    if (!invoice) return 'Invoice.pdf';
+    const invNo = invoice.invoice_number || 'Invoice';
+    const rawCustomer = invoice.customer_name || 'Walk-in Customer';
+    const sanitizedCustomer = rawCustomer.replace(/[^a-zA-Z0-9\s_-]/g, '').trim().replace(/\s+/g, '_');
+    return `${invNo}_${sanitizedCustomer || 'Customer'}.pdf`;
+  },
+
   async downloadInvoicePdf(invoice) {
     if (!invoice || !invoice.id) return;
     UI.showToast('Preparing PDF download...', 'info');
     let container = document.createElement('div');
-    container.className = 'pdf-render-container';
+    container.className = 'pdf-render-container printable-area';
     container.style.position = 'fixed';
-    container.style.left = '-9999px';
+    container.style.left = '0';
     container.style.top = '0';
     container.style.width = '790px';
     container.style.backgroundColor = '#ffffff';
     container.style.padding = '24px';
     container.style.boxSizing = 'border-box';
-    container.style.zIndex = '-9999';
+    container.style.zIndex = '99999';
+    container.style.visibility = 'visible';
+    container.style.opacity = '1';
     container.innerHTML = UI.renderInvoiceHtml(invoice);
     document.body.appendChild(container);
 
     try {
       if (typeof html2pdf !== 'undefined') {
+        await UI.waitForImages(container);
+        const fileName = UI.getInvoiceFileName(invoice);
         const opt = {
           margin: [0.3, 0.4, 0.3, 0.4],
-          filename: `${invoice.invoice_number || 'Invoice'}.pdf`,
+          filename: fileName,
           image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true, logging: false },
+          html2canvas: { scale: 2, useCORS: true, logging: false, scrollX: 0, scrollY: 0, windowWidth: 800 },
           jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
         };
+        await new Promise(resolve => setTimeout(resolve, 200));
         await html2pdf().set(opt).from(container).save();
         UI.showToast(`Invoice ${invoice.invoice_number} downloaded as PDF`, 'success');
       } else {
@@ -282,6 +309,35 @@ const UI = {
         container.parentNode.removeChild(container);
       }
     }
+  },
+
+  async downloadInvoiceAsPDF(invoice) {
+    return this.downloadInvoicePdf(invoice);
+  },
+
+  printInvoice(invoice) {
+    if (!invoice) return;
+    // Direct print without opening modal-invoice popup dialog
+    const oldContainer = document.getElementById('direct-print-container');
+    if (oldContainer) oldContainer.remove();
+
+    const container = document.createElement('div');
+    container.id = 'direct-print-container';
+    container.className = 'printable-area';
+    container.style.position = 'absolute';
+    container.style.left = '0';
+    container.style.top = '0';
+    container.style.width = '100%';
+    container.style.backgroundColor = '#ffffff';
+    container.innerHTML = UI.renderInvoiceHtml(invoice);
+    document.body.appendChild(container);
+
+    setTimeout(() => {
+      window.print();
+      setTimeout(() => {
+        if (container.parentNode) container.parentNode.removeChild(container);
+      }, 1000);
+    }, 150);
   },
 
   initFooterLiveClock() {

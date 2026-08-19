@@ -20,17 +20,7 @@ db.exec('PRAGMA temp_store = MEMORY;');   // In-Memory Temp Storage
 db.exec('PRAGMA mmap_size = 268435456;'); // 256MB Memory Mapped I/O
 
 function initDb() {
-  // Advanced Speed Optimization Indexes
-  db.exec('CREATE INDEX IF NOT EXISTS idx_medicines_name ON medicines(name);');
-  db.exec('CREATE INDEX IF NOT EXISTS idx_medicines_category ON medicines(category);');
-  db.exec('CREATE INDEX IF NOT EXISTS idx_medicines_barcode ON medicines(barcode);');
-  db.exec('CREATE INDEX IF NOT EXISTS idx_medicines_search ON medicines(name, generic_name, category);');
-  db.exec('CREATE INDEX IF NOT EXISTS idx_medicines_stock ON medicines(current_stock, minimum_stock);');
-  db.exec('CREATE INDEX IF NOT EXISTS idx_sales_invoice ON sales(invoice_number);');
-  db.exec('CREATE INDEX IF NOT EXISTS idx_sales_created ON sales(created_at);');
-  db.exec('CREATE INDEX IF NOT EXISTS idx_sale_items_med ON sale_items(medicine_id, sale_id);');
-  db.exec('CREATE INDEX IF NOT EXISTS idx_stock_movements_med ON stock_movements(medicine_id);');
-  // Users Table
+  // 1. Users Table
   db.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,7 +34,7 @@ function initDb() {
     );
   `);
 
-  // Medicines Table
+  // 2. Medicines Table
   db.exec(`
     CREATE TABLE IF NOT EXISTS medicines (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -66,7 +56,7 @@ function initDb() {
     );
   `);
 
-  // Sales Table
+  // 3. Sales Table
   db.exec(`
     CREATE TABLE IF NOT EXISTS sales (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -88,7 +78,7 @@ function initDb() {
     );
   `);
 
-  // Sale Items Table
+  // 4. Sale Items Table
   db.exec(`
     CREATE TABLE IF NOT EXISTS sale_items (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -105,7 +95,7 @@ function initDb() {
     );
   `);
 
-  // Stock Movements Table
+  // 5. Stock Movements Table
   db.exec(`
     CREATE TABLE IF NOT EXISTS stock_movements (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -120,6 +110,17 @@ function initDb() {
       FOREIGN KEY (medicine_id) REFERENCES medicines(id)
     );
   `);
+
+  // Advanced Speed Optimization Indexes (created after tables exist)
+  db.exec('CREATE INDEX IF NOT EXISTS idx_medicines_name ON medicines(name);');
+  db.exec('CREATE INDEX IF NOT EXISTS idx_medicines_category ON medicines(category);');
+  db.exec('CREATE INDEX IF NOT EXISTS idx_medicines_barcode ON medicines(barcode);');
+  db.exec('CREATE INDEX IF NOT EXISTS idx_medicines_search ON medicines(name, generic_name, category);');
+  db.exec('CREATE INDEX IF NOT EXISTS idx_medicines_stock ON medicines(current_stock, minimum_stock);');
+  db.exec('CREATE INDEX IF NOT EXISTS idx_sales_invoice ON sales(invoice_number);');
+  db.exec('CREATE INDEX IF NOT EXISTS idx_sales_created ON sales(created_at);');
+  db.exec('CREATE INDEX IF NOT EXISTS idx_sale_items_med ON sale_items(medicine_id, sale_id);');
+  db.exec('CREATE INDEX IF NOT EXISTS idx_stock_movements_med ON stock_movements(medicine_id);');
 
   seedData();
 }
@@ -253,6 +254,40 @@ function seedHistoricalSales() {
 
   console.log('Seeded enriched sample historical sales records');
 }
+
+function checkpointDb() {
+  try {
+    db.exec('PRAGMA wal_checkpoint(TRUNCATE);');
+  } catch (err) {
+    console.error('WAL Checkpoint Error:', err.message);
+  }
+}
+
+// Perform Startup Database Health & Integrity Audit
+try {
+  const integrity = db.prepare('PRAGMA integrity_check;').get();
+  if (integrity && integrity.integrity_check === 'ok') {
+    console.log('✅ SQLite Database integrity verified: OK (WAL Mode)');
+  } else {
+    console.warn('⚠️ Database Integrity Notice:', integrity);
+  }
+} catch (err) {
+  console.error('Database Integrity Check Failed:', err.message);
+}
+
+// Run WAL Checkpoint on startup to consolidate pending transactions
+checkpointDb();
+
+// Register Process Exit Handlers for Clean WAL Flush and Database Unlocking
+process.on('SIGINT', () => {
+  checkpointDb();
+  process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+  checkpointDb();
+  process.exit(0);
+});
 
 initDb();
 
