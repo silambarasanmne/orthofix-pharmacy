@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ORTHOFIX SPECIALITY CLINIC — Worker Management</title>
+  <title>ORTHOFIX SPECIALITY CLINIC — Worker & Staff Management</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -26,7 +26,6 @@
       }
     }
   </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
@@ -46,34 +45,34 @@
         <li class="menu-category text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2">Main Menu</li>
         <li>
           <a href="/billing.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-sky-400"><i class="fa-solid fa-receipt"></i></span> <span class="nav-text">Billing / POS</span>
+            <span class="nav-icon text-lg w-6 text-center text-sky-400"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h6M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span> <span class="nav-text">Billing / POS</span>
           </a>
         </li>
         <li class="admin-only">
           <a href="/dashboard.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-sky-400"><i class="fa-solid fa-chart-line"></i></span> <span class="nav-text">Dashboard</span>
+            <span class="nav-icon text-lg w-6 text-center text-sky-400"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></span> <span class="nav-text">Dashboard</span>
           </a>
         </li>
         <li>
           <a href="/history.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-teal-400"><i class="fa-solid fa-clock-rotate-left"></i></span> <span class="nav-text">Billing History</span>
+            <span class="nav-icon text-lg w-6 text-center text-teal-400"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span> <span class="nav-text">Billing History</span>
           </a>
         </li>
 
         <li class="menu-category admin-only text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2 mt-2">Management</li>
         <li class="admin-only">
           <a href="/medicines.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-indigo-400"><i class="fa-solid fa-pills"></i></span> <span class="nav-text">Medicine Inventory</span>
+            <span class="nav-icon text-lg w-6 text-center text-indigo-400"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a6.5 6.5 0 00-9.192-9.192l-2.02 2.02a6.5 6.5 0 009.192 9.192l2.02-2.02z M9.213 13.787l5.574-5.574"/></svg></span> <span class="nav-text">Medicine Inventory</span>
           </a>
         </li>
         <li class="admin-only">
           <a href="/reports.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-emerald-400"><i class="fa-solid fa-file-invoice-dollar"></i></span> <span class="nav-text">Sales Statements</span>
+            <span class="nav-icon text-lg w-6 text-center text-emerald-400"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span> <span class="nav-text">Sales Statements</span>
           </a>
         </li>
         <li class="admin-only">
           <a href="/users.html" class="nav-link active flex items-center gap-3 px-3 py-2.5 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-white"><i class="fa-solid fa-users-gear"></i></span> <span class="nav-text">Worker Management</span>
+            <span class="nav-icon text-lg w-6 text-center text-white"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span> <span class="nav-text">Worker Management</span>
           </a>
         </li>
       </ul>
@@ -87,7 +86,7 @@
           </div>
         </div>
         <button class="btn-logout-icon text-slate-400 hover:text-rose-400 hover:bg-rose-500/15 p-2 rounded-lg transition-colors cursor-pointer" onclick="Auth.logout()" title="Logout">
-          <i class="fa-solid fa-right-from-bracket"></i>
+          <svg class="w-4 h-4 text-slate-400 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
         </button>
       </div>
     </aside>
@@ -97,16 +96,16 @@
       <header class="top-header h-16 bg-white border-b border-slate-200/80 px-6 flex items-center justify-between flex-shrink-0 shadow-sm">
         <div class="header-title-wrapper flex items-center gap-3">
           <button class="btn-toggle-sidebar w-9 h-9 bg-slate-100 hover:bg-sky-50 text-slate-700 hover:text-sky-600 border border-slate-200 rounded-xl flex items-center justify-center cursor-pointer transition-colors" title="Toggle Sidebar Pin / Hover Mode">
-            <i class="fa-solid fa-bars text-sm"></i>
+            <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
           <div class="header-title">
-            <h2 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center"><i class="fa-solid fa-users-gear text-amber-600 mr-2"></i>Worker & Billing Staff Management</h2>
-            <p class="text-xs text-slate-500 font-medium">Create worker accounts, manage billing staff roles, toggle active status, and reset passwords</p>
+            <h2 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center"><svg class="w-5 h-5 text-amber-500 mr-2 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>Pharmacy Worker & Staff Accounts</h2>
+            <p class="text-xs text-slate-500 font-medium">Create worker log-in credentials, assign role permissions, and reset passwords</p>
           </div>
         </div>
         <div class="header-actions flex items-center gap-3">
           <button class="btn btn-primary px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl text-xs font-bold shadow-md shadow-sky-600/25 flex items-center gap-2 transition-all cursor-pointer" onclick="UserMgmt.openAddModal()">
-            <i class="fa-solid fa-user-plus"></i> Add Worker / User
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg> Add New Worker Account
           </button>
         </div>
       </header>
@@ -116,8 +115,19 @@
           <div class="table-header-bar p-5 border-b border-slate-200/80 flex flex-wrap justify-between items-center gap-4 bg-slate-50/50">
             <div class="table-header-title">
               <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-address-book text-sky-600"></i> System Users Directory
+                <svg class="w-5 h-5 text-sky-600 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg> System Users Registry
               </h3>
+            </div>
+            <div class="table-controls flex flex-wrap items-center gap-3">
+              <div class="relative">
+                <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" id="user-search-input" class="select-filter pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-800 outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10 w-56" placeholder="Search username, full name...">
+              </div>
+              <select id="user-filter-role" class="select-filter px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none cursor-pointer">
+                <option value="All">All Roles</option>
+                <option value="Admin">Admin</option>
+                <option value="Worker">Worker</option>
+              </select>
             </div>
           </div>
 
@@ -129,66 +139,82 @@
                   <th class="p-3.5">Username</th>
                   <th class="p-3.5">Full Name</th>
                   <th class="p-3.5">Email</th>
-                  <th class="p-3.5">System Role</th>
-                  <th class="p-3.5 text-center">Status</th>
-                  <th class="p-3.5 text-center">Actions</th>
+                  <th class="p-3.5">Assigned Role</th>
+                  <th class="p-3.5">Status</th>
+                  <th class="p-3.5">Actions</th>
                 </tr>
               </thead>
-              <tbody id="users-table-body" class="divide-y divide-slate-200 text-slate-700 font-medium">
-                <!-- Loaded dynamically via Users.js -->
+              <tbody id="user-table-body" class="divide-y divide-slate-200 text-slate-700 font-medium">
+                <!-- Loaded dynamically via users.js -->
               </tbody>
             </table>
-          </div>
-          </div>
-        </div>
       </main>
+
+      <!-- APP FOOTER -->
+      <footer class="app-footer bg-white border-t border-slate-200/80 px-6 py-2.5 flex flex-wrap items-center justify-between text-xs text-slate-500 flex-shrink-0 z-20">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 font-bold text-slate-800">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>ORTHOFIX SPECIALITY CLINIC</span>
+          </div>
+          <span class="text-slate-300 hidden sm:inline">|</span>
+          <span class="text-slate-500 font-medium hidden sm:inline">Pharmacy Management & POS System v3.0</span>
+        </div>
+
+        <div class="flex items-center gap-4 text-[11px] font-semibold text-slate-500">
+          <div class="flex items-center gap-1.5 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200/60">
+            <svg class="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span id="footer-live-clock" class="text-slate-700 font-bold tracking-tight">--:--:-- --</span>
+          </div>
+          <span class="text-slate-300 hidden md:inline">•</span>
+          <span class="hidden md:inline">Server: <strong class="text-emerald-600 font-bold">Online (Port 5000)</strong></span>
+          <span class="text-slate-300 hidden lg:inline">•</span>
+          <span class="hidden lg:inline">© 2026 ORTHOFIX. All rights reserved.</span>
+        </div>
+      </footer>
     </div>
   </div>
 
   <!-- ADD / EDIT USER MODAL -->
   <div class="modal-overlay fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-200" id="modal-user">
-    <div class="modal-box bg-white rounded-3xl shadow-2xl w-full max-w-lg flex flex-col overflow-hidden">
-      <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center">
-        <h3 id="modal-user-title" class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-user-plus text-sky-600"></i> Add New Worker / User
+    <div class="modal-box bg-white rounded-3xl shadow-2xl w-full max-w-md flex flex-col overflow-hidden">
+      <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+        <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2" id="modal-user-title">
+          <svg class="w-5 h-5 text-sky-600 inline-block align-middle mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg> Add New Worker Account
         </h3>
         <button class="btn-close-modal text-slate-400 hover:text-slate-700 text-lg p-1 rounded-lg" onclick="UI.closeModal('modal-user')">
-          <i class="fa-solid fa-xmark"></i>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
-      <form id="form-user" class="flex flex-col flex-grow">
+      <form id="form-user" onsubmit="UserMgmt.handleSaveUser(event)">
         <div class="modal-body p-6 space-y-4">
-          <div class="form-group flex flex-col gap-1">
-            <label for="user-username" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Username *</label>
-            <input type="text" id="user-username" required placeholder="e.g. rahul_billing" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 outline-none focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10">
+          <div class="form-group flex flex-col gap-1.5">
+            <label for="user-username" class="text-xs font-bold text-slate-700">Username *</label>
+            <input type="text" id="user-username" required placeholder="e.g. worker_john" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:bg-white focus:border-sky-600 outline-none">
           </div>
-
-          <div class="form-group flex flex-col gap-1">
-            <label for="user-fullname" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Full Name *</label>
-            <input type="text" id="user-fullname" required placeholder="e.g. Rahul Sharma" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 outline-none focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10">
+          <div class="form-group flex flex-col gap-1.5" id="user-password-group">
+            <label for="user-password-input" class="text-xs font-bold text-slate-700">Password *</label>
+            <input type="password" id="user-password-input" placeholder="Enter secure password" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:bg-white focus:border-sky-600 outline-none">
           </div>
-
-          <div class="form-group flex flex-col gap-1">
-            <label for="user-email" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Email Address</label>
-            <input type="email" id="user-email" placeholder="e.g. rahul@medicare.com" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 outline-none focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10">
+          <div class="form-group flex flex-col gap-1.5">
+            <label for="user-fullname" class="text-xs font-bold text-slate-700">Full Name *</label>
+            <input type="text" id="user-fullname" required placeholder="e.g. John Doe" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:bg-white focus:border-sky-600 outline-none">
           </div>
-
-          <div class="form-group flex flex-col gap-1">
-            <label for="user-role" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Role *</label>
-            <select id="user-role" class="select-filter p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none cursor-pointer w-full">
-              <option value="Billing Worker">Billing Worker</option>
-              <option value="Admin / Billing Manager">Admin / Billing Manager</option>
+          <div class="form-group flex flex-col gap-1.5">
+            <label for="user-email" class="text-xs font-bold text-slate-700">Email Address</label>
+            <input type="email" id="user-email" placeholder="john@orthofix.com" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:bg-white focus:border-sky-600 outline-none">
+          </div>
+          <div class="form-group flex flex-col gap-1.5">
+            <label for="user-role" class="text-xs font-bold text-slate-700">System Role *</label>
+            <select id="user-role" required class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:bg-white focus:border-sky-600 outline-none cursor-pointer">
+              <option value="Worker">Worker (POS Billing Only)</option>
+              <option value="Admin">Admin (Full Access & Reports)</option>
             </select>
-          </div>
-
-          <div class="form-group flex flex-col gap-1" id="user-password-group">
-            <label for="user-password-input" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Password *</label>
-            <input type="password" id="user-password-input" placeholder="Enter secure password" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 outline-none focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10">
           </div>
         </div>
         <div class="modal-footer p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
           <button type="button" class="btn btn-secondary px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors" onclick="UI.closeModal('modal-user')">Cancel</button>
-          <button type="submit" class="btn btn-primary px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl font-bold text-xs shadow-md shadow-sky-600/25 transition-all">Save User</button>
+          <button type="submit" class="btn btn-primary px-5 py-2.5 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl font-bold text-xs shadow-md shadow-sky-600/30 transition-all cursor-pointer">Save Account</button>
         </div>
       </form>
     </div>
@@ -196,31 +222,26 @@
 
   <!-- RESET PASSWORD MODAL -->
   <div class="modal-overlay fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-200" id="modal-reset-password">
-    <div class="modal-box bg-white rounded-3xl shadow-2xl w-full max-w-md flex flex-col overflow-hidden">
-      <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center">
+    <div class="modal-box bg-white rounded-3xl shadow-2xl w-full max-w-sm flex flex-col overflow-hidden">
+      <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
         <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-key text-amber-500"></i> Reset User Password
+          <svg class="w-5 h-5 text-sky-600 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg> Reset Password
         </h3>
         <button class="btn-close-modal text-slate-400 hover:text-slate-700 text-lg p-1 rounded-lg" onclick="UI.closeModal('modal-reset-password')">
-          <i class="fa-solid fa-xmark"></i>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
-      <form id="form-reset-password" class="flex flex-col flex-grow">
+      <form id="form-reset-password" onsubmit="UserMgmt.handleSaveResetPassword(event)">
+        <input type="hidden" id="reset-user-id">
         <div class="modal-body p-6 space-y-4">
-          <div class="bg-amber-50 border border-amber-200/80 p-3.5 rounded-xl">
-            <p class="text-xs text-slate-600 font-medium">
-              Resetting password for: <strong id="reset-user-name" class="text-sky-700 font-extrabold">-</strong>
-            </p>
-          </div>
-
-          <div class="form-group flex flex-col gap-1">
-            <label for="new-password-input" class="text-xs font-bold text-slate-700 uppercase tracking-wider">New Password *</label>
-            <input type="password" id="new-password-input" required placeholder="Enter new password" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 outline-none focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10">
+          <div class="form-group flex flex-col gap-1.5">
+            <label for="new-password" class="text-xs font-bold text-slate-700">Enter New Password *</label>
+            <input type="password" id="new-password" required placeholder="Min 6 characters" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:bg-white focus:border-sky-600 outline-none">
           </div>
         </div>
         <div class="modal-footer p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
           <button type="button" class="btn btn-secondary px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors" onclick="UI.closeModal('modal-reset-password')">Cancel</button>
-          <button type="submit" class="btn btn-primary px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl font-bold text-xs shadow-md shadow-sky-600/25 transition-all">Update Password</button>
+          <button type="submit" class="btn btn-primary px-5 py-2.5 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl font-bold text-xs shadow-md shadow-sky-600/30 transition-all cursor-pointer">Update Password</button>
         </div>
       </form>
     </div>

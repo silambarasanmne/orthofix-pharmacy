@@ -1,8 +1,15 @@
 /* ==========================================================================
-   MEDICARE PHARMACY POS & MANAGEMENT SYSTEM — ULTRA-COMPACT FOOTER EDITION
+   MEDICARE PHARMACY POS & MANAGEMENT SYSTEM — INLINE SVG ICON EDITION
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+.icon-svg {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
 
 :root {
   --primary: #0284c7;       /* Ocean Sky Blue */
@@ -1157,3 +1164,392 @@ body {
     border: none;
   }
 }
+
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVE SYSTEM (FLUID TYPOGRAPHY, FLEX/GRID ADAPTABILITY)
+   ========================================================================== */
+
+/* Fluid Typography Base Scaling */
+html {
+  font-size: clamp(14px, 0.4vw + 12px, 16px);
+}
+
+/* Mobile Sidebar Drawer Overlay & Backdrop */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 1050;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 768px) {
+  #app-container {
+    height: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    height: 100vh !important;
+    width: 270px !important;
+    z-index: 1100 !important;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0) !important;
+  }
+
+  .sidebar.collapsed {
+    width: 270px !important;
+  }
+
+  .sidebar.collapsed .brand-info,
+  .sidebar.collapsed .menu-category,
+  .sidebar.collapsed .nav-text,
+  .sidebar.collapsed .user-meta {
+    display: block !important;
+    opacity: 1 !important;
+  }
+
+  .main-wrapper {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .top-header {
+    padding: 0 0.85rem;
+    height: 52px;
+  }
+
+  .header-title h2 {
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+  }
+
+  .header-title p {
+    font-size: 0.65rem;
+  }
+
+  .session-chip {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.68rem;
+  }
+
+  .content-body {
+    padding: 0.6rem;
+    height: auto;
+    overflow-y: visible;
+  }
+}
+
+/* POS Billing Page Responsiveness */
+@media (max-width: 1024px) {
+  .pos-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 0.85rem;
+  }
+
+  .pos-left {
+    height: auto;
+  }
+
+  .pos-right {
+    height: auto;
+  }
+
+  .medicine-results-container {
+    max-height: 380px;
+  }
+
+  .cart-items-wrapper {
+    max-height: 300px;
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 640px) {
+  .search-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0.6rem;
+  }
+
+  .search-input-group input {
+    font-size: 0.82rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .select-filter {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .medicine-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .med-card {
+    padding: 0.55rem;
+  }
+
+  .med-name {
+    font-size: 0.82rem;
+  }
+
+  .med-generic {
+    font-size: 0.65rem;
+  }
+
+  .med-price {
+    font-size: 0.9rem;
+  }
+
+  /* Cart Footer Responsive Layout */
+  .cart-footer-row1 {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .cart-footer-row2 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+  }
+
+  .summary-pill {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .cart-footer-row3 {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .payment-method-selector {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cash-received-box {
+    justify-content: space-between;
+  }
+
+  .btn-complete-sale {
+    padding: 0.65rem;
+    font-size: 0.85rem !important;
+  }
+}
+
+/* Dashboard Stats & Charts Responsiveness */
+@media (max-width: 1024px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .stat-card {
+    padding: 0.85rem;
+    gap: 0.65rem;
+  }
+
+  .stat-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 1.15rem;
+  }
+
+  .stat-info h3 {
+    font-size: 0.68rem;
+  }
+
+  .stat-info .stat-value {
+    font-size: 1.2rem;
+  }
+
+  .chart-card {
+    padding: 0.85rem;
+  }
+
+  .chart-header h3 {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Data Tables & Table Cards Responsive Horizontal Scrolling */
+.table-card {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .table-header-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+    padding: 0.75rem;
+  }
+
+  .table-controls {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .table-controls input,
+  .table-controls select,
+  .table-controls button,
+  .table-controls .btn {
+    width: 100%;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 0.6rem 0.65rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+}
+
+/* Form Grids & Modal Dialogs Responsiveness */
+@media (max-width: 640px) {
+  .modal-overlay {
+    padding: 0.5rem;
+  }
+
+  .modal-box {
+    max-width: 100% !important;
+    max-height: 94vh;
+    border-radius: 12px;
+  }
+
+  .modal-header {
+    padding: 0.85rem 1rem;
+  }
+
+  .modal-header h3 {
+    font-size: 1rem;
+  }
+
+  .modal-body {
+    padding: 0.85rem 1rem;
+    max-height: calc(94vh - 120px);
+  }
+
+  .modal-footer {
+    padding: 0.75rem 1rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .form-group.full-width {
+    grid-column: span 1;
+  }
+
+  .btn {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Login Page Mobile Optimization */
+@media (max-width: 1024px) {
+  body {
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100vh;
+  }
+
+  .login-wrapper {
+    max-width: 480px;
+    margin: 1rem auto;
+    border-radius: 1.25rem;
+  }
+
+  .login-form-container {
+    order: 1 !important;
+    padding: 1.5rem 1.25rem !important;
+  }
+
+  .login-hero {
+    order: 2 !important;
+    padding: 1.25rem !important;
+  }
+
+  .login-hero .hero-content {
+    margin: 0.75rem 0 !important;
+  }
+
+  .login-hero .feature-list {
+    display: none !important;
+  }
+
+  .form-header h3 {
+    font-size: 1.3rem !important;
+  }
+}
+
+/* Application Footer Styling */
+.app-footer {
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03);
+}
+
+@media (max-width: 640px) {
+  .app-footer {
+    padding: 0.5rem 1rem !important;
+    gap: 0.35rem;
+    justify-content: center !important;
+    text-align: center;
+  }
+}
+
+
+

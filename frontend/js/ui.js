@@ -8,50 +8,84 @@ const UI = {
     const toggleBtns = document.querySelectorAll('.btn-toggle-sidebar');
     if (!sidebar) return;
 
-    // Restore saved state
-    const isCollapsed = localStorage.getItem('medicare_sidebar_collapsed') === 'true';
-    if (isCollapsed) {
-      sidebar.classList.add('collapsed');
+    // Create backdrop overlay for mobile view if not exists
+    let backdrop = document.querySelector('.sidebar-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'sidebar-backdrop';
+      document.body.appendChild(backdrop);
     }
 
-    // Toggle Pin/Unpin Click Handler
-    toggleBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-        const nowCollapsed = sidebar.classList.contains('collapsed');
-        localStorage.setItem('medicare_sidebar_collapsed', nowCollapsed ? 'true' : 'false');
-        
-        if (nowCollapsed) {
-          UI.showToast('Sidebar collapsed. Move cursor to left side to reveal menu.', 'info');
-        } else {
-          UI.showToast('Sidebar pinned expanded.', 'info');
+    const closeMobileSidebar = () => {
+      sidebar.classList.remove('mobile-open');
+      backdrop.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    backdrop.addEventListener('click', closeMobileSidebar);
+
+    // Close mobile menu when navigating
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          closeMobileSidebar();
         }
       });
     });
 
-    // Cursor Movement / Hover Reveal Handler
-    let hoverTimer = null;
+    // Restore saved state (desktop)
+    const isCollapsed = localStorage.getItem('medicare_sidebar_collapsed') === 'true';
+    if (isCollapsed && window.innerWidth > 768) {
+      sidebar.classList.add('collapsed');
+    }
 
+    // Toggle Pin/Unpin or Mobile Open Handler
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.innerWidth <= 768) {
+          const isOpen = sidebar.classList.toggle('mobile-open');
+          backdrop.classList.toggle('active', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        } else {
+          sidebar.classList.toggle('collapsed');
+          const nowCollapsed = sidebar.classList.contains('collapsed');
+          localStorage.setItem('medicare_sidebar_collapsed', nowCollapsed ? 'true' : 'false');
+          if (nowCollapsed) {
+            UI.showToast('Sidebar collapsed.', 'info');
+          } else {
+            UI.showToast('Sidebar pinned expanded.', 'info');
+          }
+        }
+      });
+    });
+
+    // Cursor Movement / Hover Reveal Handler (Desktop only)
     sidebar.addEventListener('mouseenter', () => {
-      if (sidebar.classList.contains('collapsed')) {
+      if (window.innerWidth > 768 && sidebar.classList.contains('collapsed')) {
         sidebar.classList.add('hover-expanded');
       }
     });
 
     sidebar.addEventListener('mouseleave', () => {
-      if (sidebar.classList.contains('collapsed')) {
+      if (window.innerWidth > 768 && sidebar.classList.contains('collapsed')) {
         sidebar.classList.remove('hover-expanded');
       }
     });
 
-    // Detect Cursor Moving to the Left MediCare Edge
     document.addEventListener('mousemove', (e) => {
-      if (sidebar.classList.contains('collapsed')) {
+      if (window.innerWidth > 768 && sidebar.classList.contains('collapsed')) {
         if (e.clientX <= 70) {
           sidebar.classList.add('hover-expanded');
         } else if (e.clientX > 260 && !sidebar.matches(':hover')) {
           sidebar.classList.remove('hover-expanded');
         }
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        closeMobileSidebar();
       }
     });
   },
@@ -67,12 +101,16 @@ const UI = {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
 
-    let icon = 'ℹ️';
-    if (type === 'success') icon = '✅';
-    if (type === 'error') icon = '❌';
-    if (type === 'warning') icon = '⚠️';
+    let svgIcon = `<svg class="w-5 h-5 text-sky-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+    if (type === 'success') {
+      svgIcon = `<svg class="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+    } else if (type === 'error') {
+      svgIcon = `<svg class="w-5 h-5 text-rose-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+    } else if (type === 'warning') {
+      svgIcon = `<svg class="w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`;
+    }
 
-    toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+    toast.innerHTML = `${svgIcon} <span>${message}</span>`;
     container.appendChild(toast);
 
     setTimeout(() => {
@@ -206,9 +244,11 @@ const UI = {
       </div>
     `;
   },
-  async downloadInvoiceAsPDF(invoice) {
-    if (!invoice) return;
-    const container = document.createElement('div');
+  async downloadInvoicePdf(invoice) {
+    if (!invoice || !invoice.id) return;
+    UI.showToast('Preparing PDF download...', 'info');
+    let container = document.createElement('div');
+    container.className = 'pdf-render-container';
     container.style.position = 'fixed';
     container.style.left = '-9999px';
     container.style.top = '0';
@@ -242,12 +282,23 @@ const UI = {
         container.parentNode.removeChild(container);
       }
     }
+  },
+
+  initFooterLiveClock() {
+    const clockEl = document.getElementById('footer-live-clock');
+    if (!clockEl) return;
+    const updateTime = () => {
+      const now = new Date();
+      clockEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+    };
+    updateTime();
+    setInterval(updateTime, 1000);
   }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
   UI.initSidebarToggle();
+  UI.initFooterLiveClock();
 });
 
 window.UI = UI;
-

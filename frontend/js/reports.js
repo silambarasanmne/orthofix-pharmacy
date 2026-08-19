@@ -72,7 +72,7 @@ const Reports = {
         <td>${UI.formatDateTime(s.created_at)}</td>
         <td>
           <strong>${s.customer_name || 'Walk-in Customer'}</strong>
-          ${s.customer_phone ? `<br><small style="color: #64748b;"><i class="fa-solid fa-phone text-xs mr-1 text-slate-400"></i>${s.customer_phone}</small>` : ''}
+          ${s.customer_phone ? `<br><small style="color: #64748b;"><svg class="w-3 h-3 text-slate-400 inline-block mr-1 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>${s.customer_phone}</small>` : ''}
         </td>
         <td>${UI.formatCurrency(s.subtotal)}</td>
         <td style="color: #ef4444;">-${UI.formatCurrency(s.discount_amount)}</td>
@@ -81,7 +81,7 @@ const Reports = {
         <td><small style="color: #64748b;">${s.worker_name}</small></td>
         <td style="text-align: center;">
           <button class="btn btn-primary btn-sm px-3 py-1.5 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl text-xs font-bold shadow-sm flex items-center justify-center gap-1.5 transition-all mx-auto" onclick="Reports.downloadInvoicePDF('${s.invoice_number}')">
-            <i class="fa-solid fa-file-pdf text-red-300"></i> Download PDF
+            <svg class="w-4 h-4 text-red-300 mr-1 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg> Download PDF
           </button>
         </td>
       </tr>
@@ -175,7 +175,7 @@ const Reports = {
         <td>${s.worker_name}</td>
         <td style="text-align: center;">
           <button class="btn btn-primary btn-sm px-3 py-1.5 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl text-xs font-bold shadow-sm flex items-center justify-center gap-1.5 transition-all mx-auto" onclick="Reports.downloadInvoicePDF('${s.invoice_number}')">
-            <i class="fa-solid fa-file-pdf text-red-300"></i> Download PDF
+            <svg class="w-4 h-4 text-red-300 mr-1 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg> Download PDF
           </button>
         </td>
       </tr>

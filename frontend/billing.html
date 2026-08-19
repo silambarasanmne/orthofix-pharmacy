@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ORTHOFIX SPECIALITY CLINIC — POS Billing</title>
+  <title>ORTHOFIX SPECIALITY CLINIC — Retail Pharmacy POS Billing</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -26,8 +26,7 @@
       }
     }
   </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/styles.css?v=2.0">
+  <link rel="stylesheet" href="/css/styles.css?v=4.0">
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
@@ -46,34 +45,34 @@
         <li class="menu-category text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2">Main Menu</li>
         <li>
           <a href="/billing.html" class="nav-link active flex items-center gap-3 px-3 py-2.5 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-white"><i class="fa-solid fa-receipt"></i></span> <span class="nav-text">Billing / POS</span>
+            <span class="nav-icon text-lg w-6 text-center text-white"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h6M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span> <span class="nav-text">Billing / POS</span>
           </a>
         </li>
         <li class="admin-only">
           <a href="/dashboard.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-sky-400"><i class="fa-solid fa-chart-line"></i></span> <span class="nav-text">Dashboard</span>
+            <span class="nav-icon text-lg w-6 text-center text-sky-400"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></span> <span class="nav-text">Dashboard</span>
           </a>
         </li>
         <li>
           <a href="/history.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-teal-400"><i class="fa-solid fa-clock-rotate-left"></i></span> <span class="nav-text">Billing History</span>
+            <span class="nav-icon text-lg w-6 text-center text-teal-400"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span> <span class="nav-text">Billing History</span>
           </a>
         </li>
 
         <li class="menu-category admin-only text-[11px] font-extrabold uppercase tracking-widest text-slate-500 px-3 py-2 mt-2">Management</li>
         <li class="admin-only">
           <a href="/medicines.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-indigo-400"><i class="fa-solid fa-pills"></i></span> <span class="nav-text">Medicine Inventory</span>
+            <span class="nav-icon text-lg w-6 text-center text-indigo-400"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a6.5 6.5 0 00-9.192-9.192l-2.02 2.02a6.5 6.5 0 009.192 9.192l2.02-2.02z M9.213 13.787l5.574-5.574"/></svg></span> <span class="nav-text">Medicine Inventory</span>
           </a>
         </li>
         <li class="admin-only">
           <a href="/reports.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-emerald-400"><i class="fa-solid fa-file-invoice-dollar"></i></span> <span class="nav-text">Sales Statements</span>
+            <span class="nav-icon text-lg w-6 text-center text-emerald-400"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span> <span class="nav-text">Sales Statements</span>
           </a>
         </li>
         <li class="admin-only">
           <a href="/users.html" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl font-semibold text-sm transition-all">
-            <span class="nav-icon text-lg w-6 text-center text-amber-400"><i class="fa-solid fa-users-gear"></i></span> <span class="nav-text">Worker Management</span>
+            <span class="nav-icon text-lg w-6 text-center text-amber-400"><svg class="w-5 h-5 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span> <span class="nav-text">Worker Management</span>
           </a>
         </li>
       </ul>
@@ -87,7 +86,7 @@
           </div>
         </div>
         <button class="btn-logout-icon text-slate-400 hover:text-rose-400 hover:bg-rose-500/15 p-2 rounded-lg transition-colors cursor-pointer" onclick="Auth.logout()" title="Logout">
-          <i class="fa-solid fa-right-from-bracket"></i>
+          <svg class="w-4 h-4 text-slate-400 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
         </button>
       </div>
     </aside>
@@ -97,10 +96,10 @@
       <header class="top-header h-16 bg-white border-b border-slate-200/80 px-6 flex items-center justify-between flex-shrink-0 shadow-sm">
         <div class="header-title-wrapper flex items-center gap-3">
           <button class="btn-toggle-sidebar w-9 h-9 bg-slate-100 hover:bg-sky-50 text-slate-700 hover:text-sky-600 border border-slate-200 rounded-xl flex items-center justify-center cursor-pointer transition-colors" title="Toggle Sidebar Pin / Hover Mode">
-            <i class="fa-solid fa-bars text-sm"></i>
+            <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
           <div class="header-title">
-            <h2 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center"><i class="fa-solid fa-receipt text-sky-600 mr-2"></i>Retail Pharmacy POS Billing</h2>
+            <h2 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center"><svg class="w-5 h-5 text-sky-600 mr-2 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h6M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>Retail Pharmacy POS Billing</h2>
             <p class="text-xs text-slate-500 font-medium">Search medicines, add items to cart, adjust quantities, and print invoices</p>
           </div>
         </div>
@@ -110,7 +109,7 @@
             <strong id="session-time">POS Ready</strong>
           </div>
           <button class="btn btn-secondary text-xs px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center gap-1.5 transition-colors" onclick="Auth.logout()">
-            <i class="fa-solid fa-right-from-bracket text-xs"></i> Logout
+            <svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg> Logout
           </button>
         </div>
       </header>
@@ -123,8 +122,8 @@
           <div class="pos-left flex flex-col gap-3 h-full overflow-hidden">
             <div class="search-card bg-white border border-slate-200/80 rounded-2xl p-3 shadow-sm flex items-center gap-2">
               <div class="search-input-group flex-grow relative">
-                <span class="search-icon-inside absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
-                  <i class="fa-solid fa-magnifying-glass"></i>
+                <span class="search-icon-inside absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none">
+                  <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </span>
                 <input type="text" id="search-medicine-input" placeholder="Search by Name, Generic, Batch #..." autofocus class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:bg-white focus:border-sky-600 focus:ring-2 focus:ring-sky-600/10 outline-none transition-all">
               </div>
@@ -151,7 +150,7 @@
           <div class="pos-right bg-white border border-slate-200/80 rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
             <div class="cart-header px-4 py-3 border-b border-slate-200/80 bg-slate-50/80 flex justify-between items-center flex-shrink-0">
               <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-cart-shopping text-sky-600"></i> Current Bill Cart
+                <svg class="w-4 h-4 text-sky-600 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg> Current Bill Cart
               </h3>
               <div class="flex items-center gap-2">
                 <span class="badge badge-instock px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold uppercase" id="cart-count-badge">0 items</span>
@@ -210,7 +209,7 @@
               <!-- Vertical Block 3: Single Full-Width Submit Button -->
               <div class="pt-0.5">
                 <button type="button" class="btn-complete-sale w-full py-3 px-4 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl font-extrabold text-sm shadow-md shadow-sky-600/30 flex items-center justify-center gap-2 transition-all cursor-pointer" id="btn-complete-sale" onclick="Billing.openSubmitPanel()">
-                  <i class="fa-solid fa-paper-plane text-base"></i>
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                   <span>Submit Bill</span>
                 </button>
               </div>
@@ -221,6 +220,29 @@
 
         </div>
       </main>
+
+      <!-- APP FOOTER -->
+      <footer class="app-footer bg-white border-t border-slate-200/80 px-6 py-2.5 flex flex-wrap items-center justify-between text-xs text-slate-500 flex-shrink-0 z-20">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 font-bold text-slate-800">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>ORTHOFIX SPECIALITY CLINIC</span>
+          </div>
+          <span class="text-slate-300 hidden sm:inline">|</span>
+          <span class="text-slate-500 font-medium hidden sm:inline">Pharmacy Management & POS System v3.0</span>
+        </div>
+
+        <div class="flex items-center gap-4 text-[11px] font-semibold text-slate-500">
+          <div class="flex items-center gap-1.5 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200/60">
+            <svg class="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span id="footer-live-clock" class="text-slate-700 font-bold tracking-tight">--:--:-- --</span>
+          </div>
+          <span class="text-slate-300 hidden md:inline">•</span>
+          <span class="hidden md:inline">Server: <strong class="text-emerald-600 font-bold">Online (Port 5000)</strong></span>
+          <span class="text-slate-300 hidden lg:inline">•</span>
+          <span class="hidden lg:inline">© 2026 ORTHOFIX. All rights reserved.</span>
+        </div>
+      </footer>
     </div>
   </div>
 
@@ -229,10 +251,10 @@
     <div class="modal-box bg-white rounded-3xl shadow-2xl w-full max-w-md flex flex-col overflow-hidden">
       <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
         <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-file-invoice text-sky-600"></i> Bill Summary & Confirm
+          <svg class="w-5 h-5 text-sky-600 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h6M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg> Bill Summary & Confirm
         </h3>
         <button class="btn-close-modal text-slate-400 hover:text-slate-700 text-lg p-1 rounded-lg" onclick="UI.closeModal('modal-submit-summary')">
-          <i class="fa-solid fa-xmark"></i>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="modal-body p-6 space-y-4">
@@ -258,7 +280,7 @@
       <div class="modal-footer p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
         <button type="button" class="btn btn-secondary px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors" onclick="UI.closeModal('modal-submit-summary')">Cancel</button>
         <button type="button" class="btn btn-primary px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-xl font-extrabold text-xs shadow-md shadow-emerald-600/30 flex items-center gap-2 transition-all cursor-pointer" id="btn-confirm-save-bill" onclick="Billing.confirmAndSaveBill()">
-          <i class="fa-solid fa-cloud-arrow-up"></i> Save & Complete Bill
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg> Save & Complete Bill
         </button>
       </div>
     </div>
@@ -269,10 +291,10 @@
     <div class="modal-box modal-lg bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden">
       <div class="modal-header p-5 border-b border-slate-200 flex justify-between items-center">
         <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-receipt text-sky-600"></i> Tax Invoice Receipt
+          <svg class="w-5 h-5 text-sky-600 inline-block align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h6M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg> Tax Invoice Receipt
         </h3>
         <button class="btn-close-modal text-slate-400 hover:text-slate-700 text-lg p-1 rounded-lg" onclick="UI.closeModal('modal-invoice')">
-          <i class="fa-solid fa-xmark"></i>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="modal-body p-6 overflow-y-auto flex-grow" id="invoice-modal-content">
@@ -281,7 +303,7 @@
       <div class="modal-footer p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
         <button class="btn btn-secondary px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors" onclick="UI.closeModal('modal-invoice')">Close</button>
         <button class="btn btn-primary px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-xl font-bold text-xs shadow-md shadow-sky-600/25 flex items-center gap-2 transition-all" onclick="window.print()">
-          <i class="fa-solid fa-print"></i> Print Invoice
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg> Print Invoice
         </button>
       </div>
     </div>
