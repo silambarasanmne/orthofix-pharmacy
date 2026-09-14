@@ -1,0 +1,33 @@
+# BigRock Apache Configuration — Hospital/Pharmacy System
+
+DirectoryIndex login.html index.html index.php
+
+RewriteEngine On
+RewriteBase /
+
+# 🔒 Security: Block direct public access/downloads of SQLite database files
+<FilesMatch "\.(db|sqlite|sqlite3|log|env)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Pass Authorization Header to FastCGI/PHP in cPanel
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+# 1. API Routing -> Send all /api/* requests to api/index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ api/index.php [QSA,L]
+
+# 2. SPA Clean Route Mapping -> Map /login, /billing, etc. to root HTML files
+RewriteRule ^$ login.html [L]
+RewriteRule ^login/?$ login.html [L]
+RewriteRule ^billing/?$ billing.html [L]
+RewriteRule ^dashboard/?$ dashboard.html [L]
+RewriteRule ^medicines/?$ medicines.html [L]
+RewriteRule ^history/?$ history.html [L]
+RewriteRule ^reports/?$ reports.html [L]
+RewriteRule ^users/?$ users.html [L]
+
+

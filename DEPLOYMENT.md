@@ -8,7 +8,8 @@ This guide provides instructions to host and deploy the **ORTHOFIX SPECIALITY CL
 
 | File Basename | Purpose / Description |
 |---|---|
-| [`Dockerfile`](file:///d:/simbu/hospital-management/Dockerfile) | Production Docker image container configuration with Node 22 Alpine & healthchecks. |
+| [`BIGROCK_HOSTING_GUIDE.md`](file:///c:/Users/Administrator/Downloads/hospital-management%20%282%29/hospital-management/BIGROCK_HOSTING_GUIDE.md) | Comprehensive step-by-step BigRock cPanel & Domain hosting guide. |
+| [`Dockerfile`](file:///c:/Users/Administrator/Downloads/hospital-management%20%282%29/hospital-management/Dockerfile) | Production Docker image container configuration with Node 22 Alpine & healthchecks. |
 | [`docker-compose.yml`](file:///d:/simbu/hospital-management/docker-compose.yml) | One-command deployment config with volume persistence for SQLite database. |
 | [`ecosystem.config.js`](file:///d:/simbu/hospital-management/ecosystem.config.js) | PM2 Process Manager configuration for Linux / Windows VPS servers. |
 | [`.env.example`](file:///d:/simbu/hospital-management/.env.example) | Production environment variable template. |
